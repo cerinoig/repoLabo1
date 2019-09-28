@@ -1,0 +1,176 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import entidades.Cliente;
+import utils.ConnectionManager;
+
+public class ClienteDAOImpl implements ClienteDAO {
+
+	private Connection conn = ConnectionManager.getConnection();
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql;
+
+	@Override
+	public Cliente selectCliente(String nroDocumento) throws SQLException {
+		Cliente cliente = new Cliente();
+		try {
+			sql = "SELECT * FROM CLIENTES WHERE NRO_DOC = " + "'" + nroDocumento + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				cliente.setIdCliente(rs.getInt("ID_CLIENTE"));
+				cliente.setNombre(rs.getString("NOMBRE"));
+				cliente.setApellido(rs.getString("APELLIDO"));
+				cliente.setTipoDocumento(rs.getString("TIPO_DOC"));
+				cliente.setNumeroDocumento(rs.getString("NRO_DOC"));
+				cliente.setDireccion(rs.getString("DIRECCION"));
+				cliente.setCodigoPostal(rs.getString("CODIGO_POSTAL"));
+				cliente.setTelefono(rs.getString("TELEFONO"));
+				cliente.setMail(rs.getString("MAIL"));
+				cliente.setIdusuario(rs.getInt("ID_USUARIO"));
+
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return cliente;
+	}
+
+	@Override
+	public void insertCliente(Cliente cliente) throws SQLException {
+		try {
+			sql = "INSERT INTO CLIENTES (ID_CLIENTE, NOMBRE, APELLIDO, TIPO_DOC, NRO_DOC, DIRECCION, CODIGO_POSTAL, TELEFONO, MAIL, ID_USUARIO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, cliente.getIdCliente());
+			pstmt.setString(2, cliente.getNombre());
+			pstmt.setString(3, cliente.getApellido());
+			pstmt.setString(4, cliente.getTipoDocumento());
+			pstmt.setString(5, cliente.getNumeroDocumento());
+			pstmt.setString(6, cliente.getDireccion());
+			pstmt.setString(7, cliente.getCodigoPostal());
+			pstmt.setString(8, cliente.getTelefono());
+			pstmt.setString(9, cliente.getMail());
+			pstmt.setInt(10, cliente.getIdusuario());
+
+			pstmt.executeUpdate();
+			conn.commit();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void updateCliente(Cliente cliente) throws SQLException {
+		try {
+			sql = "UPDATE CLIENTES SET ID_CLIENTE = ?, NOMBRE = ?, APELLIDO = ?, TIPO_DOC = ?, NRO_DOC = ?, DIRECCION = ?, CODIGO_POSTAL = ?, TELEFONO = ?, MAIL = ?, ID_USUARIO = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, cliente.getIdCliente());
+			pstmt.setString(2, cliente.getNombre());
+			pstmt.setString(3, cliente.getApellido());
+			pstmt.setString(4, cliente.getTipoDocumento());
+			pstmt.setString(5, cliente.getNumeroDocumento());
+			pstmt.setString(6, cliente.getDireccion());
+			pstmt.setString(7, cliente.getCodigoPostal());
+			pstmt.setString(8, cliente.getTelefono());
+			pstmt.setString(9, cliente.getMail());
+			pstmt.setInt(10, cliente.getIdusuario());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void deleteCliente(String nroDocumento) throws SQLException {
+		try {
+			sql = "DELETE FROM CLIENTES WHERE NRO_DOC = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, nroDocumento);
+			pstmt.executeUpdate();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public boolean buscarCliente(String nroDocumento) throws SQLException {
+		try {
+			sql = "SELECT * FROM CLIENTES WHERE NRO_DOC = " + "'" + nroDocumento + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+}

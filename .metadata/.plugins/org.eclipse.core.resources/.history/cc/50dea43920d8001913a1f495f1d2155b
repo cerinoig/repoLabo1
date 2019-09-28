@@ -1,0 +1,17 @@
+package dao;
+
+import java.sql.SQLException;
+
+import entidades.DetalleFactura;
+
+public interface DetalleFacturaDAO {
+
+	public void insertDetalleVenta(DetalleFactura detalle) throws SQLException;
+
+	public DetalleFactura selectDetalleVenta(String nroFactura) throws SQLException;
+
+	public void deleteDetalleVenta(String nroFactura) throws SQLException;
+
+	public void updateDetalleVenta(DetalleFactura detalle) throws SQLException;
+
+}

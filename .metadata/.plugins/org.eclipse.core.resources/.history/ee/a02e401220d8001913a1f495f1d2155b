@@ -1,0 +1,99 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import entidades.DetalleFactura;
+import entidades.Factura;
+import entidades.Producto;
+import utils.ConnectionManager;
+
+public class DetalleFacturaDAOImpl implements DetalleFacturaDAO {
+
+	private Connection conn = ConnectionManager.getConnection();
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql;
+
+	@Override
+	public void insertDetalleVenta(DetalleFactura detalle) throws SQLException {
+		try {
+			sql = "INSERT INTO DETALLE_FACTURA (ID_DETALLE_FACTURA, NRO_FACTURA, ID_PRODUCTO, CANTIDAD, PRECIO_TOTAL) VALUES (?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, detalle.getIdDetalleFactura());
+			pstmt.setString(2, detalle.getNumeroFactura().getNumeroFactura());
+			pstmt.setInt(3, detalle.getCodigoProducto().getIdProducto());
+			pstmt.setInt(4, detalle.getCantidad());
+			pstmt.setDouble(4, detalle.getPrecioTotal());
+
+			pstmt.executeUpdate();
+			conn.commit();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public DetalleFactura selectDetalleVenta(int nroFactura) throws SQLException {
+		DetalleFactura detalleFactura = new DetalleFactura();
+		try {
+			sql = "SELECT * FROM DETALLE_FACTURA WHERE NRO_FACTURA = " + "'" + nroFactura + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				detalleFactura.setIdDetalleFactura(rs.getInt("ID_DETALLE_FACTURA"));
+				detalleFactura.setNumeroFactura(new Factura());
+				detalleFactura.getNumeroFactura().setNumeroFactura(rs.getString("NRO_FACTURA"));
+				detalleFactura.setCodigoProducto(new Producto());
+				detalleFactura.getCodigoProducto().setIdProducto(rs.getInt("ID_PRODUCTO"));
+				detalleFactura.setCantidad(rs.getInt("CANTIDAD"));
+				detalleFactura.setPrecioTotal(rs.getInt("PRECIO_TOTAL"));
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public void deleteDetalleVenta(int numeroFactura) throws SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateDetalleVenta(DetalleFactura detalle) throws SQLException {
+		// TODO Auto-generated method stub
+
+	}
+}

@@ -1,0 +1,46 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import dao.ClienteDAO;
+import dao.ClienteDAOImpl;
+import entidades.Cliente;
+import excepciones.ExistingUserException;
+import excepciones.NonExistingUserException;
+
+public class ClienteServiceImpl implements ClienteService {
+
+	private ClienteDAO clienteDAO = new ClienteDAOImpl();
+
+	@Override
+	public Cliente selectCliente(String nroDocumento) throws SQLException, NonExistingUserException {
+		if (nroDocumento.equals(selectCliente(nroDocumento).getNumeroDocumento())) {
+			return clienteDAO.selectCliente(nroDocumento);
+		} else {
+			throw new NonExistingUserException();
+		}
+	}
+
+	@Override
+	public void insertCliente(Cliente cliente) throws SQLException, ExistingUserException, NonExistingUserException {
+		if (cliente.getNumeroDocumento().equals(selectCliente(cliente.getNumeroDocumento()).getNumeroDocumento())) {
+			throw new ExistingUserException();
+		} else {
+			clienteDAO.insertCliente(cliente);
+		}
+	}
+
+	@Override
+	public void updateCliente(Cliente cliente) throws SQLException {
+		clienteDAO.updateCliente(cliente);
+	}
+
+	@Override
+	public void deleteCliente(String nroDocumento) throws SQLException, NonExistingUserException {
+		if (nroDocumento.equals(selectCliente(nroDocumento).getNumeroDocumento())) {
+			clienteDAO.deleteCliente(nroDocumento);
+		} else {
+			throw new NonExistingUserException();
+		}
+	}
+}

@@ -1,0 +1,139 @@
+package main;
+
+import java.sql.SQLException;
+
+import entidades.Cliente;
+import entidades.Producto;
+import entidades.Usuario;
+import excepciones.ExistingUserException;
+import excepciones.NonExistingUserException;
+import servicios.ClienteService;
+import servicios.ClienteServiceImpl;
+import servicios.ProductoService;
+import servicios.ProductoServiceImpl;
+import servicios.UsuarioService;
+import servicios.UsuarioServiceImpl;
+import utils.Dentre;
+
+public class Main {
+
+	private static ClienteService clienteService = new ClienteServiceImpl();
+	private static UsuarioService usuarioService = new UsuarioServiceImpl();
+	private static ProductoService productoService = new ProductoServiceImpl();
+	
+	private static Producto producto = new Producto();
+
+	public static void main(String[] args) {
+		consultaProducto();
+	}
+	
+	public static void deleteProducto() {
+		try {
+			System.out.println("---------------");
+			System.out.println("BAJA DE PRODUCTO");
+			System.out.println("---------------");
+			productoService.deleteProducto(Dentre.entero("Ingrese el código del producto que desea eliminar"));
+			
+			System.out.println("El p´roducto fue eliminado con exito");
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+		}catch(NonExistingUserException e) {
+			System.out.println("El producto que desea eliminar no existe");
+		}
+	}
+	
+	public static void consultaProducto() {
+		try {
+			producto = productoService.selectProducto(Dentre.entero("Ingrese el codigo del producto que quiere buscar"));
+			System.out.println(producto.toString());
+		}catch(SQLException sqle) {
+			System.out.println(sqle);
+		}catch(NonExistingUserException e) {
+			System.out.println("El producto que esta buscando no existe");
+		}
+	}
+
+	public static void altaProducto() {
+		try {
+			System.out.println("---------------");
+			System.out.println("ALTA DE USUARIO");
+			System.out.println("---------------");
+			producto.setCodigoProducto(Dentre.entero("Ingrese el codigo del producto"));
+			producto.setDescripcion(Dentre.texto("Ingrese la descriptcion del producto"));
+			producto.setCantidad(Dentre.entero("Ingrese la cantiodad de unidades disponibles"));
+			producto.setPrecioUnitario(Dentre.doble("Ingrese el precio del producto"));
+
+			productoService.insertProducto(producto);
+			
+			System.out.println("El producto fue dado de alta con exito");
+
+		} catch (SQLException sqle) {
+			System.out.println(sqle);
+		} catch (ExistingUserException e) {
+			System.out.println("El producto ingresado ya existe");
+		}
+	}
+
+	public static void altaUsuario() {
+		try {
+			Usuario usuario = new Usuario();
+			System.out.println("---------------");
+			System.out.println("ALTA DE USUARIO");
+			System.out.println("---------------");
+			usuario.setUsuario(Dentre.texto("Ingrese el nombre de usuario"));
+			usuario.setPassword(Dentre.texto("Ingrese la contraseña"));
+
+			usuarioService.insertUsuario(usuario);
+
+			System.out.println("El usuario fue dado de alta con exito");
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println(sqle);
+		} catch (ExistingUserException e) {
+			System.out.println("El usuario ingresado ya existe");
+		}
+	}
+
+	public static void altaCliente() {
+		try {
+			Cliente cliente = new Cliente();
+			System.out.println("---------------");
+			System.out.println("ALTA DE CLIENTE");
+			System.out.println("---------------");
+			cliente.setNombre(Dentre.texto("Ingrese el nombre"));
+			cliente.setApellido(Dentre.texto("Ingrese el apellido"));
+			cliente.setTipoDocumento(Dentre.texto("Ingrese el tipo de documento"));
+			cliente.setNumeroDocumento(Dentre.texto("Ingrese el numero de documento"));
+			cliente.setDireccion(Dentre.texto("Ingrese la direccion"));
+			cliente.setCodigoPostal(Dentre.texto("Ingrese el codigo postal"));
+			cliente.setTelefono(Dentre.texto("Ingrese el teléfono"));
+			cliente.setMail(Dentre.texto("Ingrese el mail"));
+
+			clienteService.insertCliente(cliente);
+
+			System.out.println("El cliente fue dado de alta con exito");
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println(sqle);
+		} catch (ExistingUserException e) {
+			System.out.println("El usuario ingresado ya existe");
+			e.printStackTrace();
+		}
+	}
+
+	public static void bajaCliente() {
+		try {
+			clienteService.deleteCliente(Dentre.texto("Ingrese el documento del cliente que desea dar de baja"));
+			System.out.println("El proveedor fue eliminado con exito");
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println(sqle);
+		} catch (NonExistingUserException e) {
+			System.out.println("El usuario ingresado no existe");
+			e.printStackTrace();
+		}
+	}
+
+}

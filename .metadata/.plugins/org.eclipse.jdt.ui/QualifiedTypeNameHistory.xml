@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="entidades.Proveedor"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="utils.ConnectionManager"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="entidades.DetalleFactura"/>
+<fullyQualifiedTypeName name="entidades.Venta"/>
+<fullyQualifiedTypeName name="entidades.Factura"/>
+<fullyQualifiedTypeName name="dao.ClienteDAO"/>
+<fullyQualifiedTypeName name="dao.ClienteDAOImpl"/>
+<fullyQualifiedTypeName name="entidades.Cliente"/>
+<fullyQualifiedTypeName name="servicios.ClienteService"/>
+<fullyQualifiedTypeName name="servicios.ClienteServiceImpl"/>
+<fullyQualifiedTypeName name="dao.UsuarioDAO"/>
+<fullyQualifiedTypeName name="dao.UsuarioDAOImpl"/>
+<fullyQualifiedTypeName name="java.lang.Throwable"/>
+<fullyQualifiedTypeName name="servicios.UsuarioServiceImpl"/>
+<fullyQualifiedTypeName name="servicios.UsuarioService"/>
+<fullyQualifiedTypeName name="entidades.Usuario"/>
+<fullyQualifiedTypeName name="excepciones.ExistingUserException"/>
+<fullyQualifiedTypeName name="dao.ProductoDAO"/>
+<fullyQualifiedTypeName name="dao.ProductoDAOImpl"/>
+<fullyQualifiedTypeName name="entidades.Producto"/>
+<fullyQualifiedTypeName name="servicios.ProductoService"/>
+<fullyQualifiedTypeName name="servicios.ProductoServiceImpl"/>
+<fullyQualifiedTypeName name="utils.Dentre"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="excepciones.NonExistingUserException"/>
+</qualifiedTypeNameHistroy>

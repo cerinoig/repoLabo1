@@ -1,0 +1,17 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import entidades.Producto;
+
+public interface ProductoService {
+
+	public Producto selectProducto(int codigoProducto) throws SQLException;
+
+	public void insertProducto(Producto producto) throws SQLException;
+
+	public void updateProducto(Producto producto) throws SQLException;
+
+	public void deleteProducto(int codigoProducto) throws SQLException;
+
+}

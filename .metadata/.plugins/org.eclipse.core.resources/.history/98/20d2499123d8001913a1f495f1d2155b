@@ -1,0 +1,24 @@
+package utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectionManager {
+
+	private static String DB_URL = "jdbc:sqlserver://localhost:4143;databaseName=TPWEB;" + "integratedSecurity=true";
+	private static Connection conn = null;
+
+	public static Connection getConnection() {
+		if (conn == null) {
+			try {
+				conn = DriverManager.getConnection(DB_URL);
+				conn.setAutoCommit(false);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.exit(0);
+			}
+		}
+		return conn;
+	}
+}

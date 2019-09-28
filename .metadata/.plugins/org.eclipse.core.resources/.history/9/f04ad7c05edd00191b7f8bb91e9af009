@@ -1,0 +1,41 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import dao.ProductoDAO;
+import dao.ProductoDAOImpl;
+import entidades.Producto;
+import excepciones.ExistingUserException;
+import excepciones.NonExistingUserException;
+
+public class ProductoServiceImpl implements ProductoService{
+
+	private ProductoDAO productoDAO = new ProductoDAOImpl();
+	
+	@Override
+	public Producto selectProducto(int codigoProducto) throws SQLException, NonExistingUserException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertProducto(Producto producto) throws SQLException, ExistingUserException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateProducto(Producto producto) throws SQLException, NonExistingUserException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProducto(int codigoProducto) throws SQLException, NonExistingUserException {
+		if (codigoProducto != productoDAO.selectProducto(codigoProducto).getCodigoProducto()) {
+			throw new NonExistingUserException();
+		} else {
+			productoDAO.deleteProducto(codigoProducto);
+		}
+
+}

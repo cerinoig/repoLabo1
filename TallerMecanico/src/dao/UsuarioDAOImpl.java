@@ -1,0 +1,153 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import entidades.Usuario;
+import utils.ConnectionManager;
+
+public class UsuarioDAOImpl implements UsuarioDAO {
+
+	private Connection conn = ConnectionManager.getConnection();
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private String sql;
+
+	@Override
+	public Usuario selectUsuario(String nombreUsuario) throws SQLException {
+		Usuario usuario = new Usuario();
+		try {
+			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+				usuario.setUsuario(rs.getString("USUARIO"));
+				usuario.setPassword(rs.getString("PASSWORD"));
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return usuario;
+	}
+
+	@Override
+	public void insertUsuario(Usuario usuario) throws SQLException {
+		try {
+			sql = "INSERT INTO USUARIOS (USUARIO, PASSWORD) VALUES (?, ?)";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(2, usuario.getPassword());
+
+			pstmt.executeUpdate();
+			conn.commit();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+	}
+
+	@Override
+	public void updateUsuario(Usuario usuario) throws SQLException {
+		try {
+			sql = "UPDATE USUARIOS SET USUARIO = ?, PASSWORD = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(2, usuario.getPassword());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void deleteUsuario(String usuario) throws SQLException {
+		try {
+			sql = "DELETE FROM USUARIOS WHERE USUARIO = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, usuario);
+			pstmt.executeUpdate();
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public boolean buscarUsuario(String usuario) throws SQLException {
+		try {
+			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			}
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+}

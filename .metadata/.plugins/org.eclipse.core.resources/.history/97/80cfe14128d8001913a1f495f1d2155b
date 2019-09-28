@@ -1,0 +1,36 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import dao.UsuarioDAO;
+import dao.UsuarioDAOImpl;
+import entidades.Usuario;
+
+public class UsuarioServiceImpl implements UsuarioService{
+	
+	private UsuarioDAO usuarioDAO =  new UsuarioDAOImpl();
+
+	@Override
+	public Usuario selectUsuario(String usuario) throws SQLException {
+		return usuarioDAO.selectUsuario(usuario);
+	}
+
+	@Override
+	public void insertUsuario(Usuario usuario) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateUsuario(Usuario usuario) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUsuario(String usuario) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

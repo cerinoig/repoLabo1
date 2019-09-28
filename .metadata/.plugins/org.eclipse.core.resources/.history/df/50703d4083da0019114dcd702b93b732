@@ -1,0 +1,61 @@
+package main;
+
+import java.sql.SQLException;
+
+import entidades.Cliente;
+import excepciones.ExistingUserException;
+import excepciones.NonExistingUserException;
+import servicios.ClienteService;
+import servicios.ClienteServiceImpl;
+import utils.Dentre;
+
+public class Main {
+
+	ClienteService clienteService = new ClienteServiceImpl();
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void altaCliente() {
+		try {
+			Cliente cliente = new Cliente();
+			System.out.println("ALTA DE CLIENTE");
+			System.out.println("---------------");
+			cliente.setNombre(Dentre.texto("Ingrese el nombre"));
+			cliente.setApellido(Dentre.texto("Ingrese el apellido"));
+			cliente.setTipoDocumento(Dentre.texto("Ingrese el tipo de documento"));
+			cliente.setNumeroDocumento(Dentre.texto("Ingrese el numero de documento"));
+			cliente.setDireccion(Dentre.texto("Ingrese la direccion"));
+			cliente.setCodigoPostal(Dentre.texto("Ingrese el codigo postal"));
+			cliente.setTelefono(Dentre.texto("Ingrese el teléfono"));
+			cliente.setMail(Dentre.texto("Ingrese el mail"));
+
+			clienteService.insertCliente(cliente);
+
+			System.out.println("El cliente fue dado de alta con exito");
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println(sqle);
+		} catch (ExistingUserException e) {
+			System.out.println("El usuario ingresado ya existe");
+			e.printStackTrace();
+		}
+	}
+
+	public void bajaCliente() {
+		try {
+			clienteService.deleteCliente(Dentre.texto("Ingrese el documento del cliente que desea dar de baja"));
+			System.out.println("El proveedor fue eliminado con exito");
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println(sqle);
+		} catch (NonExistingUserException e) {
+			System.out.println("El usuario ingresado no existe");
+			e.printStackTrace();
+		}
+	}
+
+}

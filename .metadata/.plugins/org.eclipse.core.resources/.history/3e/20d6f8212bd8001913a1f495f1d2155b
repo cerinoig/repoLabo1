@@ -1,0 +1,18 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import entidades.Cliente;
+import excepciones.ExistingUserException;
+
+public interface ClienteService {
+	
+	public Cliente selectCliente(String nroDocumento) throws SQLException;
+
+	public void insertCliente(Cliente cliente) throws SQLException, ExistingUserException;
+
+	public void updateCliente(Cliente cliente) throws SQLException;
+
+	public void deleteCliente(String nroDocumento) throws SQLException;
+
+}

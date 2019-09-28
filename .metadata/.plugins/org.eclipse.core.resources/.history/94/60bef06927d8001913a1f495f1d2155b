@@ -1,0 +1,45 @@
+package servicios;
+
+import java.sql.SQLException;
+
+import dao.ClienteDAO;
+import dao.ClienteDAOImpl;
+import entidades.Cliente;
+
+public class ClienteServiceImpl implements ClienteService {
+
+	private ClienteDAO clienteDAO = new ClienteDAOImpl();
+
+	@Override
+	public Cliente selectCliente(String nroDocumento) throws SQLException {
+		return clienteDAO.selectCliente(nroDocumento);
+	}
+
+	@Override
+	public void insertCliente(Cliente cliente) throws SQLException {
+
+//		ESTO VA EN EL MAIN EN EL METODO DE ALTA DE CLIENTE
+//		System.out.println("ALTA DE CLIENTE");
+//		cliente.setNombre(Dentre.texto("Ingrese el nombre"));
+//		cliente.setApellido(Dentre.texto("Ingrese el apellido"));
+//		cliente.setTipoDocumento(Dentre.texto("Ingrese el tipo de documento"));
+//		cliente.setNumeroDocumento(Dentre.texto("Ingrese el numero de documento"));
+//		cliente.setDireccion(Dentre.texto("Ingrese la direccion"));
+//		cliente.setCodigoPostal(Dentre.texto("Ingrese el codigo postal"));
+//		cliente.setTelefono(Dentre.texto("Ingrese el teléfono"));
+//		cliente.setMail(Dentre.texto("Ingrese el mail"));
+
+		clienteDAO.insertCliente(cliente);
+	}
+
+	@Override
+	public void updateCliente(Cliente cliente) throws SQLException {
+		clienteDAO.updateCliente(cliente);
+	}
+
+	@Override
+	public void deleteCliente(String nroDocumento) throws SQLException {
+		clienteDAO.deleteCliente(nroDocumento);
+	}
+
+}
