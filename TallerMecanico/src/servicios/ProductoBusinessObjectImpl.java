@@ -6,9 +6,10 @@ import dao.ProductoDAO;
 import dao.ProductoDAOImpl;
 import entidades.Producto;
 import excepciones.ExistingUserException;
+import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
 
-public class ProductoServiceImpl implements ProductoService {
+public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 
 	private Producto producto = new Producto();
 	private ProductoDAO productoDAO = new ProductoDAOImpl();
@@ -29,7 +30,7 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
-	public void insertProducto(Producto producto) throws SQLException, ExistingUserException {
+	public void insertProducto(Producto producto) throws SQLException, ExistingUserException, NoIdObtainedException {
 		if (productoDAO.buscarProducto(producto.getCodigoProducto())) {
 			throw new ExistingUserException();
 		} else {
