@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import entidades.Producto;
+import excepciones.NoIdObtainedException;
 import utils.ConnectionManager;
 
 public class ProductoDAOImpl implements ProductoDAO {
@@ -52,11 +54,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 	}
 
 	@Override
-	public void insertProducto(Producto producto) throws SQLException {
+	public void insertProducto(Producto producto) throws SQLException, NoIdObtainedException {
 		try {
 			conn = ConnectionManager.getConnection();
 			sql = "INSERT INTO PRODUCTOS (COD_PRODUCTO, DESCRIPCION, CANTIDAD, PRECIO_UNITARIO) VALUES (?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, producto.getCodigoProducto());
 			pstmt.setString(2, producto.getDescripcion());
@@ -65,6 +67,16 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			pstmt.executeUpdate();
 			conn.commit();
+			
+			try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	            	producto.setIdProducto(generatedKeys.getInt(1));
+	            }
+	            else {
+//	                throw new NoIdObtainedException("Error al crear el usuario, no se pudo obntener el ID.");
+	            	throw new NoIdObtainedException();
+	            }
+	        }
 
 		} catch (SQLException sqle) {
 			try {
