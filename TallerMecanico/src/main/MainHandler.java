@@ -6,6 +6,7 @@ import entidades.Producto;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
+import excepciones.NonExistingProductException;
 import excepciones.NonExistingUserException;
 import servicios.ProductoBusinessObject;
 import servicios.ProductoBusinessObjectImpl;
@@ -38,7 +39,7 @@ public class MainHandler {
 			System.out.println("El próducto fue eliminado con exito");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-		} catch (NonExistingUserException e) {
+		} catch (NonExistingProductException e) {
 			System.out.println("El producto que desea eliminar no existe");
 		}
 	}
@@ -49,7 +50,7 @@ public class MainHandler {
 			System.out.println(producto.toString());
 		} catch (SQLException sqle) {
 			System.out.println(sqle);
-		} catch (NonExistingUserException e) {
+		} catch (NonExistingProductException e) {
 			System.out.println("El producto que esta buscando no existe");
 		}
 	}

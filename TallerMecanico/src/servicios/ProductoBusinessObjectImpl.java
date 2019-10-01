@@ -5,54 +5,59 @@ import java.sql.SQLException;
 import dao.ProductoDAO;
 import dao.ProductoDAOImpl;
 import entidades.Producto;
-import excepciones.ExistingUserException;
+import excepciones.ExistingProductException;
 import excepciones.NoIdObtainedException;
-import excepciones.NonExistingUserException;
+import excepciones.NonExistingProductException;
 
 public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 
-	private Producto producto = new Producto();
 	private ProductoDAO productoDAO = new ProductoDAOImpl();
 
 	@Override
-	public Producto selectProducto(int codigoProducto) throws SQLException, NonExistingUserException {
+	public Producto selectProducto(int codigoProducto) throws SQLException, NonExistingProductException {
 		try {
-			producto = productoDAO.selectProducto(codigoProducto);
+			return productoDAO.selectProducto(codigoProducto);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+		} catch (NonExistingProductException nonExistingUserException) {
+			throw new NonExistingProductException();
 		}
 
-		if (producto.getCodigoProducto() != 0) {
-			return producto;
-		} else {
-			throw new NonExistingUserException();
-		}
+		return null;
 	}
 
 	@Override
-	public void insertProducto(Producto producto) throws SQLException, ExistingUserException, NoIdObtainedException {
-		if (productoDAO.buscarProducto(producto.getCodigoProducto())) {
-			throw new ExistingUserException();
-		} else {
+	public void insertProducto(Producto producto) throws SQLException, ExistingProductException, NoIdObtainedException {
+		try {
 			productoDAO.insertProducto(producto);
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (ExistingProductException existingUserException) {
+			throw new ExistingProductException();
+		} catch (NoIdObtainedException noIdObtainedException) {
+			throw new NoIdObtainedException();
 		}
 	}
 
 	@Override
-	public void updateProducto(Producto producto) throws SQLException, NonExistingUserException {
-		if (productoDAO.buscarProducto(producto.getCodigoProducto())) {
+	public void updateProducto(Producto producto) throws SQLException, NonExistingProductException {
+		try {
 			productoDAO.updateProducto(producto);
-		} else {
-			throw new NonExistingUserException();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (NonExistingProductException nonExistingUserException) {
+			throw new NonExistingProductException();
 		}
 	}
 
 	@Override
-	public void deleteProducto(int codigoProducto) throws SQLException, NonExistingUserException {
-		if (productoDAO.buscarProducto(codigoProducto)) {
+	public void deleteProducto(int codigoProducto) throws SQLException, NonExistingProductException {
+		try {
 			productoDAO.deleteProducto(codigoProducto);
-		} else {
-			throw new NonExistingUserException();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (NonExistingProductException nonExistingUserException) {
+			throw new NonExistingProductException();
 		}
 	}
 }
