@@ -29,6 +29,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			if (rs.next()) {
 				usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+				usuario.setNombre(rs.getString("NOMBRE"));
+				usuario.setApellido(rs.getString("APELLIDO"));
+				usuario.setMail(rs.getString("MAIL"));
 				usuario.setUsuario(rs.getString("USUARIO"));
 				usuario.setPassword(rs.getString("PASSWORD"));
 			} else {
@@ -64,11 +67,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				throw new ExistingUserException();
 			} else {
 				try {
-					sql = "INSERT INTO USUARIOS (USUARIO, PASSWORD) VALUES (?, ?)";
+					sql = "INSERT INTO USUARIOS (NOMBRE, APELLIDO, MAIL, USUARIO, PASSWORD) VALUES (?, ?, ?, ?, ?)";
 					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-					pstmt.setString(1, usuario.getUsuario());
-					pstmt.setString(2, usuario.getPassword());
+					pstmt.setString(1, usuario.getNombre());
+					pstmt.setString(2, usuario.getApellido());
+					pstmt.setString(3, usuario.getMail());
+					pstmt.setString(4, usuario.getUsuario());
+					pstmt.setString(5, usuario.getPassword());
 
 					pstmt.executeUpdate();
 					conn.commit();
@@ -118,11 +124,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			if (rs.next()) {
 				try {
-					sql = "UPDATE USUARIOS SET USUARIO = ?, PASSWORD = ?";
+					sql = "UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, MAIL = ?, USUARIO = ?, PASSWORD = ?";
 					pstmt = conn.prepareStatement(sql);
 
-					pstmt.setString(1, usuario.getUsuario());
-					pstmt.setString(2, usuario.getPassword());
+					pstmt.setString(1, usuario.getNombre());
+					pstmt.setString(2, usuario.getApellido());
+					pstmt.setString(3, usuario.getMail());
+					pstmt.setString(4, usuario.getUsuario());
+					pstmt.setString(5, usuario.getPassword());
 
 					pstmt.executeUpdate();
 

@@ -18,12 +18,10 @@ public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 		try {
 			return productoDAO.selectProducto(codigoProducto);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingProductException nonExistingUserException) {
 			throw new NonExistingProductException();
 		}
-
-		return null;
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 		try {
 			productoDAO.insertProducto(producto);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (ExistingProductException existingUserException) {
 			throw new ExistingProductException();
 		} catch (NoIdObtainedException noIdObtainedException) {
@@ -44,7 +42,7 @@ public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 		try {
 			productoDAO.updateProducto(producto);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingProductException nonExistingUserException) {
 			throw new NonExistingProductException();
 		}
@@ -55,7 +53,7 @@ public class ProductoBusinessObjectImpl implements ProductoBusinessObject {
 		try {
 			productoDAO.deleteProducto(codigoProducto);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingProductException nonExistingUserException) {
 			throw new NonExistingProductException();
 		}

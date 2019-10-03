@@ -18,12 +18,10 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 		try {
 			return usuarioDAO.selectUsuario(usuario);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingUserException nonExistingUserException) {
 			throw new NonExistingUserException();
 		}
-
-		return null;
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 		try {
 			usuarioDAO.insertUsuario(usuario);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (ExistingUserException existingUserException) {
 			throw new ExistingUserException();
 		} catch (NoIdObtainedException noIdObtainedException) {
@@ -44,7 +42,7 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 		try {
 			usuarioDAO.updateUsuario(usuario);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingUserException nonExistingUserException) {
 			throw new NonExistingUserException();
 		}
@@ -55,7 +53,7 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 		try {
 			usuarioDAO.deleteUsuario(usuario);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLException();
 		} catch (NonExistingUserException nonExistingUserException) {
 			throw new NonExistingUserException();
 		}
