@@ -2,6 +2,8 @@ package main;
 
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
+
 import entidades.Producto;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
@@ -12,6 +14,7 @@ import servicios.ProductoBusinessObject;
 import servicios.ProductoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
+import ui.MiFrame;
 import utils.Dentre;
 
 public class MainHandler {
@@ -27,6 +30,12 @@ public class MainHandler {
 //		altaUsuario();
 //		deleteUsuario();//VER PORQUE NO ELIMINA
 //		consultaUsuario();
+		
+		MiFrame miFrame = new MiFrame();
+
+		miFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		miFrame.setVisible(true);
+		
 	}
 
 	public static void deleteProducto() {
@@ -82,6 +91,9 @@ public class MainHandler {
 			System.out.println("---------------");
 			System.out.println("ALTA DE USUARIO");
 			System.out.println("---------------");
+			usuario.setNombre(Dentre.texto("Ingrese el nombre"));
+			usuario.setApellido(Dentre.texto("Ingrese el apellido"));
+			usuario.setMail(Dentre.texto("Ingrese el mail"));
 			usuario.setUsuario(Dentre.texto("Ingrese el nombre de usuario"));
 			usuario.setPassword(Dentre.texto("Ingrese la contraseña"));
 
