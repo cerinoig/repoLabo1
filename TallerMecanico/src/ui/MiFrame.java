@@ -25,6 +25,8 @@ public class MiFrame extends JFrame {
 		setLocation(anchoPantalla / 4, alturaPantalla / 4);
 		setTitle("Taller Mecanico");
 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		cambiarPanel(new LoginPanel());
 	}
 

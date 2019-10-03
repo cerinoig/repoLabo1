@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,10 +21,14 @@ public class LoginPanel extends JPanel {
 	private JButton login, registro;
 
 	public LoginPanel() {
+		initUI();
+	}
+
+	public void initUI() {
 		setVisible(true);
 		setSize(700, 700);
 		setLayout(null);
-		
+
 		tituloLabel = new JLabel("Login");
 		tituloLabel.setForeground(Color.blue);
 		tituloLabel.setFont(new Font("Serif", Font.BOLD, 20));
@@ -40,7 +43,7 @@ public class LoginPanel extends JPanel {
 		registro = new JButton("REGISTRARSE");
 
 		tituloLabel.setBounds(100, 30, 400, 30);
-		
+
 		usuarioLabel.setBounds(80, 190, 200, 30);
 		passwordLabel.setBounds(80, 230, 200, 30);
 
@@ -49,7 +52,7 @@ public class LoginPanel extends JPanel {
 
 		login.setBounds(50, 350, 100, 30);
 		registro.setBounds(170, 350, 100, 30);
-		
+
 		add(tituloLabel);
 
 		add(usuarioLabel);
@@ -66,7 +69,6 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -75,7 +77,6 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 		});

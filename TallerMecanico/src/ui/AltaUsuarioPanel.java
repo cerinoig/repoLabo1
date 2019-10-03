@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import entidades.Usuario;
+
 public class AltaUsuarioPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,10 @@ public class AltaUsuarioPanel extends JPanel {
 	private JButton guardarBoton;
 
 	public AltaUsuarioPanel() {
+		initUI();
+	}
+
+	public void initUI() {
 		setVisible(true);
 		setSize(700, 700);
 		setLayout(null);
@@ -81,8 +87,12 @@ public class AltaUsuarioPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
+				Usuario usuario = new Usuario();
+				usuario.setNombre(nombreTextField.getText().toString());
+				usuario.setApellido(apellidoTextField.getText().toString());
+				usuario.setMail(mailTextField.getText().toString());
+				usuario.setUsuario(usuarioTextField.getText().toString());
+				usuario.setPassword(passwordField.getPassword().toString());
 			}
 		});
 	}

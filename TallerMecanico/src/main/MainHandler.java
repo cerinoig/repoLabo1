@@ -2,8 +2,6 @@ package main;
 
 import java.sql.SQLException;
 
-import javax.swing.JFrame;
-
 import entidades.Producto;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
@@ -26,16 +24,11 @@ public class MainHandler {
 	private static Usuario usuario = new Usuario();
 
 	public static void main(String[] args) {
-//		deleteProducto(); //VER PORQUE NO ELIMINA
-//		altaUsuario();
-//		deleteUsuario();//VER PORQUE NO ELIMINA
-//		consultaUsuario();
-		
-		MiFrame miFrame = new MiFrame();
-
-		miFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		miFrame.setVisible(true);
-		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new MiFrame().setVisible(true);
+			}
+		});
 	}
 
 	public static void deleteProducto() {
@@ -55,7 +48,8 @@ public class MainHandler {
 
 	public static void consultaProducto() {
 		try {
-			producto = productoBusinessObject.selectProducto(Dentre.entero("Ingrese el codigo del producto que quiere buscar"));
+			producto = productoBusinessObject
+					.selectProducto(Dentre.entero("Ingrese el codigo del producto que quiere buscar"));
 			System.out.println(producto.toString());
 		} catch (SQLException sqle) {
 			System.out.println(sqle);
