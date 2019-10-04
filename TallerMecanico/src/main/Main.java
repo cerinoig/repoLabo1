@@ -15,7 +15,7 @@ import servicios.UsuarioBusinessObjectImpl;
 import ui.MiFrame;
 import utils.Dentre;
 
-public class MainHandler {
+public class Main {
 
 	private static UsuarioBusinessObject usuarioBusinessObject = new UsuarioBusinessObjectImpl();
 	private static ProductoBusinessObject productoBusinessObject = new ProductoBusinessObjectImpl();
@@ -79,32 +79,7 @@ public class MainHandler {
 //		}
 	}
 
-	public static void altaUsuario() {
-		try {
-			Usuario usuario = new Usuario();
-			System.out.println("---------------");
-			System.out.println("ALTA DE USUARIO");
-			System.out.println("---------------");
-			usuario.setNombre(Dentre.texto("Ingrese el nombre"));
-			usuario.setApellido(Dentre.texto("Ingrese el apellido"));
-			usuario.setMail(Dentre.texto("Ingrese el mail"));
-			usuario.setUsuario(Dentre.texto("Ingrese el nombre de usuario"));
-			usuario.setPassword(Dentre.texto("Ingrese la contraseña"));
-
-			usuarioBusinessObject.insertUsuario(usuario);
-
-			System.out.println("El usuario fue dado de alta con exito");
-
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			System.out.println(sqle);
-		} catch (ExistingUserException e) {
-			System.out.println("El usuario ingresado ya existe");
-		} catch (NoIdObtainedException e) {
-			System.out.println("Error al crear el usuario, no se pudo obntener el ID.");
-			e.printStackTrace();
-		}
-	}
+	
 
 	public static void deleteUsuario() {
 		try {
@@ -121,15 +96,5 @@ public class MainHandler {
 		}
 	}
 
-	public static void consultaUsuario() {
-		try {
-			usuario = usuarioBusinessObject.selectUsuario(Dentre.texto("Ingrese el usuario que quiere buscar"));
-			System.out.println(usuario.toString());
-		} catch (SQLException sqle) {
-			System.out.println(sqle);
-		} catch (NonExistingUserException e) {
-			System.out.println("El usuario que esta buscando no existe");
-		}
-	}
 
 }

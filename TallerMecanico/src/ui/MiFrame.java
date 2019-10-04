@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import handler.Handler;
+
 public class MiFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,10 @@ public class MiFrame extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		cambiarPanel(new LoginPanel());
+		cambiarPanel(new LoginPanel(new Handler()));
+		//cambiarPanel(new AltaUsuarioPanel(new Handler()));
+		
+		
 	}
 
 	public void cambiarPanel(JPanel panel) {

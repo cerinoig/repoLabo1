@@ -9,7 +9,7 @@ import excepciones.NonExistingUserException;
 
 public interface UsuarioBusinessObject {
 
-	public Usuario selectUsuario(String usuario) throws SQLException, NonExistingUserException;
+	public Usuario selectUsuario(String usuario, String contraseña) throws SQLException, NonExistingUserException;
 
 	public void insertUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException;
 

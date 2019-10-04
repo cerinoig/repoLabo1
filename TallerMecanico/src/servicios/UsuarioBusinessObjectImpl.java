@@ -14,9 +14,9 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 	private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
 	@Override
-	public Usuario selectUsuario(String usuario) throws SQLException, NonExistingUserException {
+	public Usuario selectUsuario(String usuario, String contraseña) throws SQLException, NonExistingUserException {
 		try {
-			return usuarioDAO.selectUsuario(usuario);
+			return usuarioDAO.selectUsuario(usuario, contraseña);
 		} catch (SQLException sqle) {
 			throw new SQLException();
 		} catch (NonExistingUserException nonExistingUserException) {

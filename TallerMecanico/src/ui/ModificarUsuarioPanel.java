@@ -15,9 +15,10 @@ import javax.swing.JTextField;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
+import excepciones.NonExistingUserException;
 import handler.Handler;
 
-public class AltaUsuarioPanel extends JPanel {
+public class ModificarUsuarioPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,16 +27,16 @@ public class AltaUsuarioPanel extends JPanel {
 	private JPasswordField passwordField;
 	private JButton guardarBoton;
 
-	public AltaUsuarioPanel(Handler handler) {
-		initUI(handler);
+	public ModificarUsuarioPanel(Handler handler, String nombreUsuario, String contraseña) {
+		initUI(handler, nombreUsuario, contraseña);
 	}
 
-	public void initUI(Handler handler) {
+	public void initUI(Handler handler, String nombreUsuario, String contraseña) {
 		setVisible(true);
 		setSize(700, 700);
 		setLayout(null);
 
-		tituloLabel = new JLabel("Registro de usuario");
+		tituloLabel = new JLabel("Modificar datos - Usuario");
 		tituloLabel.setForeground(Color.blue);
 		tituloLabel.setFont(new Font("Serif", Font.BOLD, 20));
 
@@ -67,6 +68,15 @@ public class AltaUsuarioPanel extends JPanel {
 		passwordField.setBounds(300, 230, 200, 30);
 
 		guardarBoton.setBounds(80, 280, 100, 30);
+		
+		if(getUsuario(handler, nombreUsuario, contraseña) !=null){
+			Usuario usuario = getUsuario(handler, nombreUsuario, contraseña);
+			nombreTextField.setText(usuario.getNombre());
+			apellidoTextField.setText(usuario.getApellido());
+			mailTextField.setText(usuario.getMail());
+			usuarioTextField.setText(usuario.getUsuario());
+			passwordField.setText(usuario.getPassword());;
+		}
 
 		add(tituloLabel);
 
@@ -99,19 +109,28 @@ public class AltaUsuarioPanel extends JPanel {
 				usuario.setPassword(String.valueOf(passwordField.getPassword()));
 
 				try {
-					handler.altaUsuario(usuario);
+					handler.modificarUsuario(usuario);
 				} catch (SQLException sqle) {
 					System.out.println("error generico sql");
 					sqle.printStackTrace();
-				} catch (ExistingUserException eue) {
+				} catch (NonExistingUserException eue) {
 					System.out.println("usuario existe");
 					eue.printStackTrace();
-				} catch (NoIdObtainedException nio) {
-					System.out.println("error generico id");
-					nio.printStackTrace();
 				}
 			}
 		});
+	}
+
+	public Usuario getUsuario(Handler handler, String nombreUsuario, String contraseña) {
+		try {
+			return handler.consultaUsuario(nombreUsuario, contraseña);
+		} catch (SQLException sqle) {
+			System.out.println("error sql generico");
+		} catch (NonExistingUserException neue) {
+			System.out.println("usuario inexistente");
+		}
+		
+		return null;
 	}
 
 }

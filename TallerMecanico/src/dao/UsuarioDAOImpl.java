@@ -20,10 +20,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	private String sql;
 
 	@Override
-	public Usuario selectUsuario(String nombreUsuario) throws SQLException, NonExistingUserException {
+	public Usuario selectUsuario(String nombreUsuario, String contraseña)
+			throws SQLException, NonExistingUserException {
 		Usuario usuario = new Usuario();
 		try {
-			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "'";
+			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "' AND PASSWORD = " + "'"
+					+ contraseña + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
