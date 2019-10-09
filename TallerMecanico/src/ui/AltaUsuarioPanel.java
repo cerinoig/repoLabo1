@@ -101,7 +101,6 @@ public class AltaUsuarioPanel extends JPanel {
 				try {
 					handler.altaUsuario(usuario);
 				} catch (SQLException sqle) {
-					System.out.println("error generico sql");
 					sqle.printStackTrace();
 				} catch (ExistingUserException eue) {
 					System.out.println("usuario existe");
