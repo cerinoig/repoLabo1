@@ -13,8 +13,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
-import excepciones.ExistingUserException;
-import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
 import handler.Handler;
 

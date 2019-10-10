@@ -2,7 +2,6 @@ package handler;
 
 import java.sql.SQLException;
 
-import entidades.Producto;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
@@ -13,9 +12,6 @@ import servicios.UsuarioBusinessObjectImpl;
 public class Handler {
 
 	private UsuarioBusinessObject usuarioBusinessObject = new UsuarioBusinessObjectImpl();
-	private Producto producto = new Producto();
-	private Usuario usuario = new Usuario();
-
 	public void altaUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException {
 		try {
 
@@ -37,7 +33,7 @@ public class Handler {
 	public Usuario consultaUsuario(String nombreUsuario, String contraseña)
 			throws SQLException, NonExistingUserException {
 		try {
-			return usuario = usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+			return usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
 		} catch (SQLException sqle) {
 			throw new SQLException();
 		} catch (NonExistingUserException e) {
