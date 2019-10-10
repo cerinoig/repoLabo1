@@ -77,8 +77,8 @@ public class AutoDAOImpl implements AutoDAO {
 					pstmt.setString(3, auto.getModelo());
 					pstmt.setString(4, auto.getColor());
 					pstmt.setInt(5, auto.getCantidadPuertas());
-					pstmt.setString(5, auto.getAño());
-					pstmt.setInt(5, auto.getKilometraje());
+					pstmt.setString(6, auto.getAño());
+					pstmt.setInt(7, auto.getKilometraje());
 
 					pstmt.executeUpdate();
 					conn.commit();
