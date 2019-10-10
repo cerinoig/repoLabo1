@@ -2,16 +2,22 @@ package handler;
 
 import java.sql.SQLException;
 
+import entidades.Auto;
 import entidades.Usuario;
+import excepciones.ExistingCarException;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
+import servicios.AutoBusinessObject;
+import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 
 public class Handler {
 
 	private UsuarioBusinessObject usuarioBusinessObject = new UsuarioBusinessObjectImpl();
+	private AutoBusinessObject autoBusinessObject = new AutoBusinessObjectImpl();
+
 	public void altaUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException {
 		try {
 
@@ -51,4 +57,21 @@ public class Handler {
 		}
 	}
 
+	public void altaAuto(Auto auto) throws SQLException, ExistingCarException, NoIdObtainedException {
+		try {
+
+			autoBusinessObject.insertAuto(auto);
+
+			System.out.println("El usuario fue dado de alta con exito");
+
+		} catch (SQLException sqle) {
+			throw new SQLException();
+		} catch (ExistingCarException e) {
+			throw new ExistingCarException();
+		} catch (NoIdObtainedException e) {
+			throw new NoIdObtainedException();
+			// System.out.println("Error al crear el usuario, no se pudo
+			// obntener el ID.");
+		}
+	}
 }
