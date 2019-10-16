@@ -1,6 +1,9 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -8,17 +11,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import entidades.Auto;
+import entidades.Usuario;
+import excepciones.ExistingCarException;
+import excepciones.ExistingUserException;
+import excepciones.NoIdObtainedException;
 import handler.Handler;
 
 public class AltaDatos extends JPanel {
 
-	public AltaDatos(Handler handler, String titulo1, String titulo2, String titulo3, String titulo4, String titulo5,
-			String titulo6, String titulo7) {
-		initUI(handler, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
+	public AltaDatos(Handler handler, String tipoAlta, String titulo1, String titulo2, String titulo3, String titulo4,
+			String titulo5, String titulo6, String titulo7) {
+		initUI(handler, tipoAlta, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
 	}
 
-	public void initUI(Handler handler, String titulo1, String titulo2, String titulo3, String titulo4, String titulo5,
-			String titulo6, String titulo7) {
+	public void initUI(Handler handler, String tipoAlta, String titulo1, String titulo2, String titulo3, String titulo4,
+			String titulo5, String titulo6, String titulo7) {
 
 		setLayout(new BorderLayout());
 
@@ -66,7 +74,8 @@ public class AltaDatos extends JPanel {
 
 		Box botonera = Box.createHorizontalBox();
 		botonera.add(Box.createHorizontalGlue());
-		botonera.add(new JButton("Ok"));
+		JButton guardarBoton = new JButton("Guardar");
+		botonera.add(guardarBoton);
 		botonera.add(Box.createHorizontalStrut(10));
 		botonera.add(new JButton("Cancel"));
 
@@ -95,6 +104,68 @@ public class AltaDatos extends JPanel {
 
 		JLabel space = new JLabel("__________________________________________");
 		add(space, BorderLayout.EAST);
+
+		guardarBoton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String textF1 = ((JTextField) datos1.getComponent(2)).getText().toString();
+				String textF2 = ((JTextField) datos2.getComponent(2)).getText().toString();
+				String textF3 = ((JTextField) datos3.getComponent(2)).getText().toString();
+				String textF4 = ((JTextField) datos4.getComponent(2)).getText().toString();
+				String textF5 = ((JTextField) datos5.getComponent(2)).getText().toString();
+				String textF6 = ((JTextField) datos6.getComponent(2)).getText().toString();
+				String textF7 = ((JTextField) datos7.getComponent(2)).getText().toString();
+
+				switch (tipoAlta) {
+				case "auto":
+					Auto auto = new Auto();
+					auto.setAño(textF1);
+
+					try {
+						auto.setCantidadPuertas(Integer.valueOf(textF2));
+					} catch (Exception e3) {
+						System.out.println("no es un numero las puertas");
+						e3.printStackTrace();
+
+					}
+
+					auto.setColor(textF3);
+
+					try {
+						auto.setKilometraje(Integer.valueOf(textF4));
+
+					} catch (Exception e1) {
+						System.out.println("no es un numero de KM");
+						e1.printStackTrace();
+
+					}
+					auto.setMarca(textF5);
+					auto.setModelo(textF6);
+					auto.setPatente(textF7);
+
+					try {
+						handler.altaAuto(auto);
+						MessageDialog.datosCargados();
+					} catch (SQLException sqle) {
+						sqle.printStackTrace();
+						MessageDialog.errorCarga();
+					} catch (NoIdObtainedException nio) {
+						System.out.println("error generico id");
+						nio.printStackTrace();
+						MessageDialog.errorCarga();
+					} catch (ExistingCarException e1) {
+						System.out.println("Auto ya existe");
+						e1.printStackTrace();
+						MessageDialog.autoExiste();
+					}
+				default:
+					// code block
+				}
+
+			}
+		});
 
 	}
 

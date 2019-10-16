@@ -30,9 +30,10 @@ public class MiFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		cambiarPanel(new LoginPanel(new Handler()));
-		//cambiarPanel(new AltaUsuarioPanel(new Handler()));
-		
-		
+		// cambiarPanel(new AltaUsuarioPanel(new Handler()));
+		cambiarPanel(new AltaDatos(new Handler(), "auto", "Año", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo",
+				"Patente"));
+
 	}
 
 	public void cambiarPanel(JPanel panel) {
