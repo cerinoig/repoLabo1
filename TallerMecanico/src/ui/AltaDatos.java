@@ -85,7 +85,7 @@ public class AltaDatos extends JPanel {
 		JButton guardarBoton = new JButton("Guardar");
 		botonera.add(guardarBoton);
 		botonera.add(Box.createHorizontalStrut(10));
-		botonera.add(new JButton("Cancel"));
+		botonera.add(new JButton("Cancelar"));
 
 		Box vertical = Box.createVerticalBox();
 		vertical.add(Box.createVerticalStrut(20));
