@@ -20,7 +20,7 @@ public class AutoDAOImpl implements AutoDAO {
 	private String sql;
 
 	@Override
-	public Auto selectAuto(int patente) throws SQLException, NonExistingCarException {
+	public Auto selectAuto(String patente) throws SQLException, NonExistingCarException {
 		Auto auto = new Auto();
 		try {
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
@@ -28,7 +28,7 @@ public class AutoDAOImpl implements AutoDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				auto.setIdUsuario(rs.getInt("ID_AUTO"));
+				auto.setIdAuto(rs.getInt("ID_AUTO"));
 				auto.setPatente(rs.getString("PATENTE"));
 				auto.setMarca(rs.getString("MARCA"));
 				auto.setModelo(rs.getString("MODELO"));
@@ -85,7 +85,7 @@ public class AutoDAOImpl implements AutoDAO {
 
 					try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
 						if (generatedKeys.next()) {
-							auto.setIdUsuario(generatedKeys.getInt(1));
+							auto.setIdAuto(generatedKeys.getInt(1));
 						} else {
 							throw new NoIdObtainedException();
 						}
@@ -170,7 +170,7 @@ public class AutoDAOImpl implements AutoDAO {
 	}
 
 	@Override
-	public void deleteAuto(int patente) throws SQLException, NonExistingCarException {
+	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
 		try {
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -178,10 +178,10 @@ public class AutoDAOImpl implements AutoDAO {
 
 			if (rs.next()) {
 				try {
-					sql = "DELETE FROM AUTOS WHERE USUARIO = ?";
+					sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
 					pstmt = conn.prepareStatement(sql);
 
-					pstmt.setInt(1, patente);
+					pstmt.setString(1, patente);
 					pstmt.executeUpdate();
 
 				} catch (SQLException sqle) {

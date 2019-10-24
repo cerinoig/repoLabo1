@@ -7,6 +7,7 @@ import entidades.Usuario;
 import excepciones.ExistingCarException;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
+import excepciones.NonExistingCarException;
 import excepciones.NonExistingUserException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
@@ -20,26 +21,19 @@ public class Handler {
 
 	public void altaUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException {
 		try {
-
 			usuarioBusinessObject.insertUsuario(usuario);
-
-			System.out.println("El usuario fue dado de alta con exito");
-
 		} catch (SQLException sqle) {
 			throw new SQLException();
 		} catch (ExistingUserException e) {
 			throw new ExistingUserException();
 		} catch (NoIdObtainedException e) {
 			throw new NoIdObtainedException();
-			// System.out.println("Error al crear el usuario, no se pudo
-			// obntener el ID.");
 		}
 	}
 
-	public Usuario consultaUsuario(String nombreUsuario, String contraseña)
-			throws SQLException, NonExistingUserException {
+	public void deleteUsuario(String usuario) throws SQLException, NonExistingUserException {
 		try {
-			return usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+			usuarioBusinessObject.deleteUsuario(usuario);
 		} catch (SQLException sqle) {
 			throw new SQLException();
 		} catch (NonExistingUserException e) {
@@ -57,21 +51,56 @@ public class Handler {
 		}
 	}
 
+	public Usuario consultaUsuario(String nombreUsuario, String contraseña)
+			throws SQLException, NonExistingUserException {
+		try {
+			return usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+		} catch (SQLException sqle) {
+			throw new SQLException();
+		} catch (NonExistingUserException e) {
+			throw new NonExistingUserException();
+		}
+	}
+
 	public void altaAuto(Auto auto) throws SQLException, ExistingCarException, NoIdObtainedException {
 		try {
-
 			autoBusinessObject.insertAuto(auto);
-
-			System.out.println("El usuario fue dado de alta con exito");
-
 		} catch (SQLException sqle) {
 			throw new SQLException();
 		} catch (ExistingCarException e) {
 			throw new ExistingCarException();
 		} catch (NoIdObtainedException e) {
 			throw new NoIdObtainedException();
-			// System.out.println("Error al crear el usuario, no se pudo
-			// obntener el ID.");
+		}
+	}
+
+	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
+		try {
+			autoBusinessObject.deleteAuto(patente);
+		} catch (SQLException sqle) {
+			throw new SQLException();
+		} catch (NonExistingCarException e) {
+			throw new NonExistingCarException();
+		}
+	}
+
+	public void modificarAuto(Auto auto) throws SQLException, NonExistingCarException {
+		try {
+			autoBusinessObject.updateAuto(auto);
+		} catch (SQLException sqle) {
+			throw new SQLException();
+		} catch (NonExistingCarException e) {
+			throw new NonExistingCarException();
+		}
+	}
+
+	public Auto consultaAuto(String patente) throws SQLException, NonExistingCarException {
+		try {
+			return autoBusinessObject.selectAuto(patente);
+		} catch (SQLException sqle) {
+			throw new SQLException();
+		} catch (NonExistingCarException e) {
+			throw new NonExistingCarException();
 		}
 	}
 }

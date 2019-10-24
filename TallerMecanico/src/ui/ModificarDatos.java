@@ -19,13 +19,15 @@ import handler.Handler;
 
 public class ModificarDatos extends JPanel {
 
-	public ModificarDatos(Handler handler,String tipoBuscar, String titulo1, String titulo2, String titulo3, String titulo4,
-			String titulo5, String titulo6, String titulo7) {
+	private static final long serialVersionUID = 1L;
+
+	public ModificarDatos(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
+			String titulo4, String titulo5, String titulo6, String titulo7) {
 		initUI(handler, tipoBuscar, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
 	}
 
-	public void initUI(Handler handler,String tipoBuscar,String titulo1, String titulo2, String titulo3, String titulo4, String titulo5,
-			String titulo6, String titulo7) {
+	public void initUI(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
+			String titulo4, String titulo5, String titulo6, String titulo7) {
 
 		setLayout(new BorderLayout());
 
@@ -146,62 +148,56 @@ public class ModificarDatos extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if(!((JButton) botonera.getComponent(1)).isVisible())
-				((JButton) botonera.getComponent(1)).setVisible(true);
-				
+
+				if (!((JButton) botonera.getComponent(1)).isVisible())
+					((JButton) botonera.getComponent(1)).setVisible(true);
+
 				switch (tipoBuscar) {
 
 				case "auto":
-					/* ACA todo el asunto de buscar el auto
-					try {
-						handler.buscarAuto(((JTextField) datos1.getComponent(2)).getText().toString());
-					} catch (SQLException sqle) {
-						sqle.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (NoIdObtainedException nio) {
-						System.out.println("error generico id");
-						nio.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (ExistingCarException e1) {
-						System.out.println("Auto ya existe");
-						e1.printStackTrace();
-						MessageDialog.autoExiste();
-					
-					}*/
+					/*
+					 * ACA todo el asunto de buscar el auto try { handler.buscarAuto(((JTextField)
+					 * datos1.getComponent(2)).getText().toString()); } catch (SQLException sqle) {
+					 * sqle.printStackTrace(); MessageDialog.errorCarga(); } catch
+					 * (NoIdObtainedException nio) { System.out.println("error generico id");
+					 * nio.printStackTrace(); MessageDialog.errorCarga(); } catch
+					 * (ExistingCarException e1) { System.out.println("Auto ya existe");
+					 * e1.printStackTrace(); MessageDialog.autoExiste();
+					 * 
+					 * }
+					 */
 				default:
 					// code block
 				}
-				
-				
-				if (datos2.getComponentCount() > 2){
+
+				if (datos2.getComponentCount() > 2) {
 					((JTextField) datos2.getComponent(2)).setEditable(true);
-					//((JTextField) datos2.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos2.getComponent(2)).setText(auto.get());
 				}
-					
-				if (datos3.getComponentCount() > 2){
+
+				if (datos3.getComponentCount() > 2) {
 					((JTextField) datos3.getComponent(2)).setEditable(true);
-					//((JTextField) datos3.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos3.getComponent(2)).setText(auto.get());
 				}
-						
-				if (datos4.getComponentCount() > 2){
+
+				if (datos4.getComponentCount() > 2) {
 					((JTextField) datos4.getComponent(2)).setEditable(true);
-					//((JTextField) datos4.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos4.getComponent(2)).setText(auto.get());
 				}
-				
-				if (datos5.getComponentCount() > 2){
+
+				if (datos5.getComponentCount() > 2) {
 					((JTextField) datos5.getComponent(2)).setEditable(true);
-					//((JTextField) datos5.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos5.getComponent(2)).setText(auto.get());
 				}
-								
-				if (datos6.getComponentCount() > 2){
+
+				if (datos6.getComponentCount() > 2) {
 					((JTextField) datos6.getComponent(2)).setEditable(true);
-					//((JTextField) datos6.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos6.getComponent(2)).setText(auto.get());
 				}
-									
-				if (datos7.getComponentCount() > 2){
+
+				if (datos7.getComponentCount() > 2) {
 					((JTextField) datos7.getComponent(2)).setEditable(true);
-					//((JTextField) datos7.getComponent(2)).setText(auto.get());
+					// ((JTextField) datos7.getComponent(2)).setText(auto.get());
 				}
 			}
 
@@ -275,11 +271,11 @@ public class ModificarDatos extends JPanel {
 						sqle.printStackTrace();
 						MessageDialog.errorCarga();
 					} catch (NoIdObtainedException nio) {
-						System.out.println("error generico id");
+						MessageDialog.noIdObtained();
 						nio.printStackTrace();
 						MessageDialog.errorCarga();
 					} catch (ExistingCarException e1) {
-						System.out.println("Auto ya existe");
+						MessageDialog.autoExiste();
 						e1.printStackTrace();
 						MessageDialog.autoExiste();
 					}

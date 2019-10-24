@@ -13,13 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
-import entidades.Usuario;
 import excepciones.ExistingCarException;
-import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import handler.Handler;
 
 public class AltaDatos extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 
 	public AltaDatos(Handler handler, String tipoAlta, String titulo1, String titulo2, String titulo3, String titulo4,
 			String titulo5, String titulo6, String titulo7) {

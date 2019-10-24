@@ -14,7 +14,7 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	private AutoDAO autoDAO = new AutoDAOImpl();
 
 	@Override
-	public Auto selectAuto(int patente) throws SQLException, NonExistingCarException {
+	public Auto selectAuto(String patente) throws SQLException, NonExistingCarException {
 		try {
 			return autoDAO.selectAuto(patente);
 		} catch (SQLException sqle) {
@@ -49,7 +49,7 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	}
 
 	@Override
-	public void deleteAuto(int patente) throws SQLException, NonExistingCarException {
+	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
 		try {
 			autoDAO.deleteAuto(patente);
 		} catch (SQLException sqle) {

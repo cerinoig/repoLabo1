@@ -108,6 +108,7 @@ public class ModificarUsuarioPanel extends JPanel {
 
 				try {
 					handler.modificarUsuario(usuario);
+					MessageDialog.datosModificados();
 				} catch (SQLException sqle) {
 					System.out.println("error generico sql");
 					sqle.printStackTrace();

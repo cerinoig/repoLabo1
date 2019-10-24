@@ -3,7 +3,7 @@ package entidades;
 
 public class Auto {
 
-	private int idUsuario;
+	private int idAuto;
 	private String patente;
 	private String marca;
 	private String modelo;
@@ -12,8 +12,8 @@ public class Auto {
 	private String año;
 	private int kilometraje;
 
-	public int getIdUsuario() {
-		return idUsuario;
+	public int getIdAuto() {
+		return idAuto;
 	}
 
 	public String getPatente() {
@@ -44,8 +44,8 @@ public class Auto {
 		return kilometraje;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdAuto(int idAuto) {
+		this.idAuto = idAuto;
 	}
 
 	public void setPatente(String patente) {

@@ -25,23 +25,27 @@ public class MessageDialog {
 		JOptionPane.showMessageDialog(null, "Hubo un problema en la carga, disculpe las molestias ocasionadas",
 				mensajeVentanaError, JOptionPane.ERROR_MESSAGE);
 	}
-	
-	
+
 	public static void usuarioNoExiste() {
-		JOptionPane.showMessageDialog(null, "Hubo un problema en la carga, el usuario no existe",
-				mensajeVentanaError, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "El usuario ingresado no existe, por favor ingrese uno nuevo", mensajeVentanaError,
+				JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public static void autoNoExiste() {
-		JOptionPane.showMessageDialog(null, "Hubo un problema en la carga, el auto no existe",
-				mensajeVentanaError, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "El auto ingresado no existe, por favor ingrese uno nuevo", mensajeVentanaError,
+				JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public static void presupuestoNoExiste() {
 		JOptionPane.showMessageDialog(null, "Hubo un problema en la carga, el presupuesto no existe",
 				mensajeVentanaError, JOptionPane.ERROR_MESSAGE);
 	}
-	
+
+	public static void noIdObtained() {
+		JOptionPane.showMessageDialog(null, "Error al crear el usuario, no se pudo obntener el ID.",
+				mensajeVentanaError, JOptionPane.ERROR_MESSAGE);
+	}
+
 	public static void datosCargados() {
 		JOptionPane.showMessageDialog(null, "Se cargaron los datos correctamente ");
 	}
@@ -49,10 +53,9 @@ public class MessageDialog {
 	public static void datosModificados() {
 		JOptionPane.showMessageDialog(null, "Se modificaron los datos correctamente");
 	}
-	
+
 	public static void datosEliminados() {
 		JOptionPane.showMessageDialog(null, "Se eliminaron los datos correctamente");
 	}
-	
-	
+
 }

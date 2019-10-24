@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -12,12 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entidades.Auto;
-import excepciones.ExistingCarException;
-import excepciones.NoIdObtainedException;
+import excepciones.NonExistingCarException;
 import handler.Handler;
 
 public class EliminarDatos extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 
 	public EliminarDatos(Handler handler, String tipo, String titulo1) {
 		initUI(handler, tipo, titulo1);
@@ -63,29 +62,22 @@ public class EliminarDatos extends JPanel {
 				switch (tipo) {
 
 				case "auto":
-/* ACA todo el asunto de elminiar auto una vez que mati haga el de elimnar jaja
 					try {
-						handler.eliminarAuto(((JTextField) datos1.getComponent(2)).getText().toString());
+						handler.deleteAuto(((JTextField) datos1.getComponent(3)).getText().toString());
 						MessageDialog.datosCargados();
 					} catch (SQLException sqle) {
 						sqle.printStackTrace();
 						MessageDialog.errorCarga();
-					} catch (NoIdObtainedException nio) {
-						System.out.println("error generico id");
-						nio.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (ExistingCarException e1) {
-						System.out.println("Auto ya existe");
+					} catch (NonExistingCarException e1) {
 						e1.printStackTrace();
-						MessageDialog.autoExiste();
-					
-					}*/
+						MessageDialog.autoNoExiste();
+					}
 				default:
 					// code block
 				}
-				
+
 			}
-			
+
 		});
 
 	}
