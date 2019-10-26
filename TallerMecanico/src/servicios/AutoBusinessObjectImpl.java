@@ -1,61 +1,39 @@
 package servicios;
 
-import java.sql.SQLException;
-
 import dao.AutoDAO;
 import dao.AutoDAOImpl;
 import entidades.Auto;
 import excepciones.ExistingCarException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingCarException;
+import excepciones.TallerMecanicoException;
 
 public class AutoBusinessObjectImpl implements AutoBusinessObject {
 
 	private AutoDAO autoDAO = new AutoDAOImpl();
 
 	@Override
-	public Auto selectAuto(String patente) throws SQLException, NonExistingCarException {
-		try {
-			return autoDAO.selectAuto(patente);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException nonExistingCarException) {
-			throw new NonExistingCarException();
-		}
+	public void setDAO(AutoDAO autoDAO) {
+		this.autoDAO = autoDAO;
 	}
 
 	@Override
-	public void insertAuto(Auto auto) throws SQLException, ExistingCarException, NoIdObtainedException {
-		try {
-			autoDAO.insertAuto(auto);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (ExistingCarException existingCarException) {
-			throw new ExistingCarException();
-		} catch (NoIdObtainedException noIdObtainedException) {
-			throw new NoIdObtainedException();
-		}
+	public Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
+		return autoDAO.selectAuto(patente);
 	}
 
 	@Override
-	public void updateAuto(Auto auto) throws SQLException, NonExistingCarException {
-		try {
-			autoDAO.updateAuto(auto);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException nonExistingCarException) {
-			throw new NonExistingCarException();
-		}
+	public void insertAuto(Auto auto) throws TallerMecanicoException, ExistingCarException, NoIdObtainedException {
+		autoDAO.insertAuto(auto);
 	}
 
 	@Override
-	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
-		try {
-			autoDAO.deleteAuto(patente);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException nonExistingCarException) {
-			throw new NonExistingCarException();
-		}
+	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException {
+		autoDAO.updateAuto(auto);
+	}
+
+	@Override
+	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
+		autoDAO.deleteAuto(patente);
 	}
 }

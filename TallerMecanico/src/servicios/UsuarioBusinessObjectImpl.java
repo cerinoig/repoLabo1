@@ -1,61 +1,40 @@
 package servicios;
 
-import java.sql.SQLException;
-
 import dao.UsuarioDAO;
-import dao.UsuarioDAOImpl;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
+import excepciones.TallerMecanicoException;
 
 public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 
-	private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
+	private UsuarioDAO usuarioDAO;
 
 	@Override
-	public Usuario selectUsuario(String usuario, String contraseña) throws SQLException, NonExistingUserException {
-		try {
-			return usuarioDAO.selectUsuario(usuario, contraseña);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException nonExistingUserException) {
-			throw new NonExistingUserException();
-		}
+	public void setDAO(UsuarioDAO usuarioDAO) {
+		this.usuarioDAO = usuarioDAO;
 	}
 
 	@Override
-	public void insertUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException {
-		try {
-			usuarioDAO.insertUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (ExistingUserException existingUserException) {
-			throw new ExistingUserException();
-		} catch (NoIdObtainedException noIdObtainedException) {
-			throw new NoIdObtainedException();
-		}
+	public Usuario selectUsuario(String usuario, String contraseña)
+			throws TallerMecanicoException, NonExistingUserException {
+		return usuarioDAO.selectUsuario(usuario, contraseña);
 	}
 
 	@Override
-	public void updateUsuario(Usuario usuario) throws SQLException, NonExistingUserException {
-		try {
-			usuarioDAO.updateUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException nonExistingUserException) {
-			throw new NonExistingUserException();
-		}
+	public void insertUsuario(Usuario usuario)
+			throws TallerMecanicoException, ExistingUserException, NoIdObtainedException {
+		usuarioDAO.insertUsuario(usuario);
 	}
 
 	@Override
-	public void deleteUsuario(String usuario) throws SQLException, NonExistingUserException {
-		try {
-			usuarioDAO.deleteUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException nonExistingUserException) {
-			throw new NonExistingUserException();
-		}
+	public void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException {
+		usuarioDAO.updateUsuario(usuario);
+	}
+
+	@Override
+	public void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException {
+		usuarioDAO.deleteUsuario(usuario);
 	}
 }

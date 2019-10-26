@@ -1,106 +1,132 @@
 package handler;
 
-import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Usuario;
-import excepciones.ExistingCarException;
-import excepciones.ExistingUserException;
-import excepciones.NoIdObtainedException;
-import excepciones.NonExistingCarException;
-import excepciones.NonExistingUserException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
+import ui.EliminarDatos;
+import ui.LoginPanel;
+import ui.MiFrame;
 
 public class Handler {
 
-	private UsuarioBusinessObject usuarioBusinessObject = new UsuarioBusinessObjectImpl();
-	private AutoBusinessObject autoBusinessObject = new AutoBusinessObjectImpl();
+	private UsuarioBusinessObject usuarioBusinessObject;
+	private AutoBusinessObject autoBusinessObject;
+	private MiFrame frame;
 
-	public void altaUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException {
+	public Handler() {
+		usuarioBusinessObject = new UsuarioBusinessObjectImpl();
+		usuarioBusinessObject.setDAO(new UsuarioDAOImpl());
+		autoBusinessObject = new AutoBusinessObjectImpl();
+	}
+
+	public void initFrame() {
+		frame = new MiFrame();
+		frame.cambiarPanel(new EliminarDatos(this, "auto", "Patente"));
+		frame.setVisible(true);
+
+	}
+
+	public void altaUsuario(Usuario usuario) {
 		try {
 			usuarioBusinessObject.insertUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (ExistingUserException e) {
-			throw new ExistingUserException();
-		} catch (NoIdObtainedException e) {
-			throw new NoIdObtainedException();
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public void deleteUsuario(String usuario) throws SQLException, NonExistingUserException {
+	public void deleteUsuario(String usuario) {
 		try {
 			usuarioBusinessObject.deleteUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException e) {
-			throw new NonExistingUserException();
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public void modificarUsuario(Usuario usuario) throws SQLException, NonExistingUserException {
+	public void modificarUsuario(Usuario usuario) {
 		try {
 			usuarioBusinessObject.updateUsuario(usuario);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException e) {
-			throw new NonExistingUserException();
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public Usuario consultaUsuario(String nombreUsuario, String contraseña)
-			throws SQLException, NonExistingUserException {
+	public void login(String nombreUsuario, String contraseña) {
 		try {
-			return usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingUserException e) {
-			throw new NonExistingUserException();
+			usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+			frame.cambiarPanel(new JPanel()); // decidir si 2 frames (login y
+												// app) o editamos el existente
+												// (agregar menubar, tamaño,
+												// etc)
+		} catch (Exception e) {
+			mostrarError(new Exception("Usuario y/o password incorrectos"));
 		}
 	}
 
-	public void altaAuto(Auto auto) throws SQLException, ExistingCarException, NoIdObtainedException {
+	public Usuario consultaUsuario(String nombreUsuario, String contraseña) {
+		Usuario usuario = null;
+		try {
+			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+			mostrarExito("Se encontro el usuario");
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+
+		return usuario;
+	}
+
+	public void altaAuto(Auto auto) {
 		try {
 			autoBusinessObject.insertAuto(auto);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (ExistingCarException e) {
-			throw new ExistingCarException();
-		} catch (NoIdObtainedException e) {
-			throw new NoIdObtainedException();
+			mostrarExito("El auto fue dado de alta exitosamente");
+			frame.cambiarPanel(new JPanel());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
+	public void deleteAuto(String patente) {
 		try {
 			autoBusinessObject.deleteAuto(patente);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException e) {
-			throw new NonExistingCarException();
+			mostrarExito("El auto fue eliminado exitosamente");
+			frame.cambiarPanel(new LoginPanel(this));
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public void modificarAuto(Auto auto) throws SQLException, NonExistingCarException {
+	public void modificarAuto(Auto auto) {
 		try {
 			autoBusinessObject.updateAuto(auto);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException e) {
-			throw new NonExistingCarException();
+			mostrarExito("El auto fue modificado exitosamente");
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
-	public Auto consultaAuto(String patente) throws SQLException, NonExistingCarException {
+	public Auto consultaAuto(String patente) {
+		Auto auto = null;
 		try {
-			return autoBusinessObject.selectAuto(patente);
-		} catch (SQLException sqle) {
-			throw new SQLException();
-		} catch (NonExistingCarException e) {
-			throw new NonExistingCarException();
+			auto = autoBusinessObject.selectAuto(patente);
+		} catch (Exception e) {
+			mostrarError(e);
 		}
+		return auto;
+	}
+
+	private void mostrarExito(String string) {
+		JOptionPane.showMessageDialog(null, string);
+
+	}
+
+	private void mostrarError(Exception e) {
+		e.printStackTrace();
+		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

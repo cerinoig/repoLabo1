@@ -10,6 +10,7 @@ import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
+import excepciones.TallerMecanicoException;
 import utils.ConnectionManager;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
@@ -21,7 +22,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	@Override
 	public Usuario selectUsuario(String nombreUsuario, String contraseña)
-			throws SQLException, NonExistingUserException {
+			throws TallerMecanicoException, NonExistingUserException {
 		Usuario usuario = new Usuario();
 		try {
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "' AND PASSWORD = " + "'"
@@ -46,6 +47,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} catch (SQLException sqle2) {
 				sqle2.printStackTrace();
 			}
+			throw new TallerMecanicoException("Hubo un error en la consulta del usuario", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -59,7 +61,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public void insertUsuario(Usuario usuario) throws SQLException, NoIdObtainedException, ExistingUserException {
+	public void insertUsuario(Usuario usuario)
+			throws TallerMecanicoException, NoIdObtainedException, ExistingUserException {
 		try {
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario.getUsuario() + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -96,6 +99,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
 					}
+					throw new TallerMecanicoException("Hubo un error al insertar el usuario", sqle);
 				} finally {
 					try {
 						if (conn != null)
@@ -106,6 +110,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				}
 
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Hubo un error en la consulta del usuario", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -118,7 +124,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public void updateUsuario(Usuario usuario) throws SQLException, NonExistingUserException {
+	public void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException {
 		try {
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario.getUsuario() + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -144,6 +150,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
 					}
+					throw new TallerMecanicoException("Hubo un error al modificar los datos", sqle);
 				} finally {
 					try {
 						if (conn != null)
@@ -155,6 +162,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} else {
 				throw new NonExistingUserException();
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Hubo un error en la consulta del usuario", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -166,7 +175,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public void deleteUsuario(String usuario) throws SQLException, NonExistingUserException {
+	public void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException {
 		try {
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -198,6 +207,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			} else {
 				throw new NonExistingUserException();
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Hubo un error al eliminar el usuario", sqle);
 		} finally {
 			try {
 				if (conn != null)

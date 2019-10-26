@@ -2,19 +2,23 @@ package servicios;
 
 import java.sql.SQLException;
 
+import dao.UsuarioDAO;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
+import excepciones.TallerMecanicoException;
 
 public interface UsuarioBusinessObject {
+	
+	void setDAO(UsuarioDAO usuarioDAO);
 
-	public Usuario selectUsuario(String usuario, String contraseña) throws SQLException, NonExistingUserException;
+	Usuario selectUsuario(String usuario, String contraseña) throws TallerMecanicoException, NonExistingUserException;
 
-	public void insertUsuario(Usuario usuario) throws SQLException, ExistingUserException, NoIdObtainedException;
+	void insertUsuario(Usuario usuario) throws TallerMecanicoException, ExistingUserException, NoIdObtainedException ;
 
-	public void updateUsuario(Usuario usuario) throws SQLException, NonExistingUserException;
+	void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException;
 
-	public void deleteUsuario(String usuario) throws SQLException, NonExistingUserException;
+	void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException;
 
 }

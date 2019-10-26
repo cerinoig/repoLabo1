@@ -174,21 +174,8 @@ public class AltaDatos extends JPanel {
 					auto.setModelo(textF6);
 					auto.setPatente(textF7);
 
-					try {
-						handler.altaAuto(auto);
-						MessageDialog.datosCargados();
-					} catch (SQLException sqle) {
-						sqle.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (NoIdObtainedException nio) {
-						System.out.println("error generico id");
-						nio.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (ExistingCarException e1) {
-						System.out.println("Auto ya existe");
-						e1.printStackTrace();
-						MessageDialog.autoExiste();
-					}
+					handler.altaAuto(auto);
+
 				default:
 					// code block
 				}

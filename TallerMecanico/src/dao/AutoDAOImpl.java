@@ -10,6 +10,7 @@ import entidades.Auto;
 import excepciones.ExistingCarException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingCarException;
+import excepciones.TallerMecanicoException;
 import utils.ConnectionManager;
 
 public class AutoDAOImpl implements AutoDAO {
@@ -20,7 +21,7 @@ public class AutoDAOImpl implements AutoDAO {
 	private String sql;
 
 	@Override
-	public Auto selectAuto(String patente) throws SQLException, NonExistingCarException {
+	public Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		Auto auto = new Auto();
 		try {
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
@@ -46,6 +47,7 @@ public class AutoDAOImpl implements AutoDAO {
 			} catch (SQLException sqle2) {
 				sqle2.printStackTrace();
 			}
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -59,7 +61,7 @@ public class AutoDAOImpl implements AutoDAO {
 	}
 
 	@Override
-	public void insertAuto(Auto auto) throws SQLException, NoIdObtainedException, ExistingCarException {
+	public void insertAuto(Auto auto) throws TallerMecanicoException, NoIdObtainedException, ExistingCarException {
 		try {
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -98,6 +100,7 @@ public class AutoDAOImpl implements AutoDAO {
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
 					}
+					throw new TallerMecanicoException("Ocurrio un error en el alta del auto", sqle);
 				} finally {
 					try {
 						if (conn != null)
@@ -107,6 +110,8 @@ public class AutoDAOImpl implements AutoDAO {
 					}
 				}
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -119,7 +124,7 @@ public class AutoDAOImpl implements AutoDAO {
 	}
 
 	@Override
-	public void updateAuto(Auto auto) throws SQLException, NonExistingCarException {
+	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException {
 		try {
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -147,6 +152,7 @@ public class AutoDAOImpl implements AutoDAO {
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
 					}
+					throw new TallerMecanicoException("Ocurrio un error al modificar el auto", sqle);
 				} finally {
 					try {
 						if (conn != null)
@@ -158,6 +164,8 @@ public class AutoDAOImpl implements AutoDAO {
 			} else {
 				throw new NonExistingCarException();
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -170,46 +178,30 @@ public class AutoDAOImpl implements AutoDAO {
 	}
 
 	@Override
-	public void deleteAuto(String patente) throws SQLException, NonExistingCarException {
+	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		try {
-			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
+			sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				try {
-					sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
-					pstmt = conn.prepareStatement(sql);
-
-					pstmt.setString(1, patente);
-					pstmt.executeUpdate();
-
-				} catch (SQLException sqle) {
-					try {
-						conn.rollback();
-						sqle.printStackTrace();
-					} catch (SQLException sqle2) {
-						sqle2.printStackTrace();
-					}
-				} finally {
-					try {
-						if (conn != null)
-							conn.close();
-					} catch (SQLException sqle3) {
-						sqle3.printStackTrace();
-					}
-				}
-			} else {
-				throw new NonExistingCarException();
+			pstmt.setString(1, patente);
+			pstmt.execute();
+			conn.commit();
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+				throw new SQLException();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+				throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle);
 			}
 		} finally {
 			try {
 				if (conn != null)
 					conn.close();
-			} catch (SQLException sqle3) {
-				sqle3.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+				throw new TallerMecanicoException("Ocurrio un error al eliminar el usuario", sqle2);
 			}
 		}
-
 	}
 }

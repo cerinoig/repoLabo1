@@ -66,14 +66,15 @@ public class ModificarUsuarioPanel extends JPanel {
 		passwordField.setBounds(300, 230, 200, 30);
 
 		guardarBoton.setBounds(80, 280, 100, 30);
-		
-		if(getUsuario(handler, nombreUsuario, contraseña) !=null){
+
+		if (getUsuario(handler, nombreUsuario, contraseña) != null) {
 			Usuario usuario = getUsuario(handler, nombreUsuario, contraseña);
 			nombreTextField.setText(usuario.getNombre());
 			apellidoTextField.setText(usuario.getApellido());
 			mailTextField.setText(usuario.getMail());
 			usuarioTextField.setText(usuario.getUsuario());
-			passwordField.setText(usuario.getPassword());;
+			passwordField.setText(usuario.getPassword());
+			;
 		}
 
 		add(tituloLabel);
@@ -106,30 +107,14 @@ public class ModificarUsuarioPanel extends JPanel {
 				usuario.setUsuario(usuarioTextField.getText().toString());
 				usuario.setPassword(String.valueOf(passwordField.getPassword()));
 
-				try {
-					handler.modificarUsuario(usuario);
-					MessageDialog.datosModificados();
-				} catch (SQLException sqle) {
-					System.out.println("error generico sql");
-					sqle.printStackTrace();
-				} catch (NonExistingUserException eue) {
-					System.out.println("usuario existe");
-					eue.printStackTrace();
-				}
+				handler.modificarUsuario(usuario);
 			}
 		});
+
 	}
 
 	public Usuario getUsuario(Handler handler, String nombreUsuario, String contraseña) {
-		try {
-			return handler.consultaUsuario(nombreUsuario, contraseña);
-		} catch (SQLException sqle) {
-			System.out.println("error sql generico");
-		} catch (NonExistingUserException neue) {
-			System.out.println("usuario inexistente");
-		}
-		
-		return null;
+		return handler.consultaUsuario(nombreUsuario, contraseña);
 	}
 
 }

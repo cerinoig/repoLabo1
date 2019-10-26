@@ -9,6 +9,17 @@ public class Usuario {
 	private String usuario;
 	private String password;
 
+	public Usuario() {
+	}
+
+	public Usuario(String nombre, String apellido, String mail, String usuario, String password) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.mail = mail;
+		this.usuario = usuario;
+		this.password = password;
+	}
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -56,7 +67,7 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String toString() {
 		return "Nombre: " + nombre + "| Apellido: " + apellido + "| Mail: " + mail + "| Usuario: " + usuario;
 	}

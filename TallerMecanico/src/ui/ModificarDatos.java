@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -13,8 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
-import excepciones.ExistingCarException;
-import excepciones.NoIdObtainedException;
 import handler.Handler;
 
 public class ModificarDatos extends JPanel {
@@ -156,12 +153,15 @@ public class ModificarDatos extends JPanel {
 
 				case "auto":
 					/*
-					 * ACA todo el asunto de buscar el auto try { handler.buscarAuto(((JTextField)
-					 * datos1.getComponent(2)).getText().toString()); } catch (SQLException sqle) {
-					 * sqle.printStackTrace(); MessageDialog.errorCarga(); } catch
-					 * (NoIdObtainedException nio) { System.out.println("error generico id");
-					 * nio.printStackTrace(); MessageDialog.errorCarga(); } catch
-					 * (ExistingCarException e1) { System.out.println("Auto ya existe");
+					 * ACA todo el asunto de buscar el auto try {
+					 * handler.buscarAuto(((JTextField)
+					 * datos1.getComponent(2)).getText().toString()); } catch
+					 * (SQLException sqle) { sqle.printStackTrace();
+					 * MessageDialog.errorCarga(); } catch
+					 * (NoIdObtainedException nio) { System.out.println(
+					 * "error generico id"); nio.printStackTrace();
+					 * MessageDialog.errorCarga(); } catch (ExistingCarException
+					 * e1) { System.out.println("Auto ya existe");
 					 * e1.printStackTrace(); MessageDialog.autoExiste();
 					 * 
 					 * }
@@ -172,32 +172,38 @@ public class ModificarDatos extends JPanel {
 
 				if (datos2.getComponentCount() > 2) {
 					((JTextField) datos2.getComponent(2)).setEditable(true);
-					// ((JTextField) datos2.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos2.getComponent(2)).setText(auto.get());
 				}
 
 				if (datos3.getComponentCount() > 2) {
 					((JTextField) datos3.getComponent(2)).setEditable(true);
-					// ((JTextField) datos3.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos3.getComponent(2)).setText(auto.get());
 				}
 
 				if (datos4.getComponentCount() > 2) {
 					((JTextField) datos4.getComponent(2)).setEditable(true);
-					// ((JTextField) datos4.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos4.getComponent(2)).setText(auto.get());
 				}
 
 				if (datos5.getComponentCount() > 2) {
 					((JTextField) datos5.getComponent(2)).setEditable(true);
-					// ((JTextField) datos5.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos5.getComponent(2)).setText(auto.get());
 				}
 
 				if (datos6.getComponentCount() > 2) {
 					((JTextField) datos6.getComponent(2)).setEditable(true);
-					// ((JTextField) datos6.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos6.getComponent(2)).setText(auto.get());
 				}
 
 				if (datos7.getComponentCount() > 2) {
 					((JTextField) datos7.getComponent(2)).setEditable(true);
-					// ((JTextField) datos7.getComponent(2)).setText(auto.get());
+					// ((JTextField)
+					// datos7.getComponent(2)).setText(auto.get());
 				}
 			}
 
@@ -264,21 +270,8 @@ public class ModificarDatos extends JPanel {
 					auto.setModelo(textF6);
 					auto.setPatente(textF7);
 
-					try {
-						handler.altaAuto(auto);
-						MessageDialog.datosCargados();
-					} catch (SQLException sqle) {
-						sqle.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (NoIdObtainedException nio) {
-						MessageDialog.noIdObtained();
-						nio.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (ExistingCarException e1) {
-						MessageDialog.autoExiste();
-						e1.printStackTrace();
-						MessageDialog.autoExiste();
-					}
+					handler.modificarAuto(auto);
+
 				default:
 					// code block
 				}

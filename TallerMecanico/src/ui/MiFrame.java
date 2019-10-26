@@ -29,16 +29,16 @@ public class MiFrame extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//		cambiarPanel(new LoginPanel(new Handler()));
+		// cambiarPanel(new LoginPanel(new Handler()));
 		// cambiarPanel(new AltaUsuarioPanel(new Handler()));
-//		cambiarPanel(new AltaDatos(new Handler(), "auto", "Año", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo",
-//				"Patente"));
-		cambiarPanel(new EliminarDatos(new Handler(), "auto", "Patente"));
-
+		// cambiarPanel(new AltaDatos(new Handler(), "auto", "Año", "Cantidad
+		// Puertas", "Color", "KM", "Marca", "Modelo",
+		// "Patente"));
+		// cambiarPanel(new ModificarDatos(new Handler(), "Auto", "Patente",
+		// "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Año"));
 	}
 
 	public void cambiarPanel(JPanel panel) {
-
 		getContentPane().removeAll();
 		getContentPane().add(panel);
 		getContentPane().validate();

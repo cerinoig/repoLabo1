@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import excepciones.NonExistingUserException;
 import handler.Handler;
 
 public class LoginPanel extends JPanel {
@@ -70,28 +68,16 @@ public class LoginPanel extends JPanel {
 		add(registro);
 
 		login.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					handler.consultaUsuario(usuarioTextField.getText().toString(),
-							String.valueOf(passwordField.getPassword()));
-					System.out.println("SE HA LOGUEADO CAPO");
-
-				} catch (SQLException sqle) {
-					System.out.println("error sql generico");
-				} catch (NonExistingUserException neue) {
-					System.out.println("usuario inexistente");
-				}
+				handler.login(usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword()));
 			}
 		});
 
 		registro.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				// Aca se va a la pantalla de registro
 			}
 		});
 	}

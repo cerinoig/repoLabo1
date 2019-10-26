@@ -3,7 +3,6 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -11,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import excepciones.NonExistingCarException;
 import handler.Handler;
 
 public class EliminarDatos extends JPanel {
@@ -62,16 +60,7 @@ public class EliminarDatos extends JPanel {
 				switch (tipo) {
 
 				case "auto":
-					try {
-						handler.deleteAuto(((JTextField) datos1.getComponent(3)).getText().toString());
-						MessageDialog.datosCargados();
-					} catch (SQLException sqle) {
-						sqle.printStackTrace();
-						MessageDialog.errorCarga();
-					} catch (NonExistingCarException e1) {
-						e1.printStackTrace();
-						MessageDialog.autoNoExiste();
-					}
+					handler.deleteAuto(((JTextField) datos1.getComponent(3)).getText().toString());
 				default:
 					// code block
 				}

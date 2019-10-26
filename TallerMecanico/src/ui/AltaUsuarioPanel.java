@@ -88,27 +88,11 @@ public class AltaUsuarioPanel extends JPanel {
 		add(guardarBoton);
 
 		guardarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Usuario usuario = new Usuario();
-				usuario.setNombre(nombreTextField.getText().toString());
-				usuario.setApellido(apellidoTextField.getText().toString());
-				usuario.setMail(mailTextField.getText().toString());
-				usuario.setUsuario(usuarioTextField.getText().toString());
-				usuario.setPassword(String.valueOf(passwordField.getPassword()));
+				handler.altaUsuario(new Usuario(nombreTextField.getText().toString(), apellidoTextField.getText().toString(), 
+						mailTextField.getText().toString(), usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword())));
 
-				try {
-					handler.altaUsuario(usuario);
-				} catch (SQLException sqle) {
-					sqle.printStackTrace();
-				} catch (ExistingUserException eue) {
-					System.out.println("usuario existe");
-					eue.printStackTrace();
-				} catch (NoIdObtainedException nio) {
-					System.out.println("error generico id");
-					nio.printStackTrace();
-				}
 			}
 		});
 	}
