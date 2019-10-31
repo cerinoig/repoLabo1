@@ -14,11 +14,12 @@ import javax.swing.JTextField;
 import entidades.Auto;
 import handler.Handler;
 
-public class ModificarDatos extends JPanel {
+public abstract class ModificarDatosPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public ModificarDatos(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
+	
+	public ModificarDatosPanel(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
 			String titulo4, String titulo5, String titulo6, String titulo7) {
 		initUI(handler, tipoBuscar, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
 	}

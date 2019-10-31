@@ -12,19 +12,23 @@ import javax.swing.JTextField;
 
 import handler.Handler;
 
-public class EliminarDatos extends JPanel {
+public abstract class EliminarDatosPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public EliminarDatos(Handler handler, String tipo, String titulo1) {
-		initUI(handler, tipo, titulo1);
+	protected Box datos1;
+	protected Box botonera;
+	protected Box vertical;
+
+	public EliminarDatosPanel(Handler handler, String titulo1) {
+		initUI(handler, titulo1);
 	}
 
-	public void initUI(Handler handler, String tipo, String titulo1) {
+	public void initUI(Handler handler, String titulo1) {
 
 		setLayout(new BorderLayout());
 
-		Box datos1 = Box.createHorizontalBox();
+		datos1 = Box.createHorizontalBox();
 		datos1.add(Box.createHorizontalStrut(190));
 		JLabel tituloLabel = new JLabel(titulo1);
 		datos1.add(tituloLabel);
@@ -32,13 +36,13 @@ public class EliminarDatos extends JPanel {
 		datos1.add(new JTextField(20));
 		datos1.add(Box.createHorizontalStrut(230));
 
-		Box botonera = Box.createHorizontalBox();
+		botonera = Box.createHorizontalBox();
 		botonera.add(Box.createHorizontalGlue());
 		botonera.add(new JButton("Eliminar"));
 		botonera.add(Box.createHorizontalStrut(10));
 		botonera.add(new JButton("Cancelar"));
 
-		Box vertical = Box.createVerticalBox();
+		vertical = Box.createVerticalBox();
 		vertical.add(Box.createVerticalStrut(100));
 		vertical.add(datos1);
 		vertical.add(Box.createVerticalStrut(20));
@@ -57,18 +61,13 @@ public class EliminarDatos extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				switch (tipo) {
-
-				case "auto":
-					handler.deleteAuto(((JTextField) datos1.getComponent(3)).getText().toString());
-				default:
-					// code block
-				}
-
+				eliminarDatos(handler);
 			}
 
 		});
 
 	}
+
+	public void eliminarDatos(Handler handler) {}
 
 }
