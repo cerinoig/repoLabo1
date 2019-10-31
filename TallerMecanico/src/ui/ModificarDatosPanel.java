@@ -18,29 +18,39 @@ public abstract class ModificarDatosPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	
-	public ModificarDatosPanel(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
-			String titulo4, String titulo5, String titulo6, String titulo7) {
-		initUI(handler, tipoBuscar, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
+	protected Box datos1;
+	protected Box datos2;
+	protected Box datos3;
+	protected Box datos4;
+	protected Box datos5;
+	protected Box datos6;
+	protected Box datos7;
+	protected Box botoneraBuscar;
+	protected Box botonera;
+	protected Box vertical;
+
+	public ModificarDatosPanel(Handler handler, String titulo1, String titulo2, String titulo3, String titulo4,
+			String titulo5, String titulo6, String titulo7) {
+		initUI(handler, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
 	}
 
-	public void initUI(Handler handler, String tipoBuscar, String titulo1, String titulo2, String titulo3,
+	public void initUI(Handler handler, String titulo1, String titulo2, String titulo3,
 			String titulo4, String titulo5, String titulo6, String titulo7) {
 
 		setLayout(new BorderLayout());
 
-		Box datos1 = Box.createHorizontalBox();
+		datos1 = Box.createHorizontalBox();
 		JLabel tituloLabel = new JLabel(titulo1);
 		datos1.add(tituloLabel);
 		datos1.add(Box.createHorizontalStrut(10));
 		datos1.add(new JTextField(30));
 
-		Box botoneraBuscar = Box.createHorizontalBox();
+		botoneraBuscar = Box.createHorizontalBox();
 		botoneraBuscar.add(Box.createHorizontalGlue());
 		botoneraBuscar.add(new JButton("Buscar"));
 		botoneraBuscar.add(Box.createHorizontalStrut(10));
 
-		Box datos2 = Box.createHorizontalBox();
+		datos2 = Box.createHorizontalBox();
 		JLabel tituloLabel2 = new JLabel(titulo2);
 		datos2.add(tituloLabel2);
 		datos2.add(Box.createHorizontalStrut(10));
@@ -51,7 +61,7 @@ public abstract class ModificarDatosPanel extends JPanel {
 			datos2.add(tf2);
 		}
 
-		Box datos3 = Box.createHorizontalBox();
+		datos3 = Box.createHorizontalBox();
 		JLabel tituloLabel3 = new JLabel(titulo3);
 		datos3.add(tituloLabel3);
 		datos3.add(Box.createHorizontalStrut(10));
@@ -61,7 +71,7 @@ public abstract class ModificarDatosPanel extends JPanel {
 			tf3.setEditable(false);
 			datos3.add(tf3);
 		}
-		Box datos4 = Box.createHorizontalBox();
+		datos4 = Box.createHorizontalBox();
 		JLabel tituloLabel4 = new JLabel(titulo4);
 		datos4.add(tituloLabel4);
 		datos4.add(Box.createHorizontalStrut(10));
@@ -72,7 +82,7 @@ public abstract class ModificarDatosPanel extends JPanel {
 			datos4.add(tf4);
 		}
 
-		Box datos5 = Box.createHorizontalBox();
+		datos5 = Box.createHorizontalBox();
 		JLabel tituloLabel5 = new JLabel(titulo5);
 		datos5.add(tituloLabel5);
 		datos5.add(Box.createHorizontalStrut(10));
@@ -83,7 +93,7 @@ public abstract class ModificarDatosPanel extends JPanel {
 			datos5.add(tf5);
 		}
 
-		Box datos6 = Box.createHorizontalBox();
+		datos6 = Box.createHorizontalBox();
 		JLabel tituloLabel6 = new JLabel(titulo6);
 		datos6.add(tituloLabel6);
 		datos6.add(Box.createHorizontalStrut(10));
@@ -94,7 +104,7 @@ public abstract class ModificarDatosPanel extends JPanel {
 			datos6.add(tf6);
 		}
 
-		Box datos7 = Box.createHorizontalBox();
+		datos7 = Box.createHorizontalBox();
 		JLabel tituloLabel7 = new JLabel(titulo7);
 		datos7.add(tituloLabel7);
 		datos7.add(Box.createHorizontalStrut(10));
@@ -105,14 +115,14 @@ public abstract class ModificarDatosPanel extends JPanel {
 			datos7.add(tf7);
 		}
 
-		Box botonera = Box.createHorizontalBox();
+		botonera = Box.createHorizontalBox();
 		botonera.add(Box.createHorizontalGlue());
 		botonera.add(new JButton("Modificar"));
 		((JButton) botonera.getComponent(1)).setVisible(false);
 		botonera.add(Box.createHorizontalStrut(10));
 		botonera.add(new JButton("Cancelar"));
 
-		Box vertical = Box.createVerticalBox();
+		vertical = Box.createVerticalBox();
 		vertical.add(Box.createVerticalStrut(20));
 		vertical.add(datos1);
 		vertical.add(Box.createVerticalStrut(10));
@@ -150,26 +160,6 @@ public abstract class ModificarDatosPanel extends JPanel {
 				if (!((JButton) botonera.getComponent(1)).isVisible())
 					((JButton) botonera.getComponent(1)).setVisible(true);
 
-				switch (tipoBuscar) {
-
-				case "auto":
-					/*
-					 * ACA todo el asunto de buscar el auto try {
-					 * handler.buscarAuto(((JTextField)
-					 * datos1.getComponent(2)).getText().toString()); } catch
-					 * (SQLException sqle) { sqle.printStackTrace();
-					 * MessageDialog.errorCarga(); } catch
-					 * (NoIdObtainedException nio) { System.out.println(
-					 * "error generico id"); nio.printStackTrace();
-					 * MessageDialog.errorCarga(); } catch (ExistingCarException
-					 * e1) { System.out.println("Auto ya existe");
-					 * e1.printStackTrace(); MessageDialog.autoExiste();
-					 * 
-					 * }
-					 */
-				default:
-					// code block
-				}
 
 				if (datos2.getComponentCount() > 2) {
 					((JTextField) datos2.getComponent(2)).setEditable(true);
@@ -239,46 +229,17 @@ public abstract class ModificarDatosPanel extends JPanel {
 				if (datos7.getComponentCount() > 2)
 					textF7 = ((JTextField) datos7.getComponent(2)).getText().toString();
 
-				switch (tipoBuscar) {
 
-				case "auto":
-
-					Auto auto = new Auto();
-					auto.setAño(textF1);
-
-					try {
-						auto.setCantidadPuertas(Integer.valueOf(textF2));
-					} catch (Exception e3) {
-						System.out.println("no es un numero las puertas");
-						e3.printStackTrace();
-						((JTextField) datos2.getComponent(2)).setBackground(Color.RED);
-
-					}
-
-					auto.setColor(textF3);
-
-					try {
-						auto.setKilometraje(Integer.valueOf(textF4));
-
-					} catch (Exception e1) {
-						System.out.println("no es un numero de KM");
-						e1.printStackTrace();
-						((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
-
-					}
-
-					auto.setMarca(textF5);
-					auto.setModelo(textF6);
-					auto.setPatente(textF7);
-
-					handler.modificarAuto(auto);
-
-				default:
-					// code block
-				}
-
+					modificarDatos(handler, textF1,textF2,textF3,textF4,textF5,textF6,textF7);
+			
 			}
 		});
+
+	}
+
+	public void modificarDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
+			String textF5, String textF6, String textF7) {
+		// TODO Auto-generated method stub
 
 	}
 
