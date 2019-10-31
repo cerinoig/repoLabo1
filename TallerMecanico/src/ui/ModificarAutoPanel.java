@@ -9,17 +9,18 @@ import handler.Handler;
 
 public class ModificarAutoPanel extends ModificarDatosPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public ModificarAutoPanel(Handler handler) {
 
 		super(handler, "Patente", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Año");
 
 	}
-	
-	
+
 	@Override
-	public void modificarDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
-			String textF6, String textF7){
-		
+	public void modificarDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
+			String textF5, String textF6, String textF7) {
+
 		Auto auto = new Auto();
 		auto.setAño(textF1);
 

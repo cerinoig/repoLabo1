@@ -10,8 +10,7 @@ import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
-import ui.EliminarDatos;
-import ui.LoginPanel;
+import ui.EliminarAutosPanel;
 import ui.MiFrame;
 
 public class Handler {
@@ -28,7 +27,7 @@ public class Handler {
 
 	public void initFrame() {
 		frame = new MiFrame();
-		frame.cambiarPanel(new EliminarDatos(this, "auto", "Patente"));
+		frame.cambiarPanel(new EliminarAutosPanel(this));
 		frame.setVisible(true);
 
 	}
@@ -85,7 +84,6 @@ public class Handler {
 		try {
 			autoBusinessObject.insertAuto(auto);
 			mostrarExito("El auto fue dado de alta exitosamente");
-			frame.cambiarPanel(new JPanel());
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -95,7 +93,7 @@ public class Handler {
 		try {
 			autoBusinessObject.deleteAuto(patente);
 			mostrarExito("El auto fue eliminado exitosamente");
-			frame.cambiarPanel(new LoginPanel(this));
+//			frame.cambiarPanel(new LoginPanel(this));
 		} catch (Exception e) {
 			mostrarError(e);
 		}

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,8 +12,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
-import excepciones.ExistingUserException;
-import excepciones.NoIdObtainedException;
 import handler.Handler;
 
 public class AltaUsuarioPanel extends JPanel {
@@ -90,8 +87,9 @@ public class AltaUsuarioPanel extends JPanel {
 		guardarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaUsuario(new Usuario(nombreTextField.getText().toString(), apellidoTextField.getText().toString(), 
-						mailTextField.getText().toString(), usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword())));
+				handler.altaUsuario(new Usuario(nombreTextField.getText().toString(),
+						apellidoTextField.getText().toString(), mailTextField.getText().toString(),
+						usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword())));
 
 			}
 		});

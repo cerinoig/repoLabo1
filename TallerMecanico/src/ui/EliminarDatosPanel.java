@@ -68,6 +68,6 @@ public abstract class EliminarDatosPanel extends JPanel {
 
 	}
 
-	public void eliminarDatos(Handler handler) {}
+	public abstract void eliminarDatos(Handler handler);
 
 }

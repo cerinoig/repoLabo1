@@ -1,10 +1,8 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -12,9 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entidades.Auto;
-import excepciones.ExistingCarException;
-import excepciones.NoIdObtainedException;
 import handler.Handler;
 
 public abstract class AltaDatosPanel extends JPanel {
@@ -159,8 +154,7 @@ public abstract class AltaDatosPanel extends JPanel {
 
 	}
 
-	public void cargaDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
-			String textF6, String textF7) {
-	}
+	public abstract void cargaDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
+			String textF6, String textF7);
 
 }

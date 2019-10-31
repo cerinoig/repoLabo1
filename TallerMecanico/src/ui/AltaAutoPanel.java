@@ -9,10 +9,10 @@ import handler.Handler;
 
 public class AltaAutoPanel extends AltaDatosPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public AltaAutoPanel(Handler handler) {
-
 		super(handler, "auto", "Año", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Patente");
-
 	}
 
 	@Override
@@ -28,7 +28,6 @@ public class AltaAutoPanel extends AltaDatosPanel {
 			System.out.println("no es un numero las puertas");
 			e3.printStackTrace();
 			((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
-
 		}
 
 		auto.setColor(textF3);
@@ -40,7 +39,6 @@ public class AltaAutoPanel extends AltaDatosPanel {
 			System.out.println("no es un numero de KM");
 			e1.printStackTrace();
 			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
-
 		}
 
 		auto.setMarca(textF5);
@@ -48,7 +46,5 @@ public class AltaAutoPanel extends AltaDatosPanel {
 		auto.setPatente(textF7);
 
 		handler.altaAuto(auto);
-
 	}
-
 }
