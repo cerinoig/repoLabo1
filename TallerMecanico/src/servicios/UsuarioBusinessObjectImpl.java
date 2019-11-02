@@ -1,5 +1,7 @@
 package servicios;
 
+import java.util.List;
+
 import dao.UsuarioDAO;
 import entidades.Usuario;
 import excepciones.ExistingUserException;
@@ -36,5 +38,16 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 	@Override
 	public void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException {
 		usuarioDAO.deleteUsuario(usuario);
+	}
+
+	@Override
+	public boolean login(String usuario, String contraseña) throws TallerMecanicoException, NonExistingUserException {
+		usuarioDAO.login(usuario, contraseña);
+		return false;
+	}
+
+	@Override
+	public List<Usuario> selectAll() throws TallerMecanicoException {
+		return usuarioDAO.selectAll();
 	}
 }

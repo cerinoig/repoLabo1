@@ -77,7 +77,7 @@ public class LoginPanel extends JPanel {
 		registro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Aca se va a la pantalla de registro
+				handler.registro();
 			}
 		});
 	}

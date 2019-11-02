@@ -1,5 +1,7 @@
 package servicios;
 
+import java.util.List;
+
 import dao.AutoDAO;
 import entidades.Auto;
 import excepciones.ExistingCarException;
@@ -18,5 +20,7 @@ public interface AutoBusinessObject {
 	void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException;
 
 	void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException;
+	
+	List<Auto> selectAll() throws TallerMecanicoException;
 
 }

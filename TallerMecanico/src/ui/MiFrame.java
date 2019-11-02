@@ -25,8 +25,8 @@ public class MiFrame extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu menuOpciones, usuario, auto;
-	private JMenuItem altaUsuario, bajaUsuario, modificarUsuario, cosultaUsuarios, altaAuto, bajaAuto, modificacionAuto,
-			consultaAutos;
+	private JMenuItem altaUsuario, bajaUsuario, modificarUsuario, cosultaUsuarios, cerrarSesion, altaAuto, bajaAuto,
+			modificacionAuto, consultaAutos;
 
 	public MiFrame() {
 		miPantalla = Toolkit.getDefaultToolkit();
@@ -40,6 +40,17 @@ public class MiFrame extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		mostrarOpciones();
+
+	}
+
+	public void cambiarPanel(JPanel panel) {
+		getContentPane().removeAll();
+		getContentPane().add(panel);
+		getContentPane().validate();
+	}
+
+	public void mostrarOpciones() {
 		setLayout(new BorderLayout());
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -64,6 +75,10 @@ public class MiFrame extends JFrame implements ActionListener {
 		usuario.add(cosultaUsuarios);
 		cosultaUsuarios.addActionListener(this);
 
+		cerrarSesion = new JMenuItem("Cerrar Sesión");
+		usuario.add(cerrarSesion);
+		cerrarSesion.addActionListener(this);
+
 		altaAuto = new JMenuItem("Alta autos");
 		auto.add(altaAuto);
 		altaAuto.addActionListener(this);
@@ -76,34 +91,27 @@ public class MiFrame extends JFrame implements ActionListener {
 		consultaAutos = new JMenuItem("Consulta autos");
 		auto.add(consultaAutos);
 		consultaAutos.addActionListener(this);
-
-		// cambiarPanel(new LoginPanel(new Handler()));
-		 //cambiarPanel(new AltaUsuarioPanel(new Handler()));
-		// cambiarPanel(new AltaDatos(new Handler(), "auto", "Año", "Cantidad
-		// Puertas", "Color", "KM", "Marca", "Modelo",
-		// "Patente"));
-		// cambiarPanel(new ModificarDatos(new Handler(), "Auto", "Patente",
-		// "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Año"));
-	}
-
-	public void cambiarPanel(JPanel panel) {
-		getContentPane().removeAll();
-		getContentPane().add(panel);
-		getContentPane().validate();
 	}
 
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == altaUsuario) {
+			cambiarPanel(new AltaUsuarioPanel(new Handler()));
+		}
 
-		}
 		if (event.getSource() == bajaUsuario) {
-			cambiarPanel(new EliminarAutosPanel(new Handler()));
+			cambiarPanel(new EliminarUsuariosPanel(new Handler()));
 		}
+
 		if (event.getSource() == modificarUsuario) {
 
 		}
-		if (event.getSource() == cosultaUsuarios) {
 
+		if (event.getSource() == cosultaUsuarios) {
+			cambiarPanel(new ConsultaUsuariosPanel(new Handler()));
+		}
+
+		if (event.getSource() == cerrarSesion) {
+			cambiarPanel(new LoginPanel(new Handler()));
 		}
 
 		if (event.getSource() == altaAuto) {
@@ -116,7 +124,7 @@ public class MiFrame extends JFrame implements ActionListener {
 			cambiarPanel(new ModificarAutoPanel(new Handler()));
 		}
 		if (event.getSource() == consultaAutos) {
-//        	cambiarPanel(new AltaAutoPanel(new Handler()));
+			cambiarPanel(new ConsultaAutosPanel(new Handler()));
 		}
 	}
 

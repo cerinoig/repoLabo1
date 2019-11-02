@@ -1,5 +1,7 @@
 package servicios;
 
+import java.util.List;
+
 import dao.AutoDAO;
 import dao.AutoDAOImpl;
 import entidades.Auto;
@@ -35,5 +37,10 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	@Override
 	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		autoDAO.deleteAuto(patente);
+	}
+
+	@Override
+	public List<Auto> selectAll() throws TallerMecanicoException {
+		return autoDAO.selectAll();
 	}
 }

@@ -1,15 +1,19 @@
 package handler;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Usuario;
+import excepciones.TallerMecanicoException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
+import ui.AltaUsuarioPanel;
 import ui.EliminarAutosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
@@ -36,6 +40,7 @@ public class Handler {
 	public void altaUsuario(Usuario usuario) {
 		try {
 			usuarioBusinessObject.insertUsuario(usuario);
+			mostrarExito("El usuario fue dado de alta con éxito");
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -44,6 +49,7 @@ public class Handler {
 	public void deleteUsuario(String usuario) {
 		try {
 			usuarioBusinessObject.deleteUsuario(usuario);
+			mostrarExito("El usuario fue eliminado exitosamente");
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -52,6 +58,7 @@ public class Handler {
 	public void modificarUsuario(Usuario usuario) {
 		try {
 			usuarioBusinessObject.updateUsuario(usuario);
+			mostrarExito("El usuario fue modificado exitosamente");
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -59,7 +66,7 @@ public class Handler {
 
 	public void login(String nombreUsuario, String contraseña) {
 		try {
-			usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
+			usuarioBusinessObject.login(nombreUsuario, contraseña);
 			frame.cambiarPanel(new JPanel()); // decidir si 2 frames (login y
 												// app) o editamos el existente
 												// (agregar menubar, tamaño,
@@ -67,6 +74,10 @@ public class Handler {
 		} catch (Exception e) {
 			mostrarError(new Exception("Usuario y/o password incorrectos"));
 		}
+	}
+	
+	public void registro() {
+		frame.cambiarPanel(new AltaUsuarioPanel(this));
 	}
 
 	public Usuario consultaUsuario(String nombreUsuario, String contraseña) {
@@ -79,6 +90,16 @@ public class Handler {
 		}
 
 		return usuario;
+	}
+
+	public List<Usuario> selectAllUsuarios() {
+		List<Usuario> usuarios = null;
+		try {
+			usuarios = usuarioBusinessObject.selectAll();
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return usuarios;
 	}
 
 	public void altaAuto(Auto auto) {
@@ -116,6 +137,16 @@ public class Handler {
 			mostrarError(e);
 		}
 		return auto;
+	}
+
+	public List<Auto> selectAllAutos() {
+		List<Auto> autos = null;
+		try {
+			autos = autoBusinessObject.selectAll();
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return autos;
 	}
 
 	private void mostrarExito(String string) {

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import entidades.Usuario;
 import excepciones.ExistingUserException;
@@ -192,6 +194,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 					pstmt.setString(1, usuario);
 					pstmt.executeUpdate();
+					conn.commit();
 
 				} catch (SQLException sqle) {
 					try {
@@ -221,5 +224,75 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				sqle3.printStackTrace();
 			}
 		}
+	}
+
+	public void login(String nombreUsuario, String contraseña)
+			throws TallerMecanicoException, NonExistingUserException {
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "' AND PASSWORD = " + "'"
+					+ contraseña + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (!rs.next()) {
+				throw new TallerMecanicoException("Usuario y/o password incorrectos");
+			}
+
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Hubo un error en la busqueda del usuario", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public List<Usuario> selectAll() throws TallerMecanicoException {
+		List<Usuario> usuarios = new ArrayList<>();
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "SELECT * FROM USUARIOS";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+				usuario.setNombre(rs.getString("NOMBRE"));
+				usuario.setApellido(rs.getString("APELLIDO"));
+				usuario.setMail(rs.getString("MAIL"));
+				usuario.setUsuario(rs.getString("USUARIO"));
+				usuario.setPassword(rs.getString("PASSWORD"));
+
+				usuarios.add(usuario);
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda de los usuarios", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+		return usuarios;
 	}
 }

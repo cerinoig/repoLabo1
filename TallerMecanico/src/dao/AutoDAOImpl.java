@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import entidades.Auto;
 import excepciones.ExistingCarException;
@@ -135,7 +137,8 @@ public class AutoDAOImpl implements AutoDAO {
 
 			if (rs.next()) {
 				try {
-					sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = " + "'" + auto.getPatente() + "'";
+					sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = "
+							+ "'" + auto.getPatente() + "'";
 					pstmt = conn.prepareStatement(sql);
 
 					pstmt.setString(1, auto.getMarca());
@@ -206,5 +209,47 @@ public class AutoDAOImpl implements AutoDAO {
 				throw new TallerMecanicoException("Ocurrio un error al eliminar el usuario", sqle2);
 			}
 		}
+	}
+
+	@Override
+	public List<Auto> selectAll() throws TallerMecanicoException {
+		List<Auto> autos = new ArrayList<>();
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "SELECT * FROM AUTOS";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Auto auto = new Auto();
+				auto.setIdAuto(rs.getInt("ID_AUTO"));
+				auto.setPatente(rs.getString("PATENTE"));
+				auto.setMarca(rs.getString("MARCA"));
+				auto.setModelo(rs.getString("MODELO"));
+				auto.setColor(rs.getString("COLOR"));
+				auto.setCantidadPuertas(rs.getInt("CANT_PUERTAS"));
+				auto.setAño(rs.getString("AÑO"));
+				auto.setKilometraje(rs.getInt("KILOMETRAJE"));
+
+				autos.add(auto);
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda de los autos", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return autos;
 	}
 }
