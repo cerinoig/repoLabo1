@@ -41,7 +41,7 @@ public class AutoDAOImpl implements AutoDAO {
 				auto.setAño(rs.getString("AÑO"));
 				auto.setKilometraje(rs.getInt("KILOMETRAJE"));
 			} else {
-				throw new NonExistingCarException();
+				throw new NonExistingCarException("El auto que esta buscando no existe");
 			}
 		} catch (SQLException sqle) {
 			try {
@@ -72,7 +72,7 @@ public class AutoDAOImpl implements AutoDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				throw new ExistingCarException();
+				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
 			} else {
 				try {
 					sql = "INSERT INTO AUTOS (PATENTE, MARCA, MODELO, COLOR, CANT_PUERTAS, AÑO, KILOMETRAJE) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -93,7 +93,8 @@ public class AutoDAOImpl implements AutoDAO {
 						if (generatedKeys.next()) {
 							auto.setIdAuto(generatedKeys.getInt(1));
 						} else {
-							throw new NoIdObtainedException();
+							throw new NoIdObtainedException(
+									"Se produjo un error al dar de alta el auto, no se obtuvo el ID.");
 						}
 					}
 
@@ -167,7 +168,7 @@ public class AutoDAOImpl implements AutoDAO {
 					}
 				}
 			} else {
-				throw new NonExistingCarException();
+				throw new NonExistingCarException("El auto que quiere modificar no existe");
 			}
 		} catch (SQLException sqle) {
 			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
@@ -186,29 +187,48 @@ public class AutoDAOImpl implements AutoDAO {
 	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
+			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, patente);
-			pstmt.execute();
-			conn.commit();
-		} catch (SQLException sqle) {
-			try {
-				conn.rollback();
-				sqle.printStackTrace();
-				throw new SQLException();
-			} catch (SQLException sqle2) {
-				sqle2.printStackTrace();
-				throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				try {
+					sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, patente);
+					pstmt.execute();
+					conn.commit();
+
+				} catch (SQLException sqle) {
+					try {
+						conn.rollback();
+						sqle.printStackTrace();
+					} catch (SQLException sqle2) {
+						sqle2.printStackTrace();
+					}
+				} finally {
+					try {
+						if (conn != null)
+							conn.close();
+					} catch (SQLException sqle2) {
+						sqle2.printStackTrace();
+						throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle2);
+					}
+				}
+			} else {
+				throw new NonExistingCarException("El auto que intenta eliminar no existe");
 			}
+		} catch (SQLException sqle) {
+			throw new TallerMecanicoException("Hubo un error al eliminar el auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
 					conn.close();
-			} catch (SQLException sqle2) {
-				sqle2.printStackTrace();
-				throw new TallerMecanicoException("Ocurrio un error al eliminar el usuario", sqle2);
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
 			}
 		}
+
 	}
 
 	@Override

@@ -8,13 +8,11 @@ import javax.swing.JPanel;
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Usuario;
-import excepciones.TallerMecanicoException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 import ui.AltaUsuarioPanel;
-import ui.EliminarAutosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
 
@@ -38,21 +36,32 @@ public class Handler {
 	}
 
 	public void altaUsuario(Usuario usuario) {
-		try {
-			usuarioBusinessObject.insertUsuario(usuario);
-			mostrarExito("El usuario fue dado de alta con éxito");
-		} catch (Exception e) {
-			mostrarError(e);
+		if (!usuario.getNombre().equals("") && !usuario.getApellido().equals("") && !usuario.getMail().equals("")
+				&& !usuario.getUsuario().equals("") && !usuario.getPassword().equals("")) {
+			try {
+				usuarioBusinessObject.insertUsuario(usuario);
+				mostrarExito("El usuario fue dado de alta con éxito");
+			} catch (Exception e) {
+				mostrarError(e);
+			}
+		} else {
+			camposVaciosMensaje();
 		}
+
 	}
 
 	public void deleteUsuario(String usuario) {
-		try {
-			usuarioBusinessObject.deleteUsuario(usuario);
-			mostrarExito("El usuario fue eliminado exitosamente");
-		} catch (Exception e) {
-			mostrarError(e);
+		if (!usuario.equals("")) {
+			try {
+				usuarioBusinessObject.deleteUsuario(usuario);
+				mostrarExito("El usuario fue eliminado exitosamente");
+			} catch (Exception e) {
+				mostrarError(e);
+			}
+		} else {
+			campoVacioMensaje("Debe ingresar el nombre de usuario");
 		}
+
 	}
 
 	public void modificarUsuario(Usuario usuario) {
@@ -65,17 +74,21 @@ public class Handler {
 	}
 
 	public void login(String nombreUsuario, String contraseña) {
-		try {
-			usuarioBusinessObject.login(nombreUsuario, contraseña);
-			frame.cambiarPanel(new JPanel()); // decidir si 2 frames (login y
-												// app) o editamos el existente
-												// (agregar menubar, tamaño,
-												// etc)
-		} catch (Exception e) {
-			mostrarError(new Exception("Usuario y/o password incorrectos"));
+		if (!nombreUsuario.equals("") && !contraseña.equals("")) {
+			try {
+				usuarioBusinessObject.login(nombreUsuario, contraseña);
+				frame.cambiarPanel(new JPanel()); // decidir si 2 frames (login y
+													// app) o editamos el existente
+													// (agregar menubar, tamaño,
+													// etc)
+			} catch (Exception e) {
+				mostrarError(new Exception("Usuario y/o password incorrectos"));
+			}
+		} else {
+			camposVaciosMensaje();
 		}
 	}
-	
+
 	public void registro() {
 		frame.cambiarPanel(new AltaUsuarioPanel(this));
 	}
@@ -103,20 +116,31 @@ public class Handler {
 	}
 
 	public void altaAuto(Auto auto) {
-		try {
-			autoBusinessObject.insertAuto(auto);
-			mostrarExito("El auto fue dado de alta exitosamente");
-		} catch (Exception e) {
-			mostrarError(e);
+		if (!auto.getPatente().equals("") && auto.getMarca().equals("") && auto.getModelo().equals("")
+				&& auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && auto.getAño().equals("")
+				&& auto.getKilometraje() != 0) {
+			try {
+				autoBusinessObject.insertAuto(auto);
+				mostrarExito("El auto fue dado de alta exitosamente");
+			} catch (Exception e) {
+				mostrarError(e);
+			}
+		} else {
+			camposVaciosMensaje();
 		}
+
 	}
 
 	public void deleteAuto(String patente) {
-		try {
-			autoBusinessObject.deleteAuto(patente);
-			mostrarExito("El auto fue eliminado exitosamente");
-		} catch (Exception e) {
-			mostrarError(e);
+		if (!patente.equals("")) {
+			try {
+				autoBusinessObject.deleteAuto(patente);
+				mostrarExito("El auto fue eliminado exitosamente");
+			} catch (Exception e) {
+				mostrarError(e);
+			}
+		} else {
+			campoVacioMensaje("Debe ingresar la patente del auto");
 		}
 	}
 
@@ -157,5 +181,13 @@ public class Handler {
 	private void mostrarError(Exception e) {
 		e.printStackTrace();
 		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	private void camposVaciosMensaje() {
+		JOptionPane.showMessageDialog(null, "No puede haber espacios sin completar");
+	}
+
+	private void campoVacioMensaje(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
 	}
 }

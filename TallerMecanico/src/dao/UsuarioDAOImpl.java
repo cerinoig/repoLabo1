@@ -41,7 +41,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				usuario.setUsuario(rs.getString("USUARIO"));
 				usuario.setPassword(rs.getString("PASSWORD"));
 			} else {
-				throw new NonExistingUserException();
+				throw new NonExistingUserException("El usuario que esta buscando no existe");
 			}
 		} catch (SQLException sqle) {
 			try {
@@ -73,7 +73,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				throw new ExistingUserException();
+				throw new ExistingUserException("El usuario ingresado ya existe");
 			} else {
 				try {
 					sql = "INSERT INTO USUARIOS (NOMBRE, APELLIDO, MAIL, USUARIO, PASSWORD) VALUES (?, ?, ?, ?, ?)";
@@ -92,7 +92,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 						if (generatedKeys.next()) {
 							usuario.setIdUsuario(generatedKeys.getInt(1));
 						} else {
-							throw new NoIdObtainedException();
+							throw new NoIdObtainedException("Se produjo un error al crear el usuario, no se obtuvo el ID.");
 						}
 					}
 
@@ -165,7 +165,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					}
 				}
 			} else {
-				throw new NonExistingUserException();
+				throw new NonExistingUserException("El usuario que quiere modificar no existe");
 			}
 		} catch (SQLException sqle) {
 			throw new TallerMecanicoException("Hubo un error en la consulta del usuario", sqle);
@@ -191,7 +191,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				try {
 					sql = "DELETE FROM USUARIOS WHERE USUARIO = ?";
 					pstmt = conn.prepareStatement(sql);
-
 					pstmt.setString(1, usuario);
 					pstmt.executeUpdate();
 					conn.commit();
@@ -212,7 +211,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					}
 				}
 			} else {
-				throw new NonExistingUserException();
+				throw new NonExistingUserException("El usuario que intenta eliminar no existe");
 			}
 		} catch (SQLException sqle) {
 			throw new TallerMecanicoException("Hubo un error al eliminar el usuario", sqle);

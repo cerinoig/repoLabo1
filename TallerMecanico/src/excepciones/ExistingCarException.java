@@ -1,23 +1,27 @@
 package excepciones;
 
 public class ExistingCarException extends Exception {
-	
-private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 1L;
+
 	public ExistingCarException() {
-		super();
 	}
-	
-	public ExistingCarException(Throwable t) {
-		super();
-	}
-	
-	public ExistingCarException(Throwable t, String message) {
-		super();
-	}
-	
+
 	public ExistingCarException(String message) {
-		super();
+		super(message);
+	}
+
+	public ExistingCarException(Throwable cause) {
+		super(cause);
+	}
+
+	public ExistingCarException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ExistingCarException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 }
