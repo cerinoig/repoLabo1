@@ -15,7 +15,7 @@ import utils.ConnectionManager;
 
 public class AutoDAOImpl implements AutoDAO {
 
-	private Connection conn = ConnectionManager.getConnection();
+	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private String sql;
@@ -24,6 +24,7 @@ public class AutoDAOImpl implements AutoDAO {
 	public Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		Auto auto = new Auto();
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -63,6 +64,7 @@ public class AutoDAOImpl implements AutoDAO {
 	@Override
 	public void insertAuto(Auto auto) throws TallerMecanicoException, NoIdObtainedException, ExistingCarException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -126,25 +128,25 @@ public class AutoDAOImpl implements AutoDAO {
 	@Override
 	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				try {
-					sql = "UPDATE AUTOS SET PATENTE = ?, MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ?";
+					sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = " + "'" + auto.getPatente() + "'";
 					pstmt = conn.prepareStatement(sql);
 
-					pstmt.setString(1, auto.getPatente());
-					pstmt.setString(2, auto.getMarca());
-					pstmt.setString(3, auto.getModelo());
-					pstmt.setString(4, auto.getColor());
-					pstmt.setInt(5, auto.getCantidadPuertas());
+					pstmt.setString(1, auto.getMarca());
+					pstmt.setString(2, auto.getModelo());
+					pstmt.setString(3, auto.getColor());
+					pstmt.setInt(4, auto.getCantidadPuertas());
 					pstmt.setString(5, auto.getAño());
-					pstmt.setInt(5, auto.getKilometraje());
+					pstmt.setInt(6, auto.getKilometraje());
 
 					pstmt.executeUpdate();
-
+					conn.commit();
 				} catch (SQLException sqle) {
 					try {
 						conn.rollback();
@@ -180,6 +182,7 @@ public class AutoDAOImpl implements AutoDAO {
 	@Override
 	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, patente);

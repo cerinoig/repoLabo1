@@ -34,8 +34,8 @@ public abstract class ModificarDatosPanel extends JPanel {
 		initUI(handler, titulo1, titulo2, titulo3, titulo4, titulo5, titulo6, titulo7);
 	}
 
-	public void initUI(Handler handler, String titulo1, String titulo2, String titulo3,
-			String titulo4, String titulo5, String titulo6, String titulo7) {
+	public void initUI(Handler handler, String titulo1, String titulo2, String titulo3, String titulo4, String titulo5,
+			String titulo6, String titulo7) {
 
 		setLayout(new BorderLayout());
 
@@ -156,46 +156,13 @@ public abstract class ModificarDatosPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (!((JButton) botonera.getComponent(1)).isVisible())
-					((JButton) botonera.getComponent(1)).setVisible(true);
-
-
-				if (datos2.getComponentCount() > 2) {
-					((JTextField) datos2.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos2.getComponent(2)).setText(auto.get());
-				}
-
-				if (datos3.getComponentCount() > 2) {
-					((JTextField) datos3.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos3.getComponent(2)).setText(auto.get());
-				}
-
-				if (datos4.getComponentCount() > 2) {
-					((JTextField) datos4.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos4.getComponent(2)).setText(auto.get());
-				}
-
-				if (datos5.getComponentCount() > 2) {
-					((JTextField) datos5.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos5.getComponent(2)).setText(auto.get());
-				}
-
-				if (datos6.getComponentCount() > 2) {
-					((JTextField) datos6.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos6.getComponent(2)).setText(auto.get());
-				}
-
-				if (datos7.getComponentCount() > 2) {
-					((JTextField) datos7.getComponent(2)).setEditable(true);
-					// ((JTextField)
-					// datos7.getComponent(2)).setText(auto.get());
-				}
+				traerDatos(handler, ((JTextField) datos1.getComponent(2)).getText().toString(),
+						((JTextField) datos2.getComponent(2)).getText().toString(),
+						((JTextField) datos3.getComponent(2)).getText().toString(),
+						((JTextField) datos4.getComponent(2)).getText().toString(),
+						((JTextField) datos5.getComponent(2)).getText().toString(),
+						((JTextField) datos6.getComponent(2)).getText().toString(),
+						((JTextField) datos7.getComponent(2)).getText().toString());
 			}
 
 		});
@@ -206,41 +173,16 @@ public abstract class ModificarDatosPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				String textF1 = "";
-				String textF2 = "";
-				String textF3 = "";
-				String textF4 = "";
-				String textF5 = "";
-				String textF6 = "";
-				String textF7 = "";
+				modificarDatos(handler);
 
-				if (datos1.getComponentCount() > 2)
-					textF1 = ((JTextField) datos1.getComponent(2)).getText().toString();
-				if (datos2.getComponentCount() > 2)
-					textF2 = ((JTextField) datos2.getComponent(2)).getText().toString();
-				if (datos3.getComponentCount() > 2)
-					textF3 = ((JTextField) datos3.getComponent(2)).getText().toString();
-				if (datos4.getComponentCount() > 2)
-					textF4 = ((JTextField) datos4.getComponent(2)).getText().toString();
-				if (datos5.getComponentCount() > 2)
-					textF5 = ((JTextField) datos5.getComponent(2)).getText().toString();
-				if (datos6.getComponentCount() > 2)
-					textF6 = ((JTextField) datos6.getComponent(2)).getText().toString();
-				if (datos7.getComponentCount() > 2)
-					textF7 = ((JTextField) datos7.getComponent(2)).getText().toString();
-
-
-					modificarDatos(handler, textF1,textF2,textF3,textF4,textF5,textF6,textF7);
-			
 			}
 		});
 
 	}
 
-	public void modificarDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
-			String textF5, String textF6, String textF7) {
-		// TODO Auto-generated method stub
-
-	}
+	public abstract void traerDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
+			String textF5, String textF6, String textF7);
+	
+	public abstract void modificarDatos(Handler handler);
 
 }

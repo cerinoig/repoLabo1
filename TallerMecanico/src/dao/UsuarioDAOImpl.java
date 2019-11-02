@@ -15,7 +15,7 @@ import utils.ConnectionManager;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	private Connection conn = ConnectionManager.getConnection();
+	private Connection conn;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	private String sql;
@@ -25,6 +25,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			throws TallerMecanicoException, NonExistingUserException {
 		Usuario usuario = new Usuario();
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "' AND PASSWORD = " + "'"
 					+ contraseña + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -64,6 +65,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public void insertUsuario(Usuario usuario)
 			throws TallerMecanicoException, NoIdObtainedException, ExistingUserException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario.getUsuario() + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -126,6 +128,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario.getUsuario() + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -177,6 +180,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	@Override
 	public void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException {
 		try {
+			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + usuario + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();

@@ -11,6 +11,7 @@ import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 import ui.EliminarAutosPanel;
+import ui.LoginPanel;
 import ui.MiFrame;
 
 public class Handler {
@@ -27,7 +28,7 @@ public class Handler {
 
 	public void initFrame() {
 		frame = new MiFrame();
-		frame.cambiarPanel(new EliminarAutosPanel(this));
+		frame.cambiarPanel(new LoginPanel(this));
 		frame.setVisible(true);
 
 	}
@@ -93,7 +94,6 @@ public class Handler {
 		try {
 			autoBusinessObject.deleteAuto(patente);
 			mostrarExito("El auto fue eliminado exitosamente");
-//			frame.cambiarPanel(new LoginPanel(this));
 		} catch (Exception e) {
 			mostrarError(e);
 		}

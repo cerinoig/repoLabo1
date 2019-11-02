@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -39,7 +40,7 @@ public class MiFrame extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setLayout(null);
+		setLayout(new BorderLayout());
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -77,7 +78,7 @@ public class MiFrame extends JFrame implements ActionListener {
 		consultaAutos.addActionListener(this);
 
 		// cambiarPanel(new LoginPanel(new Handler()));
-		// cambiarPanel(new AltaUsuarioPanel(new Handler()));
+		 //cambiarPanel(new AltaUsuarioPanel(new Handler()));
 		// cambiarPanel(new AltaDatos(new Handler(), "auto", "Año", "Cantidad
 		// Puertas", "Color", "KM", "Marca", "Modelo",
 		// "Patente"));
