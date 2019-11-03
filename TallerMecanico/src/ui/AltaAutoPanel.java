@@ -20,30 +20,67 @@ public class AltaAutoPanel extends AltaDatosPanel {
 			String textF6, String textF7) {
 
 		Auto auto = new Auto();
-		auto.setAño(textF1);
 
-		try {
-			auto.setCantidadPuertas(Integer.valueOf(textF2));
-		} catch (Exception e3) {
-			System.out.println("no es un numero las puertas");
-			e3.printStackTrace();
+		if (!textF1.equals("")) {
+			auto.setAño(textF1);
+			((JTextField) super.datos1.getComponent(2)).setBackground(Color.WHITE);
+		} else {
+			((JTextField) super.datos1.getComponent(2)).setBackground(Color.RED);
+		}
+
+		if (!textF2.equals("")) {
+			try {
+				auto.setCantidadPuertas(Integer.valueOf(textF2));
+				((JTextField) super.datos2.getComponent(2)).setBackground(Color.WHITE);
+			} catch (Exception e3) {
+				System.out.println("no es un numero las puertas");
+				e3.printStackTrace();
+				((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
+			}
+		} else {
 			((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
 		}
 
-		auto.setColor(textF3);
+		if (!textF3.equals("")) {
+			auto.setColor(textF3);
+			((JTextField) super.datos3.getComponent(2)).setBackground(Color.WHITE);
+		} else {
+			((JTextField) super.datos3.getComponent(2)).setBackground(Color.RED);
+		}
 
-		try {
-			auto.setKilometraje(Integer.valueOf(textF4));
-
-		} catch (Exception e1) {
-			System.out.println("no es un numero de KM");
-			e1.printStackTrace();
+		if (!textF4.equals("")) {
+			try {
+				auto.setKilometraje(Integer.valueOf(textF4));
+				((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
+			} catch (Exception e1) {
+				System.out.println("no es un numero de KM");
+				e1.printStackTrace();
+				((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
+			}
+		} else {
 			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
 		}
 
-		auto.setMarca(textF5);
-		auto.setModelo(textF6);
-		auto.setPatente(textF7);
+		if (!textF5.equals("")) {
+			auto.setMarca(textF5);
+			((JTextField) datos5.getComponent(2)).setBackground(Color.WHITE);
+		} else {
+			((JTextField) datos5.getComponent(2)).setBackground(Color.RED);
+		}
+
+		if (!textF6.equals("")) {
+			auto.setModelo(textF6);
+			((JTextField) datos6.getComponent(2)).setBackground(Color.WHITE);
+		} else {
+			((JTextField) datos6.getComponent(2)).setBackground(Color.RED);
+		}
+
+		if (!textF7.equals("")) {
+			auto.setPatente(textF7);
+			((JTextField) datos7.getComponent(2)).setBackground(Color.WHITE);
+		} else {
+			((JTextField) datos7.getComponent(2)).setBackground(Color.RED);
+		}
 
 		handler.altaAuto(auto);
 	}

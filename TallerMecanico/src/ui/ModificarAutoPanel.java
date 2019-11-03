@@ -22,41 +22,50 @@ public class ModificarAutoPanel extends ModificarDatosPanel {
 	public void traerDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
 			String textF6, String textF7) {
 
-		auto = handler.consultaAuto(((JTextField) datos1.getComponent(2)).getText().toString());
+		if (handler.consultaAuto(((JTextField) datos1.getComponent(2)).getText().toString()) != null) {
+			auto = handler.consultaAuto(((JTextField) datos1.getComponent(2)).getText().toString());
+		}
 
-		if (!((JButton) botonera.getComponent(1)).isVisible())
+		if (!((JButton) botonera.getComponent(1)).isVisible() && auto.getPatente() != null) {
 			((JButton) botonera.getComponent(1)).setVisible(true);
+			((JButton) botonera.getComponent(1)).setBackground(Color.WHITE);
+		}
 
-		if (datos2.getComponentCount() > 2) {
+		if (datos2.getComponentCount() > 2 && auto.getCantidadPuertas() != 0) {
 			((JTextField) datos2.getComponent(2)).setEditable(true);
+			((JTextField) datos2.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos2.getComponent(2)).setText(String.valueOf(auto.getCantidadPuertas()));
 		}
 
-		if (datos3.getComponentCount() > 2) {
+		if (datos3.getComponentCount() > 2 && auto.getColor() != null) {
 			((JTextField) datos3.getComponent(2)).setEditable(true);
+			((JTextField) datos3.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos3.getComponent(2)).setText(auto.getColor());
 		}
 
-		if (datos4.getComponentCount() > 2) {
+		if (datos4.getComponentCount() > 2 && auto.getKilometraje() != 0) {
 			((JTextField) datos4.getComponent(2)).setEditable(true);
+			((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos4.getComponent(2)).setText(String.valueOf(auto.getKilometraje()));
 		}
 
-		if (datos5.getComponentCount() > 2) {
+		if (datos5.getComponentCount() > 2 && auto.getMarca() != null) {
 			((JTextField) datos5.getComponent(2)).setEditable(true);
+			((JTextField) datos5.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos5.getComponent(2)).setText(auto.getMarca());
 		}
 
-		if (datos6.getComponentCount() > 2) {
+		if (datos6.getComponentCount() > 2 && auto.getModelo() != null) {
 			((JTextField) datos6.getComponent(2)).setEditable(true);
+			((JTextField) datos6.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos6.getComponent(2)).setText(auto.getModelo());
 		}
 
-		if (datos7.getComponentCount() > 2) {
+		if (datos7.getComponentCount() > 2 && auto.getAño() != null) {
 			((JTextField) datos7.getComponent(2)).setEditable(true);
+			((JTextField) datos7.getComponent(2)).setBackground(Color.WHITE);
 			((JTextField) datos7.getComponent(2)).setText(auto.getAño());
 		}
-
 	}
 
 	@Override

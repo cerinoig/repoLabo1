@@ -111,6 +111,7 @@ public class MiFrame extends JFrame implements ActionListener {
 		}
 
 		if (event.getSource() == cerrarSesion) {
+			getJMenuBar().setVisible(false);
 			cambiarPanel(new LoginPanel(new Handler()));
 		}
 

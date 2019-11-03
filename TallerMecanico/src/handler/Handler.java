@@ -32,12 +32,12 @@ public class Handler {
 		frame = new MiFrame();
 		frame.cambiarPanel(new LoginPanel(this));
 		frame.setVisible(true);
-
+		frame.getJMenuBar().setVisible(false);
 	}
 
 	public void altaUsuario(Usuario usuario) {
-		if (!usuario.getNombre().equals("") && !usuario.getApellido().equals("") && !usuario.getMail().equals("")
-				&& !usuario.getUsuario().equals("") && !usuario.getPassword().equals("")) {
+		if (usuario.getNombre() != null && usuario.getApellido() != null && usuario.getMail() != null
+				&& usuario.getUsuario() != null && usuario.getPassword() != null) {
 			try {
 				usuarioBusinessObject.insertUsuario(usuario);
 				mostrarExito("El usuario fue dado de alta con éxito");
@@ -77,10 +77,8 @@ public class Handler {
 		if (!nombreUsuario.equals("") && !contraseña.equals("")) {
 			try {
 				usuarioBusinessObject.login(nombreUsuario, contraseña);
-				frame.cambiarPanel(new JPanel()); // decidir si 2 frames (login y
-													// app) o editamos el existente
-													// (agregar menubar, tamaño,
-													// etc)
+				frame.getJMenuBar().setVisible(true);
+				frame.cambiarPanel(new JPanel());
 			} catch (Exception e) {
 				mostrarError(new Exception("Usuario y/o password incorrectos"));
 			}
@@ -90,6 +88,7 @@ public class Handler {
 	}
 
 	public void registro() {
+		frame.getJMenuBar().setVisible(true);
 		frame.cambiarPanel(new AltaUsuarioPanel(this));
 	}
 
@@ -116,9 +115,8 @@ public class Handler {
 	}
 
 	public void altaAuto(Auto auto) {
-		if (!auto.getPatente().equals("") && auto.getMarca().equals("") && auto.getModelo().equals("")
-				&& auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && auto.getAño().equals("")
-				&& auto.getKilometraje() != 0) {
+		if (auto.getPatente() != null && auto.getMarca() != null && auto.getModelo() != null && auto.getColor() != null
+				&& auto.getCantidadPuertas() != 0 && auto.getAño() != null && auto.getKilometraje() != 0) {
 			try {
 				autoBusinessObject.insertAuto(auto);
 				mostrarExito("El auto fue dado de alta exitosamente");
@@ -155,10 +153,14 @@ public class Handler {
 
 	public Auto consultaAuto(String patente) {
 		Auto auto = null;
-		try {
-			auto = autoBusinessObject.selectAuto(patente);
-		} catch (Exception e) {
-			mostrarError(e);
+		if (!patente.equals("")) {
+			try {
+				auto = autoBusinessObject.selectAuto(patente);
+			} catch (Exception e) {
+				mostrarError(e);
+			}
+		} else {
+			campoVacioMensaje("Debe ingresar la patente del auto");
 		}
 		return auto;
 	}
@@ -175,7 +177,6 @@ public class Handler {
 
 	private void mostrarExito(String string) {
 		JOptionPane.showMessageDialog(null, string);
-
 	}
 
 	private void mostrarError(Exception e) {

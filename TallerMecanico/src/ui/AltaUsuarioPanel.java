@@ -87,10 +87,44 @@ public class AltaUsuarioPanel extends JPanel {
 		guardarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaUsuario(new Usuario(nombreTextField.getText().toString(),
-						apellidoTextField.getText().toString(), mailTextField.getText().toString(),
-						usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword())));
+				Usuario usuario = new Usuario();
 
+				if (!nombreTextField.getText().equals("")) {
+					usuario.setNombre(nombreTextField.getText());
+					nombreTextField.setBackground(Color.WHITE);
+				} else {
+					nombreTextField.setBackground(Color.RED);
+				}
+
+				if (!apellidoTextField.getText().equals("")) {
+					usuario.setApellido(apellidoTextField.getText());
+					apellidoTextField.setBackground(Color.WHITE);
+				} else {
+					apellidoTextField.setBackground(Color.RED);
+				}
+
+				if (!mailTextField.getText().equals("")) {
+					usuario.setMail(mailTextField.getText());
+					mailTextField.setBackground(Color.WHITE);
+				} else {
+					mailTextField.setBackground(Color.RED);
+				}
+
+				if (!usuarioTextField.getText().equals("")) {
+					usuario.setUsuario(usuarioTextField.getText());
+					usuarioTextField.setBackground(Color.WHITE);
+				} else {
+					usuarioTextField.setBackground(Color.RED);
+				}
+
+				if (!String.valueOf(passwordField.getPassword()).equals("")) {
+					usuario.setPassword(String.valueOf(passwordField.getPassword()));
+					passwordField.setBackground(Color.WHITE);
+				} else {
+					passwordField.setBackground(Color.RED);
+				}
+
+				handler.altaUsuario(usuario);
 			}
 		});
 	}

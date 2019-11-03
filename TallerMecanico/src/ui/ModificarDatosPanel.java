@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entidades.Auto;
 import handler.Handler;
 
 public abstract class ModificarDatosPanel extends JPanel {
@@ -153,7 +152,6 @@ public abstract class ModificarDatosPanel extends JPanel {
 
 		// Boton Buscar
 		((JButton) botoneraBuscar.getComponent(1)).addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				traerDatos(handler, ((JTextField) datos1.getComponent(2)).getText().toString(),
@@ -164,25 +162,20 @@ public abstract class ModificarDatosPanel extends JPanel {
 						((JTextField) datos6.getComponent(2)).getText().toString(),
 						((JTextField) datos7.getComponent(2)).getText().toString());
 			}
-
 		});
 
 		// Boton editar
 		((JButton) botonera.getComponent(1)).addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				modificarDatos(handler);
-
 			}
 		});
-
 	}
 
 	public abstract void traerDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
 			String textF5, String textF6, String textF7);
-	
+
 	public abstract void modificarDatos(Handler handler);
 
 }
