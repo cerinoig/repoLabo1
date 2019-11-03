@@ -206,13 +206,13 @@ public class AutoDAOImpl implements AutoDAO {
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
 					}
+					throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle);
 				} finally {
 					try {
 						if (conn != null)
 							conn.close();
 					} catch (SQLException sqle2) {
 						sqle2.printStackTrace();
-						throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle2);
 					}
 				}
 			} else {
