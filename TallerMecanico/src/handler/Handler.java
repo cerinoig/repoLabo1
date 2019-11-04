@@ -1,7 +1,9 @@
 package handler;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -12,9 +14,16 @@ import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
+import ui.AltaAutoPanel;
 import ui.AltaUsuarioPanel;
+import ui.ConsultaAutosPanel;
+import ui.ConsultaUsuariosPanel;
+import ui.EliminarAutosPanel;
+import ui.EliminarUsuariosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
+import ui.ModificarAutoPanel;
+import ui.ModificarUsuarioPanel;
 
 public class Handler {
 
@@ -29,7 +38,7 @@ public class Handler {
 	}
 
 	public void initFrame() {
-		frame = new MiFrame();
+		frame = new MiFrame(this);
 		frame.cambiarPanel(new LoginPanel(this));
 		frame.setVisible(true);
 		frame.getJMenuBar().setVisible(false);
@@ -175,6 +184,41 @@ public class Handler {
 		return autos;
 	}
 
+	public void menuUsage(String menuActionType) {
+
+		switch (menuActionType) {
+		case "altaUsuario":
+			frame.cambiarPanel(new AltaUsuarioPanel(this));
+			break;
+		case "bajaUsuario":
+			frame.cambiarPanel(new EliminarUsuariosPanel(this));
+			break;
+		case "modificarUsuario":
+			// frame.cambiarPanel(new ModificarUsuarioPanel(this));
+			break;
+		case "cosultaUsuarios":
+			frame.cambiarPanel(new ConsultaUsuariosPanel(this));
+			break;
+		case "cerrarSesion":
+			frame.getJMenuBar().setVisible(false);
+			frame.cambiarPanel(new LoginPanel(this));
+			break;
+		case "altaAuto":
+			frame.cambiarPanel(new AltaAutoPanel(this));
+			break;
+		case "bajaAuto":
+			frame.cambiarPanel(new EliminarAutosPanel(this));
+			break;
+		case "modificacionAuto":
+			frame.cambiarPanel(new ModificarAutoPanel(this));
+			break;
+		case "consultaAutos":
+			frame.cambiarPanel(new ConsultaAutosPanel(this));
+			break;
+		}
+
+	}
+
 	private void mostrarExito(String string) {
 		JOptionPane.showMessageDialog(null, string);
 	}
@@ -191,4 +235,5 @@ public class Handler {
 	private void campoVacioMensaje(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
 	}
+
 }

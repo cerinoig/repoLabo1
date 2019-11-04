@@ -28,7 +28,7 @@ public class MiFrame extends JFrame implements ActionListener {
 	private JMenuItem altaUsuario, bajaUsuario, modificarUsuario, cosultaUsuarios, cerrarSesion, altaAuto, bajaAuto,
 			modificacionAuto, consultaAutos;
 
-	public MiFrame() {
+	public MiFrame(Handler handler) {
 		miPantalla = Toolkit.getDefaultToolkit();
 		tamanoPantalla = miPantalla.getScreenSize();
 		alturaPantalla = tamanoPantalla.height;
@@ -40,7 +40,7 @@ public class MiFrame extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		mostrarOpciones();
+		mostrarOpciones(handler);
 
 	}
 
@@ -50,7 +50,7 @@ public class MiFrame extends JFrame implements ActionListener {
 		getContentPane().validate();
 	}
 
-	public void mostrarOpciones() {
+	public void mostrarOpciones(Handler handler) {
 		setLayout(new BorderLayout());
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -91,42 +91,94 @@ public class MiFrame extends JFrame implements ActionListener {
 		consultaAutos = new JMenuItem("Consulta autos");
 		auto.add(consultaAutos);
 		consultaAutos.addActionListener(this);
+
+		altaUsuario.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("altaUsuario");
+			}
+
+		});
+
+		bajaUsuario.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("bajaUsuario");
+			}
+
+		});
+
+		modificarUsuario.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("modificarUsuario");
+			}
+
+		});
+
+		cosultaUsuarios.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("cosultaUsuarios");
+			}
+
+		});
+
+		cerrarSesion.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				getJMenuBar().setVisible(false);
+				handler.menuUsage("cerrarSesion");
+			}
+
+		});
+
+		altaAuto.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("altaAuto");
+			}
+
+		});
+
+		bajaAuto.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("bajaAuto");
+			}
+
+		});
+
+		modificacionAuto.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("modificacionAuto");
+			}
+
+		});
+		
+		consultaAutos.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				handler.menuUsage("consultaAutos");
+			}
+
+		});
+
 	}
 
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == altaUsuario) {
-			cambiarPanel(new AltaUsuarioPanel(new Handler()));
-		}
-
-		if (event.getSource() == bajaUsuario) {
-			cambiarPanel(new EliminarUsuariosPanel(new Handler()));
-		}
-
-		if (event.getSource() == modificarUsuario) {
-
-		}
-
-		if (event.getSource() == cosultaUsuarios) {
-			cambiarPanel(new ConsultaUsuariosPanel(new Handler()));
-		}
-
-		if (event.getSource() == cerrarSesion) {
-			getJMenuBar().setVisible(false);
-			cambiarPanel(new LoginPanel(new Handler()));
-		}
-
-		if (event.getSource() == altaAuto) {
-			cambiarPanel(new AltaAutoPanel(new Handler()));
-		}
-		if (event.getSource() == bajaAuto) {
-			cambiarPanel(new EliminarAutosPanel(new Handler()));
-		}
-		if (event.getSource() == modificacionAuto) {
-			cambiarPanel(new ModificarAutoPanel(new Handler()));
-		}
-		if (event.getSource() == consultaAutos) {
-			cambiarPanel(new ConsultaAutosPanel(new Handler()));
-		}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
