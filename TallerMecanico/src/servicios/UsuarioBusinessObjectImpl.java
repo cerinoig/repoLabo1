@@ -27,6 +27,7 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 	@Override
 	public void insertUsuario(Usuario usuario)
 			throws TallerMecanicoException, ExistingUserException, NoIdObtainedException {
+		
 		usuarioDAO.insertUsuario(usuario);
 	}
 

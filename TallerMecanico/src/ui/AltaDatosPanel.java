@@ -16,7 +16,6 @@ public abstract class AltaDatosPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Box datos1;
 	protected Box datos2;
 	protected Box datos3;
 	protected Box datos4;
@@ -35,7 +34,7 @@ public abstract class AltaDatosPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		datos1 = Box.createHorizontalBox();
+		Box datos1 = Box.createHorizontalBox();
 		JLabel tituloLabel = new JLabel(titulo1);
 		datos1.add(tituloLabel);
 		datos1.add(Box.createHorizontalStrut(10));
@@ -106,7 +105,7 @@ public abstract class AltaDatosPanel extends JPanel {
 		vertical.add(datos6);
 		vertical.add(Box.createVerticalStrut(20));
 		vertical.add(datos7);
-		vertical.add(Box.createVerticalStrut(20));
+		vertical.add(Box.createVerticalStrut(5));
 		vertical.add(botonera);
 
 		add(vertical, BorderLayout.CENTER);

@@ -27,6 +27,8 @@ public abstract class ModificarDatosPanel extends JPanel {
 	protected Box botoneraBuscar;
 	protected Box botonera;
 	protected Box vertical;
+	protected Box horizontal;
+	
 
 	public ModificarDatosPanel(Handler handler, String titulo1, String titulo2, String titulo3, String titulo4,
 			String titulo5, String titulo6, String titulo7) {
@@ -118,17 +120,17 @@ public abstract class ModificarDatosPanel extends JPanel {
 		botonera.add(Box.createHorizontalGlue());
 		botonera.add(new JButton("Modificar"));
 		((JButton) botonera.getComponent(1)).setVisible(false);
-		botonera.add(Box.createHorizontalStrut(10));
+		botonera.add(Box.createHorizontalStrut(5));
 		botonera.add(new JButton("Cancelar"));
 
 		vertical = Box.createVerticalBox();
-		vertical.add(Box.createVerticalStrut(20));
+		vertical.add(Box.createVerticalStrut(5));
 		vertical.add(datos1);
-		vertical.add(Box.createVerticalStrut(10));
+		vertical.add(Box.createVerticalStrut(5));
 		vertical.add(botoneraBuscar);
-		vertical.add(Box.createVerticalStrut(10));
+		vertical.add(Box.createVerticalStrut(5));
 		vertical.add(datos2);
-		vertical.add(Box.createVerticalStrut(20));
+		vertical.add(Box.createVerticalStrut(10));
 		vertical.add(datos3);
 		vertical.add(Box.createVerticalStrut(20));
 		vertical.add(datos4);
@@ -168,7 +170,12 @@ public abstract class ModificarDatosPanel extends JPanel {
 		((JButton) botonera.getComponent(1)).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				modificarDatos(handler);
+				try {
+					modificarDatos(handler);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
@@ -176,6 +183,6 @@ public abstract class ModificarDatosPanel extends JPanel {
 	public abstract void traerDatos(Handler handler, String textF1, String textF2, String textF3, String textF4,
 			String textF5, String textF6, String textF7);
 
-	public abstract void modificarDatos(Handler handler);
+	public abstract void modificarDatos(Handler handler) throws NumberFormatException;
 
 }

@@ -1,9 +1,7 @@
 package handler;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -23,7 +21,6 @@ import ui.EliminarUsuariosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
 import ui.ModificarAutoPanel;
-import ui.ModificarUsuarioPanel;
 
 public class Handler {
 
@@ -50,6 +47,7 @@ public class Handler {
 			try {
 				usuarioBusinessObject.insertUsuario(usuario);
 				mostrarExito("El usuario fue dado de alta con éxito");
+				frame.getJMenuBar().setVisible(true);
 			} catch (Exception e) {
 				mostrarError(e);
 			}
@@ -97,7 +95,6 @@ public class Handler {
 	}
 
 	public void registro() {
-		frame.getJMenuBar().setVisible(true);
 		frame.cambiarPanel(new AltaUsuarioPanel(this));
 	}
 

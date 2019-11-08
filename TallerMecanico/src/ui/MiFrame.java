@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import handler.Handler;
 
-public class MiFrame extends JFrame implements ActionListener {
+public class MiFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -64,33 +64,24 @@ public class MiFrame extends JFrame implements ActionListener {
 
 		altaUsuario = new JMenuItem("Alta usuarios");
 		usuario.add(altaUsuario);
-		altaUsuario.addActionListener(this);
 		bajaUsuario = new JMenuItem("Baja usuarios");
 		usuario.add(bajaUsuario);
-		bajaUsuario.addActionListener(this);
 		modificarUsuario = new JMenuItem("Modificar usuarios");
 		usuario.add(modificarUsuario);
-		modificarUsuario.addActionListener(this);
 		cosultaUsuarios = new JMenuItem("Consulta usuarios");
 		usuario.add(cosultaUsuarios);
-		cosultaUsuarios.addActionListener(this);
 
 		cerrarSesion = new JMenuItem("Cerrar Sesión");
 		usuario.add(cerrarSesion);
-		cerrarSesion.addActionListener(this);
 
 		altaAuto = new JMenuItem("Alta autos");
 		auto.add(altaAuto);
-		altaAuto.addActionListener(this);
 		bajaAuto = new JMenuItem("Baja autos");
 		auto.add(bajaAuto);
-		bajaAuto.addActionListener(this);
 		modificacionAuto = new JMenuItem("Modificar autos");
 		auto.add(modificacionAuto);
-		modificacionAuto.addActionListener(this);
 		consultaAutos = new JMenuItem("Consulta autos");
 		auto.add(consultaAutos);
-		consultaAutos.addActionListener(this);
 
 		altaUsuario.addActionListener(new ActionListener() {
 
@@ -175,10 +166,5 @@ public class MiFrame extends JFrame implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

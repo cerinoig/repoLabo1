@@ -69,7 +69,7 @@ public class ModificarAutoPanel extends ModificarDatosPanel {
 	}
 
 	@Override
-	public void modificarDatos(Handler handler) {
+	public void modificarDatos(Handler handler) throws NumberFormatException {
 
 		String textF1 = "";
 		String textF2 = "";
@@ -98,19 +98,23 @@ public class ModificarAutoPanel extends ModificarDatosPanel {
 
 		try {
 			auto.setCantidadPuertas(Integer.valueOf(textF2));
+			((JTextField) datos2.getComponent(2)).setBackground(Color.WHITE);
 		} catch (Exception e3) {
 			System.out.println("no es un numero las puertas");
 			e3.printStackTrace();
 			((JTextField) datos2.getComponent(2)).setBackground(Color.RED);
+			throw new NumberFormatException("No es un numero");
 		}
 
 		try {
 			auto.setKilometraje(Integer.valueOf(textF4));
+			((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
 
 		} catch (Exception e1) {
 			System.out.println("no es un numero de KM");
 			e1.printStackTrace();
 			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
+			throw new NumberFormatException("No es un numero");
 		}
 
 		auto.setMarca(textF5);

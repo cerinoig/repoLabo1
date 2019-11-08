@@ -20,7 +20,13 @@ public class AltaAutoPanel extends AltaDatosPanel {
 			String textF6, String textF7) {
 
 		Auto auto = new Auto();
-
+//
+//		JTextfield tf
+//		
+//		createBox("auto", tf);
+		
+		
+		
 		if (!textF1.equals("")) {
 			auto.setAño(textF1);
 			((JTextField) super.datos1.getComponent(2)).setBackground(Color.WHITE);
@@ -36,6 +42,7 @@ public class AltaAutoPanel extends AltaDatosPanel {
 				System.out.println("no es un numero las puertas");
 				e3.printStackTrace();
 				((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
+				throw new NumberFormatException("No es un numero");
 			}
 		} else {
 			((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
@@ -56,6 +63,7 @@ public class AltaAutoPanel extends AltaDatosPanel {
 				System.out.println("no es un numero de KM");
 				e1.printStackTrace();
 				((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
+				throw new NumberFormatException("No es un numero");
 			}
 		} else {
 			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
