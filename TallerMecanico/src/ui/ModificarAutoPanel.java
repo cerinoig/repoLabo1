@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -8,121 +10,122 @@ import javax.swing.JTextField;
 import entidades.Auto;
 import handler.Handler;
 
-public class ModificarAutoPanel extends ModificarDatosPanel {
+public class ModificarAutoPanel extends MiPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Auto auto;
+
+	private JTextField buscarTextfield = new JTextField();
+	private JTextField patenteTextField = new JTextField();
+	private JTextField marcaTextField = new JTextField();
+	private JTextField modeloTextField = new JTextField();
+	private JTextField colorTextField = new JTextField();
+	private JTextField puertasTextField = new JTextField();
+	private JTextField kilometrosTextField = new JTextField();
+	private JTextField añoTextField = new JTextField();
+
+	private JButton buscarBoton = new JButton("Buscar");
+	private JButton modificarBoton = new JButton("Modificar");
+	private JButton cancelarBoton = new JButton("Cancelar");
+
+	private Auto auto = new Auto();
 
 	public ModificarAutoPanel(Handler handler) {
-		super(handler, "Patente", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Año");
-		auto = new Auto();
+		super(handler);
+		initPanel(handler);
 	}
 
-	@Override
-	public void traerDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
-			String textF6, String textF7) {
+	public void initPanel(Handler handler) {
+		crearTituloPantalla("MODIFICAR AUTOS");
+		deshabilitarCampos();
 
-		if (handler.consultaAuto(((JTextField) datos1.getComponent(2)).getText().toString()) != null) {
-			auto = handler.consultaAuto(((JTextField) datos1.getComponent(2)).getText().toString());
-		}
+		String[] labels = { "Buscar auto", "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros",
+				"Año" };
+		JButton[] botones = { buscarBoton, modificarBoton, cancelarBoton };
+		JTextField[] textFields = { buscarTextfield, patenteTextField, marcaTextField, modeloTextField, colorTextField,
+				puertasTextField, kilometrosTextField, añoTextField };
 
-		if (!((JButton) botonera.getComponent(1)).isVisible() && auto.getPatente() != null) {
-			((JButton) botonera.getComponent(1)).setVisible(true);
-			((JButton) botonera.getComponent(1)).setBackground(Color.WHITE);
-		}
+		crearBoxVertical(labels, textFields);
+		crearBotonera(botones);
 
-		if (datos2.getComponentCount() > 2 && auto.getCantidadPuertas() != 0) {
-			((JTextField) datos2.getComponent(2)).setEditable(true);
-			((JTextField) datos2.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos2.getComponent(2)).setText(String.valueOf(auto.getCantidadPuertas()));
-		}
+		buscarBoton.addActionListener(new ActionListener() {
 
-		if (datos3.getComponentCount() > 2 && auto.getColor() != null) {
-			((JTextField) datos3.getComponent(2)).setEditable(true);
-			((JTextField) datos3.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos3.getComponent(2)).setText(auto.getColor());
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				consultarDatos(handler);
+			}
 
-		if (datos4.getComponentCount() > 2 && auto.getKilometraje() != 0) {
-			((JTextField) datos4.getComponent(2)).setEditable(true);
-			((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos4.getComponent(2)).setText(String.valueOf(auto.getKilometraje()));
-		}
+		});
 
-		if (datos5.getComponentCount() > 2 && auto.getMarca() != null) {
-			((JTextField) datos5.getComponent(2)).setEditable(true);
-			((JTextField) datos5.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos5.getComponent(2)).setText(auto.getMarca());
-		}
+		modificarBoton.addActionListener(new ActionListener() {
 
-		if (datos6.getComponentCount() > 2 && auto.getModelo() != null) {
-			((JTextField) datos6.getComponent(2)).setEditable(true);
-			((JTextField) datos6.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos6.getComponent(2)).setText(auto.getModelo());
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				auto.setPatente(patenteTextField.getText());
+				auto.setMarca(marcaTextField.getText());
+				auto.setModelo(modeloTextField.getText());
+				auto.setColor(colorTextField.getText());
+				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+				auto.setAño(añoTextField.getText());
 
-		if (datos7.getComponentCount() > 2 && auto.getAño() != null) {
-			((JTextField) datos7.getComponent(2)).setEditable(true);
-			((JTextField) datos7.getComponent(2)).setBackground(Color.WHITE);
-			((JTextField) datos7.getComponent(2)).setText(auto.getAño());
-		}
-	}
+				handler.modificarAuto(auto);
+			}
+		});
 
-	@Override
-	public void modificarDatos(Handler handler) throws NumberFormatException {
+		cancelarBoton.addActionListener(new ActionListener() {
 
-		String textF1 = "";
-		String textF2 = "";
-		String colorText = "";
-		String textF4 = "";
-		String textF5 = "";
-		String textF6 = "";
-		String textF7 = "";
-
-		if (datos1.getComponentCount() > 2)
-			textF1 = ((JTextField) datos1.getComponent(2)).getText().toString();
-		if (datos2.getComponentCount() > 2)
-			textF2 = ((JTextField) datos2.getComponent(2)).getText().toString();
-		if (datos3.getComponentCount() > 2)
-			colorText = ((JTextField) datos3.getComponent(2)).getText().toString();
-		if (datos4.getComponentCount() > 2)
-			textF4 = ((JTextField) datos4.getComponent(2)).getText().toString();
-		if (datos5.getComponentCount() > 2)
-			textF5 = ((JTextField) datos5.getComponent(2)).getText().toString();
-		if (datos6.getComponentCount() > 2)
-			textF6 = ((JTextField) datos6.getComponent(2)).getText().toString();
-		if (datos7.getComponentCount() > 2)
-			textF7 = ((JTextField) datos7.getComponent(2)).getText().toString();
-
-		auto.setColor(colorText);
-
-		try {
-			auto.setCantidadPuertas(Integer.valueOf(textF2));
-			((JTextField) datos2.getComponent(2)).setBackground(Color.WHITE);
-		} catch (Exception e3) {
-			System.out.println("no es un numero las puertas");
-			e3.printStackTrace();
-			((JTextField) datos2.getComponent(2)).setBackground(Color.RED);
-			throw new NumberFormatException("No es un numero");
-		}
-
-		try {
-			auto.setKilometraje(Integer.valueOf(textF4));
-			((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
-
-		} catch (Exception e1) {
-			System.out.println("no es un numero de KM");
-			e1.printStackTrace();
-			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
-			throw new NumberFormatException("No es un numero");
-		}
-
-		auto.setMarca(textF5);
-		auto.setModelo(textF6);
-		auto.setPatente(textF1);
-
-		handler.modificarAuto(auto);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.irAlInicio();
+			}
+		});
 
 	}
 
+	public void deshabilitarCampos() {
+		patenteTextField.setEditable(false);
+		patenteTextField.setBackground(Color.LIGHT_GRAY);
+		marcaTextField.setEditable(false);
+		marcaTextField.setBackground(Color.LIGHT_GRAY);
+		modeloTextField.setEditable(false);
+		modeloTextField.setBackground(Color.LIGHT_GRAY);
+		colorTextField.setEditable(false);
+		colorTextField.setBackground(Color.LIGHT_GRAY);
+		puertasTextField.setEditable(false);
+		puertasTextField.setBackground(Color.LIGHT_GRAY);
+		kilometrosTextField.setEditable(false);
+		kilometrosTextField.setBackground(Color.LIGHT_GRAY);
+		añoTextField.setEditable(false);
+		añoTextField.setBackground(Color.LIGHT_GRAY);
+	}
+
+	public void habilitarCampos() {
+		marcaTextField.setEditable(true);
+		marcaTextField.setBackground(Color.WHITE);
+		modeloTextField.setEditable(true);
+		modeloTextField.setBackground(Color.WHITE);
+		colorTextField.setEditable(true);
+		colorTextField.setBackground(Color.WHITE);
+		puertasTextField.setEditable(true);
+		puertasTextField.setBackground(Color.WHITE);
+		kilometrosTextField.setEditable(true);
+		kilometrosTextField.setBackground(Color.WHITE);
+		añoTextField.setEditable(true);
+		añoTextField.setBackground(Color.WHITE);
+	}
+
+	private void consultarDatos(Handler handler) {
+		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
+			auto = handler.consultaAuto(buscarTextfield.getText());
+			patenteTextField.setText(auto.getPatente());
+			marcaTextField.setText(auto.getMarca());
+			modeloTextField.setText(auto.getModelo());
+			colorTextField.setText(auto.getColor());
+			puertasTextField.setText(String.valueOf(auto.getCantidadPuertas()));
+			kilometrosTextField.setText(String.valueOf(auto.getKilometraje()));
+			añoTextField.setText(auto.getAño());
+
+			habilitarCampos();
+		}
+	}
 }

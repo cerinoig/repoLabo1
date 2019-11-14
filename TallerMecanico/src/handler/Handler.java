@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Usuario;
+import excepciones.CamposVaciosException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
@@ -21,6 +22,8 @@ import ui.EliminarUsuariosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
 import ui.ModificarAutoPanel;
+import ui.PanelBienvenida;
+import utils.NombrePantallas;
 
 public class Handler {
 
@@ -36,9 +39,9 @@ public class Handler {
 
 	public void initFrame() {
 		frame = new MiFrame(this);
-		frame.cambiarPanel(new LoginPanel(this));
+		frame.cambiarPanel(new PanelBienvenida());
 		frame.setVisible(true);
-		frame.getJMenuBar().setVisible(false);
+		frame.getJMenuBar().setVisible(true);
 	}
 
 	public void altaUsuario(Usuario usuario) {
@@ -52,7 +55,7 @@ public class Handler {
 				mostrarError(e);
 			}
 		} else {
-			camposVaciosMensaje();
+//			camposVaciosMensaje();
 		}
 
 	}
@@ -90,7 +93,7 @@ public class Handler {
 				mostrarError(new Exception("Usuario y/o password incorrectos"));
 			}
 		} else {
-			camposVaciosMensaje();
+//			camposVaciosMensaje();
 		}
 	}
 
@@ -121,30 +124,24 @@ public class Handler {
 	}
 
 	public void altaAuto(Auto auto) {
-		if (auto.getPatente() != null && auto.getMarca() != null && auto.getModelo() != null && auto.getColor() != null
-				&& auto.getCantidadPuertas() != 0 && auto.getAño() != null && auto.getKilometraje() != 0) {
-			try {
-				autoBusinessObject.insertAuto(auto);
-				mostrarExito("El auto fue dado de alta exitosamente");
-			} catch (Exception e) {
-				mostrarError(e);
-			}
-		} else {
-			camposVaciosMensaje();
+		try {
+			autoBusinessObject.insertAuto(auto);
+			mostrarExito("El auto fue dado de alta exitosamente");
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
-
 	}
 
 	public void deleteAuto(String patente) {
-		if (!patente.equals("")) {
-			try {
-				autoBusinessObject.deleteAuto(patente);
-				mostrarExito("El auto fue eliminado exitosamente");
-			} catch (Exception e) {
-				mostrarError(e);
-			}
-		} else {
-			campoVacioMensaje("Debe ingresar la patente del auto");
+		try {
+			autoBusinessObject.deleteAuto(patente);
+			mostrarExito("El auto fue eliminado exitosamente");
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 	}
 
@@ -159,14 +156,12 @@ public class Handler {
 
 	public Auto consultaAuto(String patente) {
 		Auto auto = null;
-		if (!patente.equals("")) {
-			try {
-				auto = autoBusinessObject.selectAuto(patente);
-			} catch (Exception e) {
-				mostrarError(e);
-			}
-		} else {
-			campoVacioMensaje("Debe ingresar la patente del auto");
+		try {
+			auto = autoBusinessObject.selectAuto(patente);
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
 		return auto;
 	}
@@ -182,38 +177,40 @@ public class Handler {
 	}
 
 	public void menuUsage(String menuActionType) {
-
 		switch (menuActionType) {
-		case "altaUsuario":
+		case NombrePantallas.ALTA_USUARIO:
 			frame.cambiarPanel(new AltaUsuarioPanel(this));
 			break;
-		case "bajaUsuario":
+		case NombrePantallas.BAJA_USUARIO:
 			frame.cambiarPanel(new EliminarUsuariosPanel(this));
 			break;
-		case "modificarUsuario":
+		case NombrePantallas.MODIFICAR_USUARIO:
 			// frame.cambiarPanel(new ModificarUsuarioPanel(this));
 			break;
-		case "cosultaUsuarios":
+		case NombrePantallas.CONSULTA_USUARIOS:
 			frame.cambiarPanel(new ConsultaUsuariosPanel(this));
 			break;
-		case "cerrarSesion":
+		case NombrePantallas.CERRAR_SESION:
 			frame.getJMenuBar().setVisible(false);
 			frame.cambiarPanel(new LoginPanel(this));
 			break;
-		case "altaAuto":
+		case NombrePantallas.ALTA_AUTO:
 			frame.cambiarPanel(new AltaAutoPanel(this));
 			break;
-		case "bajaAuto":
+		case NombrePantallas.BAJA_AUTO:
 			frame.cambiarPanel(new EliminarAutosPanel(this));
 			break;
-		case "modificacionAuto":
+		case NombrePantallas.MODIFICAR_AUTO:
 			frame.cambiarPanel(new ModificarAutoPanel(this));
 			break;
-		case "consultaAutos":
+		case NombrePantallas.CONSULTA_AUTO:
 			frame.cambiarPanel(new ConsultaAutosPanel(this));
 			break;
 		}
+	}
 
+	public void irAlInicio() {
+		frame.cambiarPanel(new PanelBienvenida());
 	}
 
 	private void mostrarExito(String string) {
@@ -223,10 +220,6 @@ public class Handler {
 	private void mostrarError(Exception e) {
 		e.printStackTrace();
 		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	}
-
-	private void camposVaciosMensaje() {
-		JOptionPane.showMessageDialog(null, "No puede haber espacios sin completar");
 	}
 
 	private void campoVacioMensaje(String mensaje) {

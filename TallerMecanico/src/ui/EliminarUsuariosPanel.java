@@ -4,17 +4,17 @@ import javax.swing.JTextField;
 
 import handler.Handler;
 
-public class EliminarUsuariosPanel extends EliminarDatosPanel {
-
-	private static final long serialVersionUID = 1L;
+public class EliminarUsuariosPanel extends MiPanel {
 
 	public EliminarUsuariosPanel(Handler handler) {
-		super(handler, "Nombre de usuario");
+		super(handler);
+		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void eliminarDatos(Handler handler) {
-		handler.deleteUsuario(((JTextField) datos1.getComponent(3)).getText().toString());
-	}
+//
+//	@Override
+//	public void eliminarDatos(Handler handler) {
+//		handler.deleteUsuario(((JTextField) datos1.getComponent(3)).getText().toString());
+//	}
 
 }

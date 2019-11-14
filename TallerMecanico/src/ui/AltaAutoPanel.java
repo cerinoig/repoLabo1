@@ -1,95 +1,82 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import entidades.Auto;
 import handler.Handler;
 
-public class AltaAutoPanel extends AltaDatosPanel {
+public class AltaAutoPanel extends MiPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	private JButton guardarBoton = new JButton("Guardar");
+	private JButton cancelarBoton = new JButton("Cancelar");
+
 	public AltaAutoPanel(Handler handler) {
-		super(handler, "auto", "Año", "Cantidad Puertas", "Color", "KM", "Marca", "Modelo", "Patente");
+		super(handler);
+
+		initPanel(handler);
 	}
 
-	@Override
-	public void cargaDatos(Handler handler, String textF1, String textF2, String textF3, String textF4, String textF5,
-			String textF6, String textF7) {
+	public void initPanel(Handler handler) {
+		crearTituloPantalla("ALTA AUTOS");
 
-		Auto auto = new Auto();
-//
-//		JTextfield tf
-//		
-//		createBox("auto", tf);
-		
-		
-		
-		if (!textF1.equals("")) {
-			auto.setAño(textF1);
-			((JTextField) super.datos1.getComponent(2)).setBackground(Color.WHITE);
-		} else {
-			((JTextField) super.datos1.getComponent(2)).setBackground(Color.RED);
-		}
+		String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
+		JButton[] botones = { guardarBoton, cancelarBoton };
 
-		if (!textF2.equals("")) {
-			try {
-				auto.setCantidadPuertas(Integer.valueOf(textF2));
-				((JTextField) super.datos2.getComponent(2)).setBackground(Color.WHITE);
-			} catch (Exception e3) {
-				System.out.println("no es un numero las puertas");
-				e3.printStackTrace();
-				((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
-				throw new NumberFormatException("No es un numero");
+		JTextField patenteTextField = new JTextField();
+		JTextField marcaTextField = new JTextField();
+		JTextField modeloTextField = new JTextField();
+		JTextField colorTextField = new JTextField();
+		JTextField puertasTextField = new JTextField();
+		JTextField kilometrosTextField = new JTextField();
+		JTextField añoTextField = new JTextField();
+
+		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
+				kilometrosTextField, añoTextField };
+
+		crearBoxVertical(labels, textFields);
+		crearBotonera(botones);
+
+		guardarBoton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Auto auto = new Auto();
+				auto.setPatente(patenteTextField.getText());
+				auto.setMarca(marcaTextField.getText().toString());
+				auto.setModelo(modeloTextField.getText());
+				auto.setColor(colorTextField.getText());
+
+				try {
+					auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+				} catch (Exception e3) {
+					throw new NumberFormatException("No es un numero");
+				}
+
+				try {
+					auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+				} catch (Exception e3) {
+					throw new NumberFormatException("No es un numero");
+				}
+
+				auto.setAño(añoTextField.getText());
+
+				handler.altaAuto(auto);
 			}
-		} else {
-			((JTextField) super.datos2.getComponent(2)).setBackground(Color.RED);
-		}
+		});
 
-		if (!textF3.equals("")) {
-			auto.setColor(textF3);
-			((JTextField) super.datos3.getComponent(2)).setBackground(Color.WHITE);
-		} else {
-			((JTextField) super.datos3.getComponent(2)).setBackground(Color.RED);
-		}
+		cancelarBoton.addActionListener(new ActionListener() {
 
-		if (!textF4.equals("")) {
-			try {
-				auto.setKilometraje(Integer.valueOf(textF4));
-				((JTextField) datos4.getComponent(2)).setBackground(Color.WHITE);
-			} catch (Exception e1) {
-				System.out.println("no es un numero de KM");
-				e1.printStackTrace();
-				((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
-				throw new NumberFormatException("No es un numero");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.irAlInicio();
 			}
-		} else {
-			((JTextField) datos4.getComponent(2)).setBackground(Color.RED);
-		}
-
-		if (!textF5.equals("")) {
-			auto.setMarca(textF5);
-			((JTextField) datos5.getComponent(2)).setBackground(Color.WHITE);
-		} else {
-			((JTextField) datos5.getComponent(2)).setBackground(Color.RED);
-		}
-
-		if (!textF6.equals("")) {
-			auto.setModelo(textF6);
-			((JTextField) datos6.getComponent(2)).setBackground(Color.WHITE);
-		} else {
-			((JTextField) datos6.getComponent(2)).setBackground(Color.RED);
-		}
-
-		if (!textF7.equals("")) {
-			auto.setPatente(textF7);
-			((JTextField) datos7.getComponent(2)).setBackground(Color.WHITE);
-		} else {
-			((JTextField) datos7.getComponent(2)).setBackground(Color.RED);
-		}
-
-		handler.altaAuto(auto);
+		});
 	}
 }
