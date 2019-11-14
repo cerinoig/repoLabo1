@@ -34,8 +34,8 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	@Override
 	public void insertAuto(Auto auto)
 			throws TallerMecanicoException, ExistingCarException, NoIdObtainedException, CamposVaciosException {
-		if (auto.getPatente().equals("") && auto.getMarca().equals("") && auto.getModelo().equals("")
-				&& auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && auto.getAño().equals("")
+		if (!auto.getPatente().equals("") && !auto.getMarca().equals("") && !auto.getModelo().equals("")
+				&& !auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && !auto.getAño().equals("")
 				&& auto.getKilometraje() != 0) {
 			if (autoDAO.existeAuto(auto.getPatente())) {
 				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
@@ -49,8 +49,8 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 
 	@Override
 	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
-		if (auto.getPatente().equals("") && auto.getMarca().equals("") && auto.getModelo().equals("")
-				&& auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && auto.getAño().equals("")
+		if (!auto.getPatente().equals("")  && !auto.getMarca().equals("") && !auto.getModelo().equals("")
+				&& !auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && !auto.getAño().equals("")
 				&& auto.getKilometraje() != 0) {
 			autoDAO.updateAuto(auto);
 		} else {
