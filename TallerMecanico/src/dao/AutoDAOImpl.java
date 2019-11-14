@@ -67,56 +67,35 @@ public class AutoDAOImpl implements AutoDAO {
 	public void insertAuto(Auto auto) throws TallerMecanicoException, NoIdObtainedException, ExistingCarException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			sql = "INSERT INTO AUTOS (PATENTE, MARCA, MODELO, COLOR, CANT_PUERTAS, AÑO, KILOMETRAJE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			if (rs.next()) {
-				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
-			} else {
-				try {
-					sql = "INSERT INTO AUTOS (PATENTE, MARCA, MODELO, COLOR, CANT_PUERTAS, AÑO, KILOMETRAJE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-					pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, auto.getPatente());
+			pstmt.setString(2, auto.getMarca());
+			pstmt.setString(3, auto.getModelo());
+			pstmt.setString(4, auto.getColor());
+			pstmt.setInt(5, auto.getCantidadPuertas());
+			pstmt.setString(6, auto.getAño());
+			pstmt.setInt(7, auto.getKilometraje());
 
-					pstmt.setString(1, auto.getPatente());
-					pstmt.setString(2, auto.getMarca());
-					pstmt.setString(3, auto.getModelo());
-					pstmt.setString(4, auto.getColor());
-					pstmt.setInt(5, auto.getCantidadPuertas());
-					pstmt.setString(6, auto.getAño());
-					pstmt.setInt(7, auto.getKilometraje());
+			pstmt.executeUpdate();
+			conn.commit();
 
-					pstmt.executeUpdate();
-					conn.commit();
-
-					try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-						if (generatedKeys.next()) {
-							auto.setIdAuto(generatedKeys.getInt(1));
-						} else {
-							throw new NoIdObtainedException(
-									"Se produjo un error al dar de alta el auto, no se obtuvo el ID.");
-						}
-					}
-
-				} catch (SQLException sqle) {
-					try {
-						conn.rollback();
-						sqle.printStackTrace();
-					} catch (SQLException sqle2) {
-						sqle2.printStackTrace();
-					}
-					throw new TallerMecanicoException("Ocurrio un error en el alta del auto", sqle);
-				} finally {
-					try {
-						if (conn != null)
-							conn.close();
-					} catch (SQLException sqle3) {
-						sqle3.printStackTrace();
-					}
+			try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					auto.setIdAuto(generatedKeys.getInt(1));
+				} else {
+					throw new NoIdObtainedException("Se produjo un error al dar de alta el auto, no se obtuvo el ID.");
 				}
 			}
 		} catch (SQLException sqle) {
-			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error en el alta del auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -125,53 +104,33 @@ public class AutoDAOImpl implements AutoDAO {
 				sqle3.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
 	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + auto.getPatente() + "'";
+			sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = "
+					+ "'" + auto.getPatente() + "'";
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				try {
-					sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = "
-							+ "'" + auto.getPatente() + "'";
-					pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, auto.getMarca());
+			pstmt.setString(2, auto.getModelo());
+			pstmt.setString(3, auto.getColor());
+			pstmt.setInt(4, auto.getCantidadPuertas());
+			pstmt.setString(5, auto.getAño());
+			pstmt.setInt(6, auto.getKilometraje());
 
-					pstmt.setString(1, auto.getMarca());
-					pstmt.setString(2, auto.getModelo());
-					pstmt.setString(3, auto.getColor());
-					pstmt.setInt(4, auto.getCantidadPuertas());
-					pstmt.setString(5, auto.getAño());
-					pstmt.setInt(6, auto.getKilometraje());
-
-					pstmt.executeUpdate();
-					conn.commit();
-				} catch (SQLException sqle) {
-					try {
-						conn.rollback();
-						sqle.printStackTrace();
-					} catch (SQLException sqle2) {
-						sqle2.printStackTrace();
-					}
-					throw new TallerMecanicoException("Ocurrio un error al modificar el auto", sqle);
-				} finally {
-					try {
-						if (conn != null)
-							conn.close();
-					} catch (SQLException sqle3) {
-						sqle3.printStackTrace();
-					}
-				}
-			} else {
-				throw new NonExistingCarException("El auto que quiere modificar no existe");
-			}
+			pstmt.executeUpdate();
+			conn.commit();
 		} catch (SQLException sqle) {
-			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error al modificar el auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
@@ -180,55 +139,34 @@ public class AutoDAOImpl implements AutoDAO {
 				sqle3.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
 	public void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
+			sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			pstmt.setString(1, patente);
+			pstmt.execute();
+			conn.commit();
 
-			if (rs.next()) {
-				try {
-					sql = "DELETE FROM AUTOS WHERE PATENTE = ?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, patente);
-					pstmt.execute();
-					conn.commit();
-
-				} catch (SQLException sqle) {
-					try {
-						conn.rollback();
-						sqle.printStackTrace();
-					} catch (SQLException sqle2) {
-						sqle2.printStackTrace();
-					}
-					throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle);
-				} finally {
-					try {
-						if (conn != null)
-							conn.close();
-					} catch (SQLException sqle2) {
-						sqle2.printStackTrace();
-					}
-				}
-			} else {
-				throw new NonExistingCarException("El auto que intenta eliminar no existe");
-			}
 		} catch (SQLException sqle) {
-			throw new TallerMecanicoException("Hubo un error al eliminar el auto", sqle);
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error al eliminar el auto", sqle);
 		} finally {
 			try {
 				if (conn != null)
 					conn.close();
-			} catch (SQLException sqle3) {
-				sqle3.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
@@ -272,4 +210,37 @@ public class AutoDAOImpl implements AutoDAO {
 
 		return autos;
 	}
+
+	@Override
+	public boolean existeAuto(String patente) throws TallerMecanicoException {
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+	}
+	
+	
 }

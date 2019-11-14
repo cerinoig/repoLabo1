@@ -19,7 +19,7 @@ public interface AutoBusinessObject {
 	void insertAuto(Auto auto)
 			throws TallerMecanicoException, ExistingCarException, NoIdObtainedException, CamposVaciosException;
 
-	void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException;
+	void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException, CamposVaciosException;
 
 	void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException, CamposVaciosException;
 

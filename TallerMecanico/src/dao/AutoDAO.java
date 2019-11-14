@@ -19,5 +19,7 @@ public interface AutoDAO {
 	void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException;
 	
 	List<Auto> selectAll() throws TallerMecanicoException;
+	
+	boolean existeAuto(String patente) throws TallerMecanicoException;
 
 }
