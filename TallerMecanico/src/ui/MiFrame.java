@@ -1,8 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,35 +11,30 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import handler.Handler;
+import static utils.NombrePantallas.ALTA_AUTO;
+import static utils.NombrePantallas.BAJA_AUTO;
+import static utils.NombrePantallas.MODIFICAR_AUTO;
+import static utils.NombrePantallas.CONSULTA_AUTO;
+import static utils.NombrePantallas.ALTA_USUARIO;
+import static utils.NombrePantallas.BAJA_USUARIO;
+import static utils.NombrePantallas.MODIFICAR_USUARIO;
+import static utils.NombrePantallas.CONSULTA_USUARIOS;
+import static utils.NombrePantallas.CERRAR_SESION;
 
 public class MiFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
-	private Toolkit miPantalla;
-	private Dimension tamanoPantalla;
-	private int alturaPantalla;
-	private int anchoPantalla;
-
 	private JMenuBar menuBar;
 	private JMenu menuOpciones, usuario, auto;
 	private JMenuItem altaUsuario, bajaUsuario, modificarUsuario, cosultaUsuarios, cerrarSesion, altaAuto, bajaAuto,
 			modificacionAuto, consultaAutos;
 
 	public MiFrame(Handler handler) {
-		miPantalla = Toolkit.getDefaultToolkit();
-		tamanoPantalla = miPantalla.getScreenSize();
-		alturaPantalla = tamanoPantalla.height;
-		anchoPantalla = tamanoPantalla.width;
-
-		setSize(anchoPantalla / 2, alturaPantalla / 2);
-		setLocation(anchoPantalla / 4, alturaPantalla / 4);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLocationRelativeTo(null);
 		setTitle("Taller Mecanico");
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		mostrarOpciones(handler);
-
 	}
 
 	public void cambiarPanel(JPanel panel) {
@@ -84,87 +77,58 @@ public class MiFrame extends JFrame {
 		auto.add(consultaAutos);
 
 		altaUsuario.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("altaUsuario");
+				handler.menuUsage(ALTA_USUARIO);
 			}
-
 		});
 
 		bajaUsuario.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("bajaUsuario");
+				handler.menuUsage(BAJA_USUARIO);
 			}
-
 		});
 
 		modificarUsuario.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("modificarUsuario");
+				handler.menuUsage(MODIFICAR_USUARIO);
 			}
-
 		});
 
 		cosultaUsuarios.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("cosultaUsuarios");
+				handler.menuUsage(CONSULTA_USUARIOS);
 			}
-
 		});
 
 		cerrarSesion.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				getJMenuBar().setVisible(false);
-				handler.menuUsage("cerrarSesion");
+				handler.menuUsage(CERRAR_SESION);
 			}
-
 		});
 
 		altaAuto.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("altaAuto");
+				handler.menuUsage(ALTA_AUTO);
 			}
-
 		});
 
 		bajaAuto.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("bajaAuto");
+				handler.menuUsage(BAJA_AUTO);
 			}
-
 		});
 
 		modificacionAuto.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("modificacionAuto");
+				handler.menuUsage(MODIFICAR_AUTO);
 			}
-
 		});
-		
+
 		consultaAutos.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
-
-				handler.menuUsage("consultaAutos");
+				handler.menuUsage(CONSULTA_AUTO);
 			}
-
 		});
-
 	}
-
-
 }

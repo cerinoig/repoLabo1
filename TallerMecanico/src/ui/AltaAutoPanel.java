@@ -48,7 +48,7 @@ public class AltaAutoPanel extends MiPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Auto auto = new Auto();
-				auto.setPatente(patenteTextField.getText());
+				auto.setPatente(patenteTextField.getText().toUpperCase());
 				auto.setMarca(marcaTextField.getText().toString());
 				auto.setModelo(modeloTextField.getText());
 				auto.setColor(colorTextField.getText());

@@ -23,8 +23,8 @@ public class AutoDAOImpl implements AutoDAO {
 	private String sql;
 
 	@Override
-	public Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException {
-		Auto auto = new Auto();
+	public Auto selectAuto(String patente) throws TallerMecanicoException {
+		Auto auto = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
@@ -40,8 +40,6 @@ public class AutoDAOImpl implements AutoDAO {
 				auto.setCantidadPuertas(rs.getInt("CANT_PUERTAS"));
 				auto.setAño(rs.getString("AÑO"));
 				auto.setKilometraje(rs.getInt("KILOMETRAJE"));
-			} else {
-				throw new NonExistingCarException("El auto que esta buscando no existe");
 			}
 		} catch (SQLException sqle) {
 			try {
@@ -110,8 +108,7 @@ public class AutoDAOImpl implements AutoDAO {
 	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = "
-					+ "'" + auto.getPatente() + "'";
+			sql = "UPDATE AUTOS SET MARCA = ?, MODELO = ?, COLOR = ?, CANT_PUERTAS = ?, AÑO = ?, KILOMETRAJE = ? WHERE PATENTE = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, auto.getMarca());
@@ -120,6 +117,7 @@ public class AutoDAOImpl implements AutoDAO {
 			pstmt.setInt(4, auto.getCantidadPuertas());
 			pstmt.setString(5, auto.getAño());
 			pstmt.setInt(6, auto.getKilometraje());
+			pstmt.setString(7, auto.getPatente());
 
 			pstmt.executeUpdate();
 			conn.commit();
@@ -241,6 +239,5 @@ public class AutoDAOImpl implements AutoDAO {
 			}
 		}
 	}
-	
-	
+
 }

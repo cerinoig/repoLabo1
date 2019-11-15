@@ -23,7 +23,16 @@ import ui.LoginPanel;
 import ui.MiFrame;
 import ui.ModificarAutoPanel;
 import ui.PanelBienvenida;
-import utils.NombrePantallas;
+
+import static utils.NombrePantallas.ALTA_AUTO;
+import static utils.NombrePantallas.BAJA_AUTO;
+import static utils.NombrePantallas.MODIFICAR_AUTO;
+import static utils.NombrePantallas.CONSULTA_AUTO;
+import static utils.NombrePantallas.ALTA_USUARIO;
+import static utils.NombrePantallas.BAJA_USUARIO;
+import static utils.NombrePantallas.MODIFICAR_USUARIO;
+import static utils.NombrePantallas.CONSULTA_USUARIOS;
+import static utils.NombrePantallas.CERRAR_SESION;
 
 public class Handler {
 
@@ -41,7 +50,6 @@ public class Handler {
 		frame = new MiFrame(this);
 		frame.cambiarPanel(new PanelBienvenida());
 		frame.setVisible(true);
-		frame.getJMenuBar().setVisible(true);
 	}
 
 	public void altaUsuario(Usuario usuario) {
@@ -149,6 +157,8 @@ public class Handler {
 		try {
 			autoBusinessObject.updateAuto(auto);
 			mostrarExito("El auto fue modificado exitosamente");
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -178,32 +188,32 @@ public class Handler {
 
 	public void menuUsage(String menuActionType) {
 		switch (menuActionType) {
-		case NombrePantallas.ALTA_USUARIO:
+		case ALTA_USUARIO:
 			frame.cambiarPanel(new AltaUsuarioPanel(this));
 			break;
-		case NombrePantallas.BAJA_USUARIO:
+		case BAJA_USUARIO:
 			frame.cambiarPanel(new EliminarUsuariosPanel(this));
 			break;
-		case NombrePantallas.MODIFICAR_USUARIO:
+		case MODIFICAR_USUARIO:
 			// frame.cambiarPanel(new ModificarUsuarioPanel(this));
 			break;
-		case NombrePantallas.CONSULTA_USUARIOS:
+		case CONSULTA_USUARIOS:
 			frame.cambiarPanel(new ConsultaUsuariosPanel(this));
 			break;
-		case NombrePantallas.CERRAR_SESION:
+		case CERRAR_SESION:
 			frame.getJMenuBar().setVisible(false);
 			frame.cambiarPanel(new LoginPanel(this));
 			break;
-		case NombrePantallas.ALTA_AUTO:
+		case ALTA_AUTO:
 			frame.cambiarPanel(new AltaAutoPanel(this));
 			break;
-		case NombrePantallas.BAJA_AUTO:
+		case BAJA_AUTO:
 			frame.cambiarPanel(new EliminarAutosPanel(this));
 			break;
-		case NombrePantallas.MODIFICAR_AUTO:
+		case MODIFICAR_AUTO:
 			frame.cambiarPanel(new ModificarAutoPanel(this));
 			break;
-		case NombrePantallas.CONSULTA_AUTO:
+		case CONSULTA_AUTO:
 			frame.cambiarPanel(new ConsultaAutosPanel(this));
 			break;
 		}
@@ -223,7 +233,7 @@ public class Handler {
 	}
 
 	private void campoVacioMensaje(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
+		JOptionPane.showMessageDialog(null, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
 
 }

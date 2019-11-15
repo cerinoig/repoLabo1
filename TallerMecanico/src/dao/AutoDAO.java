@@ -10,16 +10,16 @@ import excepciones.TallerMecanicoException;
 
 public interface AutoDAO {
 
-	Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException;
+	Auto selectAuto(String patente) throws TallerMecanicoException;
 
 	void insertAuto(Auto auto) throws TallerMecanicoException, NoIdObtainedException, ExistingCarException;
 
 	void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException;
 
 	void deleteAuto(String patente) throws TallerMecanicoException, NonExistingCarException;
-	
+
 	List<Auto> selectAll() throws TallerMecanicoException;
-	
+
 	boolean existeAuto(String patente) throws TallerMecanicoException;
 
 }

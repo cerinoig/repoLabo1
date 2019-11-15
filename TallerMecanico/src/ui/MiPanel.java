@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 import handler.Handler;
 
-public abstract class MiPanel extends JPanel {
+public class MiPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 

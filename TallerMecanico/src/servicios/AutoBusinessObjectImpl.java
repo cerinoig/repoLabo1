@@ -13,7 +13,7 @@ import excepciones.TallerMecanicoException;
 
 public class AutoBusinessObjectImpl implements AutoBusinessObject {
 
-	private AutoDAO autoDAO = new AutoDAOImpl();
+	private AutoDAO autoDAO;
 
 	@Override
 	public void setDAO(AutoDAO autoDAO) {
@@ -23,20 +23,20 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	@Override
 	public Auto selectAuto(String patente)
 			throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
-		if (!patente.equals("")) {
-			return autoDAO.selectAuto(patente);
-		} else {
-			throw new CamposVaciosException("No puede haber espacios sin completar");
-		}
 
+		if (patente.equals(""))
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+
+		if (autoDAO.selectAuto(patente) == null)
+			throw new NonExistingCarException("El auto no existe con patente " + patente);
+
+		return autoDAO.selectAuto(patente);
 	}
 
 	@Override
 	public void insertAuto(Auto auto)
 			throws TallerMecanicoException, ExistingCarException, NoIdObtainedException, CamposVaciosException {
-		if (!auto.getPatente().equals("") && !auto.getMarca().equals("") && !auto.getModelo().equals("")
-				&& !auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && !auto.getAño().equals("")
-				&& auto.getKilometraje() != 0) {
+		if (validarAuto(auto)) {
 			if (autoDAO.existeAuto(auto.getPatente())) {
 				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
 			} else {
@@ -49,9 +49,7 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 
 	@Override
 	public void updateAuto(Auto auto) throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
-		if (!auto.getPatente().equals("")  && !auto.getMarca().equals("") && !auto.getModelo().equals("")
-				&& !auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && !auto.getAño().equals("")
-				&& auto.getKilometraje() != 0) {
+		if (validarAuto(auto)) {
 			autoDAO.updateAuto(auto);
 		} else {
 			throw new CamposVaciosException("No puede haber espacios sin completar");
@@ -75,5 +73,15 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	@Override
 	public List<Auto> selectAll() throws TallerMecanicoException {
 		return autoDAO.selectAll();
+	}
+
+	public boolean validarAuto(Auto auto) {
+		if (!auto.getPatente().equals("") && !auto.getMarca().equals("") && !auto.getModelo().equals("")
+				&& !auto.getColor().equals("") && auto.getCantidadPuertas() != 0 && !auto.getAño().equals("")
+				&& auto.getKilometraje() != 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

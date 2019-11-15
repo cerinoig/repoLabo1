@@ -60,7 +60,7 @@ public class ModificarAutoPanel extends MiPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				auto.setPatente(patenteTextField.getText());
+				auto.setPatente(patenteTextField.getText().toUpperCase());
 				auto.setMarca(marcaTextField.getText());
 				auto.setModelo(modeloTextField.getText());
 				auto.setColor(colorTextField.getText());

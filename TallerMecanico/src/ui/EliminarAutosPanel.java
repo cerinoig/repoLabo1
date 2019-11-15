@@ -37,7 +37,7 @@ public class EliminarAutosPanel extends MiPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.deleteAuto(patenteTextField.getText());
+				handler.deleteAuto(patenteTextField.getText().toUpperCase());
 
 			}
 		});
