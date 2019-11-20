@@ -3,7 +3,6 @@ package servicios;
 import java.util.List;
 
 import dao.AutoDAO;
-import dao.AutoDAOImpl;
 import entidades.Auto;
 import excepciones.CamposVaciosException;
 import excepciones.ExistingCarException;
@@ -21,26 +20,26 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	}
 
 	@Override
-	public Auto selectAuto(String patente)
-			throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
-
-		if (patente.equals(""))
+	public Auto selectAuto(String patente) throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
+		if (!patente.equals("")) {
+			if (autoDAO.selectAuto(patente) == null) {
+				throw new NonExistingCarException("El auto no existe con patente " + patente);
+			} else {
+				return autoDAO.selectAuto(patente);
+			}
+		} else {
 			throw new CamposVaciosException("No puede haber espacios sin completar");
-
-		if (autoDAO.selectAuto(patente) == null)
-			throw new NonExistingCarException("El auto no existe con patente " + patente);
-
-		return autoDAO.selectAuto(patente);
+		}
 	}
 
 	@Override
 	public void insertAuto(Auto auto)
 			throws TallerMecanicoException, ExistingCarException, NoIdObtainedException, CamposVaciosException {
 		if (validarAuto(auto)) {
-			if (autoDAO.existeAuto(auto.getPatente())) {
-				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
-			} else {
+			if (autoDAO.selectAuto(auto.getPatente()) == null) {
 				autoDAO.insertAuto(auto);
+			} else {
+				throw new ExistingCarException("El auto que intenta dar de alta ya existe");
 			}
 		} else {
 			throw new CamposVaciosException("No puede haber espacios sin completar");
@@ -60,10 +59,10 @@ public class AutoBusinessObjectImpl implements AutoBusinessObject {
 	public void deleteAuto(String patente)
 			throws TallerMecanicoException, NonExistingCarException, CamposVaciosException {
 		if (!patente.equals("")) {
-			if (autoDAO.existeAuto(patente)) {
-				autoDAO.deleteAuto(patente);
+			if (autoDAO.selectAuto(patente) == null) {
+				throw new NonExistingCarException("El auto que intenta eliminar no existe");
 			} else {
-				throw new NonExistingCarException("El auto que intenta modificar no existe");
+				autoDAO.deleteAuto(patente);
 			}
 		} else {
 			throw new CamposVaciosException("No puede haber espacios sin completar");

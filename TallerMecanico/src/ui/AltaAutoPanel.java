@@ -26,7 +26,7 @@ public class AltaAutoPanel extends MiPanel {
 	public void initPanel(Handler handler) {
 		crearTituloPantalla("ALTA AUTOS");
 
-		final String[]  labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
+		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
 		JButton[] botones = { guardarBoton, cancelarBoton };
 
 		JTextField patenteTextField = new JTextField();
@@ -59,7 +59,7 @@ public class AltaAutoPanel extends MiPanel {
 				} catch (Exception e3) {
 					e3.printStackTrace();
 					puertasTextField.setBackground(Color.RED);
-					throw new NumberFormatException("La cantidad de puertas no es un numero");
+					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
 				}
 
 				try {
@@ -68,12 +68,10 @@ public class AltaAutoPanel extends MiPanel {
 				} catch (Exception e3) {
 					e3.printStackTrace();
 					kilometrosTextField.setBackground(Color.RED);
-					throw new NumberFormatException("La cantidad de KM no es un numero");
-					
+					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
 				}
 
 				auto.setAño(añoTextField.getText());
-
 				handler.altaAuto(auto);
 			}
 		});

@@ -48,7 +48,6 @@ public class ModificarAutoPanel extends MiPanel {
 		crearBotonera(botones);
 
 		buscarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				consultarDatos(handler);
@@ -57,33 +56,32 @@ public class ModificarAutoPanel extends MiPanel {
 		});
 
 		modificarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				auto.setPatente(patenteTextField.getText().toUpperCase());
 				auto.setMarca(marcaTextField.getText());
 				auto.setModelo(modeloTextField.getText());
 				auto.setColor(colorTextField.getText());
+
 				try {
-				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
-				puertasTextField.setBackground(Color.WHITE);
+					auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+					puertasTextField.setBackground(Color.WHITE);
 				} catch (Exception e3) {
 					e3.printStackTrace();
 					puertasTextField.setBackground(Color.RED);
-					throw new NumberFormatException("La cantidad de KM no es un numero");
+					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
 				}
-				
+
 				try {
-				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
-				kilometrosTextField.setBackground(Color.WHITE);
+					auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+					kilometrosTextField.setBackground(Color.WHITE);
 				} catch (Exception e3) {
 					e3.printStackTrace();
 					kilometrosTextField.setBackground(Color.RED);
-					throw new NumberFormatException("La cantidad de KM no es un numero");
+					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
 				}
-				
-				auto.setAño(añoTextField.getText());
 
+				auto.setAño(añoTextField.getText());
 				handler.modificarAuto(auto);
 			}
 		});

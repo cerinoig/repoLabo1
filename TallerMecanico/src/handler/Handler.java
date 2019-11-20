@@ -5,10 +5,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import dao.AutoDAOImpl;
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Usuario;
 import excepciones.CamposVaciosException;
+import excepciones.NonExistingCarException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
@@ -44,6 +46,7 @@ public class Handler {
 		usuarioBusinessObject = new UsuarioBusinessObjectImpl();
 		usuarioBusinessObject.setDAO(new UsuarioDAOImpl());
 		autoBusinessObject = new AutoBusinessObjectImpl();
+		autoBusinessObject.setDAO(new AutoDAOImpl());
 	}
 
 	public void initFrame() {
@@ -148,6 +151,8 @@ public class Handler {
 			mostrarExito("El auto fue eliminado exitosamente");
 		} catch (CamposVaciosException cve) {
 			campoVacioMensaje(cve.getMessage());
+		} catch (NullPointerException npe) {
+			mostrarError(npe);
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -227,7 +232,7 @@ public class Handler {
 		JOptionPane.showMessageDialog(null, string);
 	}
 
-	private void mostrarError(Exception e) {
+	public void mostrarError(Exception e) {
 		e.printStackTrace();
 		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}

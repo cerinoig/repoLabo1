@@ -32,6 +32,7 @@ public class AutoDAOImpl implements AutoDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
+				auto = new Auto();
 				auto.setIdAuto(rs.getInt("ID_AUTO"));
 				auto.setPatente(rs.getString("PATENTE"));
 				auto.setMarca(rs.getString("MARCA"));
@@ -208,36 +209,4 @@ public class AutoDAOImpl implements AutoDAO {
 
 		return autos;
 	}
-
-	@Override
-	public boolean existeAuto(String patente) throws TallerMecanicoException {
-		try {
-			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM AUTOS WHERE PATENTE = " + "'" + patente + "'";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (SQLException sqle) {
-			try {
-				conn.rollback();
-				sqle.printStackTrace();
-			} catch (SQLException sqle2) {
-				sqle2.printStackTrace();
-			}
-			throw new TallerMecanicoException("Ocurrio un error en la busqueda del auto", sqle);
-		} finally {
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException sqle3) {
-				sqle3.printStackTrace();
-			}
-		}
-	}
-
 }

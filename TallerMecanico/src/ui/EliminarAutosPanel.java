@@ -34,16 +34,13 @@ public class EliminarAutosPanel extends MiPanel {
 		crearBotonera(botones);
 
 		eliminarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.deleteAuto(patenteTextField.getText().toUpperCase());
-
 			}
 		});
 
 		cancelarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.irAlInicio();
