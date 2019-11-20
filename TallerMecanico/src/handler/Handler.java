@@ -66,7 +66,7 @@ public class Handler {
 				mostrarError(e);
 			}
 		} else {
-//			camposVaciosMensaje();
+			// camposVaciosMensaje();
 		}
 
 	}
@@ -104,7 +104,7 @@ public class Handler {
 				mostrarError(new Exception("Usuario y/o password incorrectos"));
 			}
 		} else {
-//			camposVaciosMensaje();
+			// camposVaciosMensaje();
 		}
 	}
 
@@ -138,6 +138,8 @@ public class Handler {
 		try {
 			autoBusinessObject.insertAuto(auto);
 			mostrarExito("El auto fue dado de alta exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
 		} catch (CamposVaciosException cve) {
 			campoVacioMensaje(cve.getMessage());
 		} catch (Exception e) {
@@ -162,6 +164,8 @@ public class Handler {
 		try {
 			autoBusinessObject.updateAuto(auto);
 			mostrarExito("El auto fue modificado exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
 		} catch (CamposVaciosException cve) {
 			campoVacioMensaje(cve.getMessage());
 		} catch (Exception e) {
@@ -239,6 +243,10 @@ public class Handler {
 
 	private void campoVacioMensaje(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
+	}
+
+	private void campoNumericoInvalido() {
+		JOptionPane.showMessageDialog(null, "El campo numerico es invalido", "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
 
 }

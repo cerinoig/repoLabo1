@@ -54,22 +54,28 @@ public class AltaAutoPanel extends MiPanel {
 				auto.setColor(colorTextField.getText());
 
 				try {
-					auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+					Integer.valueOf(puertasTextField.getText());
 					puertasTextField.setBackground(Color.WHITE);
-				} catch (Exception e3) {
-					e3.printStackTrace();
+				} catch (NumberFormatException ne) {
+					ne.printStackTrace();
 					puertasTextField.setBackground(Color.RED);
 					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
+					throw new NumberFormatException("La cantidad de puertas no es un numero");
 				}
 
+				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+
 				try {
-					auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+					Integer.valueOf(kilometrosTextField.getText());
 					kilometrosTextField.setBackground(Color.WHITE);
 				} catch (Exception e3) {
 					e3.printStackTrace();
 					kilometrosTextField.setBackground(Color.RED);
 					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
+					throw new NumberFormatException("La cantidad de KM no es un numero");
 				}
+
+				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
 
 				auto.setAño(añoTextField.getText());
 				handler.altaAuto(auto);
