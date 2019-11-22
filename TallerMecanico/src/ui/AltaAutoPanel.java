@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import entidades.Auto;
 import handler.Handler;
 
-public class AltaAutoPanel extends MiPanel {
+public class AltaAutoPanel extends AutoPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,6 @@ public class AltaAutoPanel extends MiPanel {
 
 	public AltaAutoPanel(Handler handler) {
 		super(handler);
-
 		initPanel(handler);
 	}
 
@@ -29,14 +28,6 @@ public class AltaAutoPanel extends MiPanel {
 		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
 		JButton[] botones = { guardarBoton, cancelarBoton };
 
-		JTextField patenteTextField = new JTextField();
-		JTextField marcaTextField = new JTextField();
-		JTextField modeloTextField = new JTextField();
-		JTextField colorTextField = new JTextField();
-		JTextField puertasTextField = new JTextField();
-		JTextField kilometrosTextField = new JTextField();
-		JTextField añoTextField = new JTextField();
-
 		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
 				kilometrosTextField, añoTextField };
 
@@ -44,41 +35,9 @@ public class AltaAutoPanel extends MiPanel {
 		crearBotonera(botones);
 
 		guardarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Auto auto = new Auto();
-				auto.setPatente(patenteTextField.getText().toUpperCase());
-				auto.setMarca(marcaTextField.getText().toString());
-				auto.setModelo(modeloTextField.getText());
-				auto.setColor(colorTextField.getText());
-
-				try {
-					Integer.valueOf(puertasTextField.getText());
-					puertasTextField.setBackground(Color.WHITE);
-				} catch (NumberFormatException ne) {
-					ne.printStackTrace();
-					puertasTextField.setBackground(Color.RED);
-					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
-					throw new NumberFormatException("La cantidad de puertas no es un numero");
-				}
-
-				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
-
-				try {
-					Integer.valueOf(kilometrosTextField.getText());
-					kilometrosTextField.setBackground(Color.WHITE);
-				} catch (Exception e3) {
-					e3.printStackTrace();
-					kilometrosTextField.setBackground(Color.RED);
-					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
-					throw new NumberFormatException("La cantidad de KM no es un numero");
-				}
-
-				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
-
-				auto.setAño(añoTextField.getText());
-				handler.altaAuto(auto);
+				handler.altaAuto((Auto) panelToObject());
 			}
 		});
 
@@ -89,5 +48,51 @@ public class AltaAutoPanel extends MiPanel {
 				handler.irAlInicio();
 			}
 		});
+	}
+
+	@Override
+	public Object panelToObject() {
+		Auto auto = new Auto();
+		auto.setPatente(patenteTextField.getText().toUpperCase());
+		auto.setMarca(marcaTextField.getText().toString());
+		auto.setModelo(modeloTextField.getText());
+		auto.setColor(colorTextField.getText());
+
+		try {
+			Integer.valueOf(puertasTextField.getText());
+			puertasTextField.setBackground(Color.WHITE);
+		} catch (NumberFormatException ne) {
+			ne.printStackTrace();
+			puertasTextField.setBackground(Color.RED);
+			throw new NumberFormatException("La cantidad de puertas no es un numero");
+		}
+
+		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+
+		try {
+			Integer.valueOf(kilometrosTextField.getText());
+			kilometrosTextField.setBackground(Color.WHITE);
+		} catch (Exception e3) {
+			e3.printStackTrace();
+			kilometrosTextField.setBackground(Color.RED);
+			throw new NumberFormatException("La cantidad de KM no es un numero");
+		}
+
+		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+
+		auto.setAño(añoTextField.getText());
+		return auto;
+	}
+
+	@Override
+	public void objectToPanel(Object object) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void limpiarCampos() {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -10,12 +10,19 @@ import javax.swing.JTextField;
 
 import handler.Handler;
 
-public class MiPanel extends JPanel {
+public abstract class MiPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public MiPanel(Handler handler) {
 		setLayout(new BorderLayout());
+		
+//		add(getTituloPanel())
+//		
+//		add(getBody())
+//		
+//		add(crearBotonera(getBotones()));
+		
 	}
 
 	public void crearTituloPantalla(String tituloPantalla) {
@@ -53,4 +60,10 @@ public class MiPanel extends JPanel {
 		horizontal.add(botonera);
 		add(horizontal, BorderLayout.SOUTH);
 	}
+	
+	public abstract void limpiarCampos();
+	
+	public abstract Object panelToObject();
+	
+	public abstract void objectToPanel(Object object);
 }

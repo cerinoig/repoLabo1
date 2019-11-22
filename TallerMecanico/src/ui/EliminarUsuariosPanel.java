@@ -11,6 +11,24 @@ public class EliminarUsuariosPanel extends MiPanel {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void limpiarCampos() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Object panelToObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void objectToPanel(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 //
 //	@Override
 //	public void eliminarDatos(Handler handler) {

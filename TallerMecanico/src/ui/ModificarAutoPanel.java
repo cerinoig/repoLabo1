@@ -10,18 +10,11 @@ import javax.swing.JTextField;
 import entidades.Auto;
 import handler.Handler;
 
-public class ModificarAutoPanel extends MiPanel {
+public class ModificarAutoPanel extends AutoPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	private JTextField buscarTextfield = new JTextField();
-	private JTextField patenteTextField = new JTextField();
-	private JTextField marcaTextField = new JTextField();
-	private JTextField modeloTextField = new JTextField();
-	private JTextField colorTextField = new JTextField();
-	private JTextField puertasTextField = new JTextField();
-	private JTextField kilometrosTextField = new JTextField();
-	private JTextField añoTextField = new JTextField();
 
 	private JButton buscarBoton = new JButton("Buscar");
 	private JButton modificarBoton = new JButton("Modificar");
@@ -74,7 +67,6 @@ public class ModificarAutoPanel extends MiPanel {
 					ne.printStackTrace();
 					puertasTextField.setBackground(Color.RED);
 					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
-					throw new NumberFormatException("La cantidad de puertas no es un numero");
 				}
 
 				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
@@ -86,7 +78,6 @@ public class ModificarAutoPanel extends MiPanel {
 					e3.printStackTrace();
 					kilometrosTextField.setBackground(Color.RED);
 					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
-					throw new NumberFormatException("La cantidad de KM no es un numero");
 				}
 
 				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
@@ -151,5 +142,23 @@ public class ModificarAutoPanel extends MiPanel {
 
 			habilitarCampos();
 		}
+	}
+
+	@Override
+	public Object panelToObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void objectToPanel(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void limpiarCampos() {
+		// TODO Auto-generated method stub
+		
 	}
 }
