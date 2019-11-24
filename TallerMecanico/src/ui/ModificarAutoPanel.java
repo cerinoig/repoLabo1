@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
@@ -28,7 +30,6 @@ public class ModificarAutoPanel extends AutoPanel {
 	}
 
 	public void initPanel(Handler handler) {
-		crearTituloPantalla("MODIFICAR AUTOS");
 		deshabilitarCampos();
 
 		String[] labels = { "Buscar auto", "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros",
@@ -160,5 +161,22 @@ public class ModificarAutoPanel extends AutoPanel {
 	public void limpiarCampos() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("MODIFICAR AUTOS");
+	}
+
+	@Override
+	public Box getBody() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

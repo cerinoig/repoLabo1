@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
@@ -23,7 +25,6 @@ public class AltaAutoPanel extends AutoPanel {
 	}
 
 	public void initPanel(Handler handler) {
-		crearTituloPantalla("ALTA AUTOS");
 
 		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
 		JButton[] botones = { guardarBoton, cancelarBoton };
@@ -94,5 +95,22 @@ public class AltaAutoPanel extends AutoPanel {
 	public void limpiarCampos() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("ALTA AUTOS");
+	}
+
+	@Override
+	public Box getBody() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -3,7 +3,9 @@ package ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import handler.Handler;
@@ -22,7 +24,6 @@ public class EliminarAutosPanel extends MiPanel {
 	}
 
 	public void initPanel(Handler handler) {
-		crearTituloPantalla("ELIMINAR AUTOS");
 
 		JTextField patenteTextField = new JTextField();
 
@@ -64,5 +65,22 @@ public class EliminarAutosPanel extends MiPanel {
 	public void limpiarCampos() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("ELIMINAR AUTOS");
+	}
+
+	@Override
+	public Box getBody() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

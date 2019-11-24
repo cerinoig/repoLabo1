@@ -4,9 +4,9 @@ package entidades;
 public class Factura {
 
 	private int idFactura;
-	private Auto auto;
+	private String patente;
 	private String arreglo;
-	private int costoTotal;
+	private boolean cobrado;
 
 	public int getIdFactura() {
 		return idFactura;
@@ -15,23 +15,7 @@ public class Factura {
 	public void setIdFactura(int idFactura) {
 		this.idFactura = idFactura;
 	}
-
-	public Auto getAuto() {
-		return auto;
-	}
-
-	public void setAuto(Auto auto) {
-		this.auto = auto;
-	}
-
-	public int getCostoTotal() {
-		return costoTotal;
-	}
-
-	public void setCostoTotal(int costoTotal) {
-		this.costoTotal = costoTotal;
-	}
-
+	
 	public String getArreglo() {
 		return arreglo;
 	}
@@ -40,4 +24,20 @@ public class Factura {
 		this.arreglo = arreglo;
 	}
 
+	public String getPatente() {
+		return patente;
+	}
+
+	public void setPatente(String patente) {
+		this.patente = patente;
+	}
+
+	public boolean isCobrado() {
+		return cobrado;
+	}
+
+	public void setCobrado(boolean cobrado) {
+		this.cobrado = cobrado;
+	}
+	
 }

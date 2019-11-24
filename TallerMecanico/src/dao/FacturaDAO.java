@@ -15,7 +15,7 @@ public interface FacturaDAO {
 
 	void insertFactura(Factura factura) throws TallerMecanicoException, NoIdObtainedException;
 
-	void updateFactura(Factura factura) throws TallerMecanicoException;
+	void cobrarArreglo(Factura factura) throws TallerMecanicoException;
 
 	void deleteFactura(String patente) throws TallerMecanicoException;
 

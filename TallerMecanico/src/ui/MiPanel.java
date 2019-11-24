@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -17,17 +18,10 @@ public abstract class MiPanel extends JPanel {
 	public MiPanel(Handler handler) {
 		setLayout(new BorderLayout());
 		
-//		add(getTituloPanel())
-//		
-//		add(getBody())
-//		
-//		add(crearBotonera(getBotones()));
+		add(getTituloPanel(), BorderLayout.NORTH);
+		add(getBody());
+		add(crearBotonera(getBotones()));
 		
-	}
-
-	public void crearTituloPantalla(String tituloPantalla) {
-		JLabel lebelTitulo = new JLabel(tituloPantalla);
-		add(lebelTitulo, BorderLayout.NORTH);
 	}
 
 	public Box crearBoxHorizontal(String titulo, JTextField jTextField) {
@@ -47,7 +41,7 @@ public abstract class MiPanel extends JPanel {
 		add(vertical, BorderLayout.CENTER);
 	}
 
-	public void crearBotonera(JButton[] botones) {
+	public Box crearBotonera(JButton[] botones) {
 		Box horizontal = Box.createHorizontalBox();
 		Box botonera = Box.createHorizontalBox();
 		botonera.add(Box.createHorizontalGlue());
@@ -59,6 +53,8 @@ public abstract class MiPanel extends JPanel {
 
 		horizontal.add(botonera);
 		add(horizontal, BorderLayout.SOUTH);
+		
+		return horizontal;
 	}
 	
 	public abstract void limpiarCampos();
@@ -66,4 +62,11 @@ public abstract class MiPanel extends JPanel {
 	public abstract Object panelToObject();
 	
 	public abstract void objectToPanel(Object object);
+	
+	public abstract JLabel getTituloPanel();
+	
+	public abstract Box getBody();
+	
+	public abstract JButton[] getBotones();
+	
 }
