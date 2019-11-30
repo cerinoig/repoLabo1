@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 import handler.Handler;
 
-public class EliminarAutosPanel extends MiPanel {
+public class EliminarAutosPanel extends AutoPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,10 +19,9 @@ public class EliminarAutosPanel extends MiPanel {
 
 	public EliminarAutosPanel(Handler handler) {
 		super(handler);
-
-		initPanel(handler);
 	}
-
+	
+	@Override
 	public void initPanel(Handler handler) {
 
 		JTextField patenteTextField = new JTextField();
@@ -63,8 +62,12 @@ public class EliminarAutosPanel extends MiPanel {
 
 	@Override
 	public void limpiarCampos() {
-		// TODO Auto-generated method stub
-		
+		patenteTextField.setText("");
+		marcaTextField.setText("");
+		modeloTextField.setText("");
+		colorTextField.setText("");
+		puertasTextField.setText("");
+		kilometrosTextField.setText("");
 	}
 
 	@Override

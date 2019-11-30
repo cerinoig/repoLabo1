@@ -16,29 +16,18 @@ public class AltaAutoPanel extends AutoPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JButton guardarBoton = new JButton("Guardar");
-	private JButton cancelarBoton = new JButton("Cancelar");
-
 	public AltaAutoPanel(Handler handler) {
 		super(handler);
-		initPanel(handler);
 	}
 
+	@Override
 	public void initPanel(Handler handler) {
 
-		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
-		JButton[] botones = { guardarBoton, cancelarBoton };
-
-		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
-				kilometrosTextField, añoTextField };
-
-		crearBoxVertical(labels, textFields);
-		crearBotonera(botones);
-
-		guardarBoton.addActionListener(new ActionListener() {
+		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.altaAuto((Auto) panelToObject());
+				limpiarCampos();
 			}
 		});
 
@@ -93,8 +82,13 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void limpiarCampos() {
-		// TODO Auto-generated method stub
-
+		patenteTextField.setText("");
+		marcaTextField.setText("");
+		modeloTextField.setText("");
+		colorTextField.setText("");
+		puertasTextField.setText("");
+		kilometrosTextField.setText("");
+		añoTextField.setText("");
 	}
 
 	@Override
@@ -104,13 +98,31 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public Box getBody() {
-		// TODO Auto-generated method stub
-		return null;
+
+		patenteTextField = new JTextField();
+		marcaTextField = new JTextField();
+		modeloTextField = new JTextField();
+		colorTextField = new JTextField();
+		puertasTextField = new JTextField();
+		kilometrosTextField = new JTextField();
+		añoTextField = new JTextField();
+
+		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
+
+		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
+				kilometrosTextField, añoTextField };
+
+		return crearBoxVertical(labels, textFields);
 	}
 
 	@Override
 	public JButton[] getBotones() {
-		// TODO Auto-generated method stub
-		return null;
+
+		confirmarBoton = new JButton("Guardar");
+		cancelarBoton = new JButton("Cancelar");
+
+		JButton[] botones = { confirmarBoton, cancelarBoton };
+
+		return botones;
 	}
 }

@@ -1,5 +1,8 @@
 package ui;
 
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import handler.Handler;
@@ -25,6 +28,30 @@ public class EliminarUsuariosPanel extends MiPanel {
 
 	@Override
 	public void objectToPanel(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Box getBody() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void initPanel(Handler handler) {
 		// TODO Auto-generated method stub
 		
 	}

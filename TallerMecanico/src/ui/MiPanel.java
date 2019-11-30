@@ -15,13 +15,17 @@ public abstract class MiPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	protected JButton confirmarBoton;
+	protected JButton cancelarBoton;
+
 	public MiPanel(Handler handler) {
+
 		setLayout(new BorderLayout());
-		
+
 		add(getTituloPanel(), BorderLayout.NORTH);
-		add(getBody());
-		add(crearBotonera(getBotones()));
-		
+		add(getBody(), BorderLayout.CENTER);
+		add(crearBotonera(getBotones()), BorderLayout.SOUTH);
+		initPanel(handler);
 	}
 
 	public Box crearBoxHorizontal(String titulo, JTextField jTextField) {
@@ -32,13 +36,13 @@ public abstract class MiPanel extends JPanel {
 		return box;
 	}
 
-	public void crearBoxVertical(String[] titulosBoxes, JTextField[] textFields) {
+	public Box crearBoxVertical(String[] titulosBoxes, JTextField[] textFields) {
 		Box vertical = Box.createVerticalBox();
 		for (int i = 0; i < titulosBoxes.length; i++) {
 			vertical.add(Box.createVerticalStrut(20));
 			vertical.add(crearBoxHorizontal(titulosBoxes[i], textFields[i]));
 		}
-		add(vertical, BorderLayout.CENTER);
+		return vertical;
 	}
 
 	public Box crearBotonera(JButton[] botones) {
@@ -53,20 +57,22 @@ public abstract class MiPanel extends JPanel {
 
 		horizontal.add(botonera);
 		add(horizontal, BorderLayout.SOUTH);
-		
+
 		return horizontal;
 	}
-	
+
 	public abstract void limpiarCampos();
-	
+
 	public abstract Object panelToObject();
-	
+
 	public abstract void objectToPanel(Object object);
-	
+
 	public abstract JLabel getTituloPanel();
-	
+
 	public abstract Box getBody();
-	
+
 	public abstract JButton[] getBotones();
-	
+
+	public abstract void initPanel(Handler handler);
+
 }

@@ -26,9 +26,9 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	public ModificarAutoPanel(Handler handler) {
 		super(handler);
-		initPanel(handler);
 	}
-
+	
+	@Override
 	public void initPanel(Handler handler) {
 		deshabilitarCampos();
 
@@ -159,8 +159,12 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void limpiarCampos() {
-		// TODO Auto-generated method stub
-		
+		patenteTextField.setText("");
+		marcaTextField.setText("");
+		modeloTextField.setText("");
+		colorTextField.setText("");
+		puertasTextField.setText("");
+		kilometrosTextField.setText("");
 	}
 
 	@Override
