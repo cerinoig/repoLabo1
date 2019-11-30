@@ -82,6 +82,7 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void limpiarCampos() {
+
 		patenteTextField.setText("");
 		marcaTextField.setText("");
 		modeloTextField.setText("");
@@ -99,16 +100,8 @@ public class AltaAutoPanel extends AutoPanel {
 	@Override
 	public Box getBody() {
 
-		patenteTextField = new JTextField();
-		marcaTextField = new JTextField();
-		modeloTextField = new JTextField();
-		colorTextField = new JTextField();
-		puertasTextField = new JTextField();
-		kilometrosTextField = new JTextField();
-		añoTextField = new JTextField();
-
+		initTextFields();
 		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
-
 		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
 				kilometrosTextField, añoTextField };
 
@@ -118,11 +111,26 @@ public class AltaAutoPanel extends AutoPanel {
 	@Override
 	public JButton[] getBotones() {
 
+		initButtons();
+		JButton[] botones = { confirmarBoton, cancelarBoton };
+		return botones;
+	}
+
+	@Override
+	public void initTextFields() {
+
+		patenteTextField = new JTextField();
+		marcaTextField = new JTextField();
+		modeloTextField = new JTextField();
+		colorTextField = new JTextField();
+		puertasTextField = new JTextField();
+		kilometrosTextField = new JTextField();
+		añoTextField = new JTextField();
+	}
+
+	@Override
+	public void initButtons() {
 		confirmarBoton = new JButton("Guardar");
 		cancelarBoton = new JButton("Cancelar");
-
-		JButton[] botones = { confirmarBoton, cancelarBoton };
-
-		return botones;
 	}
 }

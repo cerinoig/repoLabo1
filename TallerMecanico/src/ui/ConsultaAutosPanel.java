@@ -15,7 +15,7 @@ public class ConsultaAutosPanel extends JPanel {
 	public ConsultaAutosPanel(Handler handler) {
 		initUI(handler);
 	}
-	
+
 	private void initUI(Handler handler) {
 		setLayout(new BorderLayout());
 		AutosTableModel autosTableModel = new AutosTableModel(handler.selectAllAutos());

@@ -56,10 +56,22 @@ public class EliminarUsuariosPanel extends MiPanel {
 		
 	}
 
+	@Override
+	public void initTextFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void initButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
 //
 //	@Override
 //	public void eliminarDatos(Handler handler) {
 //		handler.deleteUsuario(((JTextField) datos1.getComponent(3)).getText().toString());
-//	}
+	// }
 
 }

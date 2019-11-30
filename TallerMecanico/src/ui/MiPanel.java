@@ -1,8 +1,6 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,6 +15,7 @@ public abstract class MiPanel extends JPanel {
 
 	protected JButton confirmarBoton;
 	protected JButton cancelarBoton;
+	protected JButton buscarBoton;
 
 	public MiPanel(Handler handler) {
 
@@ -74,5 +73,9 @@ public abstract class MiPanel extends JPanel {
 	public abstract JButton[] getBotones();
 
 	public abstract void initPanel(Handler handler);
+
+	public abstract void initTextFields();
+
+	public abstract void initButtons();
 
 }

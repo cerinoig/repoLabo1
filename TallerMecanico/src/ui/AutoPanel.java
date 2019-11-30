@@ -1,6 +1,5 @@
 package ui;
 
-import javax.swing.Box;
 import javax.swing.JTextField;
 
 import handler.Handler;
@@ -16,6 +15,7 @@ public abstract class AutoPanel extends MiPanel {
 	protected JTextField puertasTextField;
 	protected JTextField kilometrosTextField;
 	protected JTextField añoTextField;
+	protected JTextField buscarTextfield;
 
 	public AutoPanel(Handler handler) {
 		super(handler);

@@ -15,76 +15,38 @@ import handler.Handler;
 public class ModificarAutoPanel extends AutoPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private JTextField buscarTextfield = new JTextField();
-
-	private JButton buscarBoton = new JButton("Buscar");
-	private JButton modificarBoton = new JButton("Modificar");
-	private JButton cancelarBoton = new JButton("Cancelar");
-
 	private Auto auto = new Auto();
 
 	public ModificarAutoPanel(Handler handler) {
 		super(handler);
 	}
-	
+
 	@Override
 	public void initPanel(Handler handler) {
-		deshabilitarCampos();
-
-		String[] labels = { "Buscar auto", "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros",
-				"Año" };
-		JButton[] botones = { buscarBoton, modificarBoton, cancelarBoton };
-		JTextField[] textFields = { buscarTextfield, patenteTextField, marcaTextField, modeloTextField, colorTextField,
-				puertasTextField, kilometrosTextField, añoTextField };
-
-		crearBoxVertical(labels, textFields);
-
-		modificarBoton.setEnabled(false);
-
-		crearBotonera(botones);
 
 		buscarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				consultarDatos(handler);
-				modificarBoton.setEnabled(true);
-			}
 
+				if (handler.consultaAuto(buscarTextfield.getText()) != null) {
+					objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
+					confirmarBoton.setEnabled(true);
+				}
+			}
 		});
 
-		modificarBoton.addActionListener(new ActionListener() {
+		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				auto.setPatente(patenteTextField.getText().toUpperCase());
-				auto.setMarca(marcaTextField.getText());
-				auto.setModelo(modeloTextField.getText());
-				auto.setColor(colorTextField.getText());
 
 				try {
-					Integer.valueOf(puertasTextField.getText());
-					puertasTextField.setBackground(Color.WHITE);
-				} catch (NumberFormatException ne) {
-					ne.printStackTrace();
-					puertasTextField.setBackground(Color.RED);
-					handler.mostrarError(new NumberFormatException("La cantidad de puertas no es un numero"));
+					handler.modificarAuto((Auto) panelToObject());
+					limpiarCampos();
+					deshabilitarCampos();
+				} catch (NumberFormatException nf) {
+					handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
 				}
 
-				auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
-
-				try {
-					Integer.valueOf(kilometrosTextField.getText());
-					kilometrosTextField.setBackground(Color.WHITE);
-				} catch (Exception e3) {
-					e3.printStackTrace();
-					kilometrosTextField.setBackground(Color.RED);
-					handler.mostrarError(new NumberFormatException("La cantidad de KM no es un numero"));
-				}
-
-				auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
-
-				auto.setAño(añoTextField.getText());
-				handler.modificarAuto(auto);
 			}
 		});
 
@@ -130,31 +92,51 @@ public class ModificarAutoPanel extends AutoPanel {
 		añoTextField.setBackground(Color.WHITE);
 	}
 
-	private void consultarDatos(Handler handler) {
-		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-			auto = handler.consultaAuto(buscarTextfield.getText().toUpperCase());
-			patenteTextField.setText(auto.getPatente());
-			marcaTextField.setText(auto.getMarca());
-			modeloTextField.setText(auto.getModelo());
-			colorTextField.setText(auto.getColor());
-			puertasTextField.setText(String.valueOf(auto.getCantidadPuertas()));
-			kilometrosTextField.setText(String.valueOf(auto.getKilometraje()));
-			añoTextField.setText(auto.getAño());
-
-			habilitarCampos();
-		}
-	}
-
 	@Override
 	public Object panelToObject() {
-		// TODO Auto-generated method stub
-		return null;
+		auto.setPatente(patenteTextField.getText().toUpperCase());
+		auto.setMarca(marcaTextField.getText());
+		auto.setModelo(modeloTextField.getText());
+		auto.setColor(colorTextField.getText());
+
+		try {
+			Integer.valueOf(puertasTextField.getText());
+			puertasTextField.setBackground(Color.WHITE);
+		} catch (NumberFormatException ne) {
+			ne.printStackTrace();
+			puertasTextField.setBackground(Color.RED);
+			new NumberFormatException("La cantidad de puertas no es un numero");
+		}
+
+		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+
+		try {
+			Integer.valueOf(kilometrosTextField.getText());
+			kilometrosTextField.setBackground(Color.WHITE);
+		} catch (Exception e3) {
+			e3.printStackTrace();
+			kilometrosTextField.setBackground(Color.RED);
+			new NumberFormatException("La cantidad de KM no es un numero");
+		}
+
+		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+		auto.setAño(añoTextField.getText());
+		return auto;
 	}
 
 	@Override
 	public void objectToPanel(Object object) {
-		// TODO Auto-generated method stub
-		
+
+		patenteTextField.setText(((Auto) object).getPatente());
+		marcaTextField.setText(((Auto) object).getMarca());
+		modeloTextField.setText(((Auto) object).getModelo());
+		colorTextField.setText(((Auto) object).getColor());
+		puertasTextField.setText(String.valueOf(((Auto) object).getCantidadPuertas()));
+		kilometrosTextField.setText(String.valueOf(((Auto) object).getKilometraje()));
+		añoTextField.setText(((Auto) object).getAño());
+
+		habilitarCampos();
+
 	}
 
 	@Override
@@ -165,6 +147,7 @@ public class ModificarAutoPanel extends AutoPanel {
 		colorTextField.setText("");
 		puertasTextField.setText("");
 		kilometrosTextField.setText("");
+		añoTextField.setText("");
 	}
 
 	@Override
@@ -174,13 +157,45 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public Box getBody() {
-		// TODO Auto-generated method stub
-		return null;
+
+		initTextFields();
+		deshabilitarCampos();
+		String[] labels = { "Buscar auto", "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros",
+				"Año" };
+		JTextField[] textFields = { buscarTextfield, patenteTextField, marcaTextField, modeloTextField, colorTextField,
+				puertasTextField, kilometrosTextField, añoTextField };
+
+		return crearBoxVertical(labels, textFields);
 	}
 
 	@Override
 	public JButton[] getBotones() {
-		// TODO Auto-generated method stub
-		return null;
+
+		initButtons();
+		confirmarBoton.setEnabled(false);
+		JButton[] botones = { buscarBoton, confirmarBoton, cancelarBoton };
+
+		return botones;
+	}
+
+	@Override
+	public void initTextFields() {
+
+		buscarTextfield = new JTextField();
+		patenteTextField = new JTextField();
+		marcaTextField = new JTextField();
+		modeloTextField = new JTextField();
+		colorTextField = new JTextField();
+		puertasTextField = new JTextField();
+		kilometrosTextField = new JTextField();
+		añoTextField = new JTextField();
+
+	}
+
+	@Override
+	public void initButtons() {
+		buscarBoton = new JButton("Buscar");
+		confirmarBoton = new JButton("Modificar");
+		cancelarBoton = new JButton("Cancelar");
 	}
 }
