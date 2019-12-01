@@ -11,7 +11,6 @@ import entidades.Auto;
 import entidades.Factura;
 import entidades.Usuario;
 import excepciones.CamposVaciosException;
-import excepciones.NonExistingCarException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.FacturaBusinessObject;
@@ -228,6 +227,18 @@ public class Handler {
 		case CONSULTA_AUTO:
 			frame.cambiarPanel(new ConsultaAutosPanel(this));
 			break;
+//		case ALTA_FACTURA:
+//			frame.cambiarPanel(new AltaFacturaPanel(this));
+//			break;
+//		case BAJA_FACTURA:
+//			frame.cambiarPanel(new AltaFacturaPanel(this));
+//			break;
+//		case MODIFICAR_FACTURA:
+//			frame.cambiarPanel(new AltaFacturaPanel(this));
+//			break;
+//		case CONSULTA_FACTURA:
+//			frame.cambiarPanel(new AltaFacturaPanel(this));
+//			break;
 		}
 	}
 
