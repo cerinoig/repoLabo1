@@ -10,45 +10,78 @@ import excepciones.TallerMecanicoException;
 
 public class FacturaBusinessObjectImpl implements FacturaBusinessObject {
 
-	public FacturaBusinessObjectImpl() {
-		// TODO Auto-generated constructor stub
-	}
+	private FacturaDAO facturaDAO;
 
 	@Override
 	public void setDAO(FacturaDAO facturaDAO) {
-		// TODO Auto-generated method stub
-		
+		this.facturaDAO = facturaDAO;
 	}
 
 	@Override
 	public Factura selectFactura(int idFactura) throws TallerMecanicoException, CamposVaciosException {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (!String.valueOf(idFactura).equals("")) {
+			if (facturaDAO.selectFactura(idFactura) == null) {
+				throw new TallerMecanicoException("La factura no existe con el codigo " + idFactura);
+			} else {
+				return facturaDAO.selectFactura(idFactura);
+			}
+		} else {
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+		}
 	}
 
 	@Override
 	public void insertFactura(Factura factura)
 			throws TallerMecanicoException, NoIdObtainedException, CamposVaciosException {
-		// TODO Auto-generated method stub
-		
+		if (validarFactura(factura)) {
+			facturaDAO.insertFactura(factura);
+		} else {
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+		}
 	}
 
 	@Override
 	public void updateFactura(Factura factura) throws TallerMecanicoException, CamposVaciosException {
-		// TODO Auto-generated method stub
-		
+		if (validarFactura(factura)) {
+			facturaDAO.updateFactura(factura);
+		} else {
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+		}
 	}
 
 	@Override
 	public void deleteFactura(int idFactura) throws TallerMecanicoException, CamposVaciosException {
-		// TODO Auto-generated method stub
-		
+
+		if (!String.valueOf(idFactura).equals("")) {
+			if (facturaDAO.selectFactura(idFactura) == null) {
+				throw new TallerMecanicoException("La factura que intenta eliminar no existe");
+			} else {
+				facturaDAO.deleteFactura(idFactura);
+			}
+		} else {
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+		}
+
 	}
+	
+	@Override
+	public void cobrarArreglo(Factura factura) throws TallerMecanicoException {
+		facturaDAO.cobrarArreglo(factura);
+	}
+	
 
 	@Override
 	public List<Factura> selectAll() throws TallerMecanicoException {
-		// TODO Auto-generated method stub
-		return null;
+		return facturaDAO.selectAll();
+	}
+
+	public boolean validarFactura(Factura factura) {
+		if (!factura.getPatente().equals("") && !factura.getArreglo().equals("")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

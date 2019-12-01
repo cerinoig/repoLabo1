@@ -20,6 +20,8 @@ public interface FacturaBusinessObject {
 	void updateFactura(Factura factura) throws TallerMecanicoException, CamposVaciosException;
 
 	void deleteFactura(int idFactura) throws TallerMecanicoException, CamposVaciosException;
+	
+	void cobrarArreglo(Factura factura)  throws TallerMecanicoException;
 
 	List<Factura> selectAll() throws TallerMecanicoException;
 

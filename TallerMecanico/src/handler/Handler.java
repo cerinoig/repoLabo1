@@ -17,6 +17,7 @@ import servicios.FacturaBusinessObject;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 import ui.AltaAutoPanel;
+import ui.AltaFacturaPanel;
 import ui.AltaUsuarioPanel;
 import ui.ConsultaAutosPanel;
 import ui.ConsultaUsuariosPanel;
@@ -36,6 +37,11 @@ import static utils.NombrePantallas.BAJA_USUARIO;
 import static utils.NombrePantallas.MODIFICAR_USUARIO;
 import static utils.NombrePantallas.CONSULTA_USUARIOS;
 import static utils.NombrePantallas.CERRAR_SESION;
+import static utils.NombrePantallas.ALTA_FACTURA;
+import static utils.NombrePantallas.BAJA_FACTURA;
+import static utils.NombrePantallas.MODIFICAR_FACTURA;
+import static utils.NombrePantallas.CONSULTA_FACTURA;
+
 
 public class Handler {
 
@@ -227,18 +233,18 @@ public class Handler {
 		case CONSULTA_AUTO:
 			frame.cambiarPanel(new ConsultaAutosPanel(this));
 			break;
-//		case ALTA_FACTURA:
-//			frame.cambiarPanel(new AltaFacturaPanel(this));
-//			break;
-//		case BAJA_FACTURA:
-//			frame.cambiarPanel(new AltaFacturaPanel(this));
-//			break;
-//		case MODIFICAR_FACTURA:
-//			frame.cambiarPanel(new AltaFacturaPanel(this));
-//			break;
-//		case CONSULTA_FACTURA:
-//			frame.cambiarPanel(new AltaFacturaPanel(this));
-//			break;
+		case ALTA_FACTURA:
+			frame.cambiarPanel(new AltaFacturaPanel(this));
+			break;
+		case BAJA_FACTURA:
+			frame.cambiarPanel(new AltaFacturaPanel(this));
+			break;
+		case MODIFICAR_FACTURA:
+			frame.cambiarPanel(new AltaFacturaPanel(this));
+			break;
+		case CONSULTA_FACTURA:
+			frame.cambiarPanel(new AltaFacturaPanel(this));
+			break;
 		}
 	}
 

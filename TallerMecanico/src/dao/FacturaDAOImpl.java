@@ -127,12 +127,12 @@ public class FacturaDAOImpl implements FacturaDAO {
 	}
 
 	@Override
-	public void deleteFactura(String patente) throws TallerMecanicoException {
+	public void deleteFactura(int idFactura) throws TallerMecanicoException {
 		try {
 			conn = ConnectionManager.getConnection();
 			sql = "DELETE FROM FACTURAS WHERE ID_FACTURA = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, patente);
+			pstmt.setInt(1, idFactura);
 			pstmt.execute();
 			conn.commit();
 
@@ -189,5 +189,37 @@ public class FacturaDAOImpl implements FacturaDAO {
 		}
 
 		return facturas;
+	}
+
+	@Override
+	public void updateFactura(Factura factura) throws TallerMecanicoException {
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "UPDATE FACTURAS SET ARREGLO = ?,  PATENTE = ?  WHERE ID_FACTURA = ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, factura.getArreglo());
+			pstmt.setString(2, factura.getPatente());
+			pstmt.setInt(3, factura.getIdFactura());
+
+			pstmt.executeUpdate();
+			conn.commit();
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error al modificar la factura", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
 	}
 }

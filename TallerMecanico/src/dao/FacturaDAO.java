@@ -17,7 +17,9 @@ public interface FacturaDAO {
 
 	void cobrarArreglo(Factura factura) throws TallerMecanicoException;
 
-	void deleteFactura(String patente) throws TallerMecanicoException;
+	void updateFactura(Factura factura) throws TallerMecanicoException;
+
+	void deleteFactura(int codigoFactura) throws TallerMecanicoException;
 
 	List<Factura> selectAll() throws TallerMecanicoException;
 
