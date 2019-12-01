@@ -44,7 +44,7 @@ public class AltaAutoPanel extends AutoPanel {
 	public Object panelToObject() {
 		Auto auto = new Auto();
 		auto.setPatente(patenteTextField.getText().toUpperCase());
-		auto.setMarca(marcaTextField.getText().toString());
+		auto.setMarca(marcaTextField.getText());
 		auto.setModelo(modeloTextField.getText());
 		auto.setColor(colorTextField.getText());
 

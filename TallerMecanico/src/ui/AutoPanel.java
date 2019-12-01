@@ -21,6 +21,6 @@ public abstract class AutoPanel extends MiPanel {
 		super(handler);
 	}
 
-	public abstract void initPanel(Handler handler);
+	//public abstract void initPanel(Handler handler);
 
 }

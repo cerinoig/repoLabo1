@@ -8,11 +8,13 @@ import javax.swing.JPanel;
 import dao.AutoDAOImpl;
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
+import entidades.Factura;
 import entidades.Usuario;
 import excepciones.CamposVaciosException;
 import excepciones.NonExistingCarException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
+import servicios.FacturaBusinessObject;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 import ui.AltaAutoPanel;
@@ -40,6 +42,7 @@ public class Handler {
 
 	private UsuarioBusinessObject usuarioBusinessObject;
 	private AutoBusinessObject autoBusinessObject;
+	private FacturaBusinessObject facturaBusinessObject;
 	private MiFrame frame;
 
 	public Handler() {
@@ -247,6 +250,20 @@ public class Handler {
 
 	private void campoNumericoInvalido() {
 		JOptionPane.showMessageDialog(null, "El campo numerico es invalido", "Aviso", JOptionPane.WARNING_MESSAGE);
+	}
+
+	public void altaFactura(Factura factura) {
+		
+		try {
+			facturaBusinessObject.insertFactura(factura);
+			mostrarExito("La factura fue creada exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
 	}
 
 }
