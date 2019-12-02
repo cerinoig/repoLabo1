@@ -39,6 +39,8 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.modificarUsuario((Usuario) panelToObject());
+				limpiarCampos();
+				deshabilitarCampos();
 			}
 		});
 
