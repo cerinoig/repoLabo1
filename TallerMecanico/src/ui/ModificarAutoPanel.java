@@ -27,56 +27,19 @@ public class ModificarAutoPanel extends AutoPanel {
 		buscarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-					objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
-					confirmarBoton.setEnabled(true);
-				}
+				accionBuscar(handler);
 			}
 		});
 
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					handler.modificarAuto((Auto) panelToObject());
-					limpiarCampos();
-					deshabilitarCampos();
-				} catch (NumberFormatException nf) {
-					handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-				}
-
+				accionConfirmar(handler);
 			}
 		});
-
-		cancelarBoton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
-			}
-		});
-
 	}
 
-	public void deshabilitarCampos() {
-		patenteTextField.setEditable(false);
-		patenteTextField.setBackground(Color.LIGHT_GRAY);
-		marcaTextField.setEditable(false);
-		marcaTextField.setBackground(Color.LIGHT_GRAY);
-		modeloTextField.setEditable(false);
-		modeloTextField.setBackground(Color.LIGHT_GRAY);
-		colorTextField.setEditable(false);
-		colorTextField.setBackground(Color.LIGHT_GRAY);
-		puertasTextField.setEditable(false);
-		puertasTextField.setBackground(Color.LIGHT_GRAY);
-		kilometrosTextField.setEditable(false);
-		kilometrosTextField.setBackground(Color.LIGHT_GRAY);
-		añoTextField.setEditable(false);
-		añoTextField.setBackground(Color.LIGHT_GRAY);
-	}
-
+	@Override
 	public void habilitarCampos() {
 		marcaTextField.setEditable(true);
 		marcaTextField.setBackground(Color.WHITE);
@@ -126,7 +89,6 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void objectToPanel(Object object) {
-
 		patenteTextField.setText(((Auto) object).getPatente());
 		marcaTextField.setText(((Auto) object).getMarca());
 		modeloTextField.setText(((Auto) object).getModelo());
@@ -134,20 +96,6 @@ public class ModificarAutoPanel extends AutoPanel {
 		puertasTextField.setText(String.valueOf(((Auto) object).getCantidadPuertas()));
 		kilometrosTextField.setText(String.valueOf(((Auto) object).getKilometraje()));
 		añoTextField.setText(((Auto) object).getAño());
-
-		habilitarCampos();
-
-	}
-
-	@Override
-	public void limpiarCampos() {
-		patenteTextField.setText("");
-		marcaTextField.setText("");
-		modeloTextField.setText("");
-		colorTextField.setText("");
-		puertasTextField.setText("");
-		kilometrosTextField.setText("");
-		añoTextField.setText("");
 	}
 
 	@Override
@@ -157,7 +105,6 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public Box getBody() {
-
 		initTextFields();
 		deshabilitarCampos();
 		String[] labels = { "Buscar auto", "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros",
@@ -170,7 +117,6 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public JButton[] getBotones() {
-
 		initButtons();
 		confirmarBoton.setEnabled(false);
 		JButton[] botones = { buscarBoton, confirmarBoton, cancelarBoton };
@@ -180,7 +126,6 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void initTextFields() {
-
 		buscarTextfield = new JTextField();
 		patenteTextField = new JTextField();
 		marcaTextField = new JTextField();
@@ -189,7 +134,6 @@ public class ModificarAutoPanel extends AutoPanel {
 		puertasTextField = new JTextField();
 		kilometrosTextField = new JTextField();
 		añoTextField = new JTextField();
-
 	}
 
 	@Override
@@ -197,5 +141,25 @@ public class ModificarAutoPanel extends AutoPanel {
 		buscarBoton = new JButton("Buscar");
 		confirmarBoton = new JButton("Modificar");
 		cancelarBoton = new JButton("Cancelar");
+	}
+
+	@Override
+	public void accionConfirmar(Handler handler) {
+		try {
+			handler.modificarAuto((Auto) panelToObject());
+			limpiarCampos();
+			deshabilitarCampos();
+		} catch (NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		}
+	}
+
+	@Override
+	public void accionBuscar(Handler handler) {
+		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
+			objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
+			habilitarCampos();
+			confirmarBoton.setEnabled(true);
+		}
 	}
 }
