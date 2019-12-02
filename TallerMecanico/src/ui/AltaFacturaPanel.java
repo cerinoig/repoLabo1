@@ -18,14 +18,15 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public AltaFacturaPanel(Handler handler) {
 		super(handler);
 	}
-	
+
 	@Override
 	public void initPanel(Handler handler) {
-		
+
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaFactura(((Factura) panelToObject())); ;
+				handler.altaFactura(((Factura) panelToObject()));
+				;
 				limpiarCampos();
 			}
 		});
@@ -39,7 +40,7 @@ public class AltaFacturaPanel extends FacturaPanel {
 		});
 
 	}
-	
+
 	@Override
 	public void limpiarCampos() {
 		patenteTextField.setText("");
@@ -49,10 +50,10 @@ public class AltaFacturaPanel extends FacturaPanel {
 	@Override
 	public Object panelToObject() {
 		Factura factura = new Factura();
-		
+
 		factura.setArreglo(arregloTextField.getText());
 		factura.setPatente(arregloTextField.getText().toUpperCase());
-		
+
 		return null;
 	}
 
@@ -71,7 +72,7 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public Box getBody() {
 
 		initTextFields();
-		final String[] labels = {  "patente", "Arreglo" };
+		final String[] labels = { "patente", "Arreglo" };
 		JTextField[] textFields = { patenteTextField, arregloTextField };
 
 		return crearBoxVertical(labels, textFields);
@@ -95,6 +96,30 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public void initButtons() {
 		confirmarBoton = new JButton("Crear");
 		cancelarBoton = new JButton("Cancelar");
+	}
+
+	@Override
+	public void accionConfirmar(Handler handler) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void accionBuscar(Handler handler) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deshabilitarCampos() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void habilitarCampos() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
