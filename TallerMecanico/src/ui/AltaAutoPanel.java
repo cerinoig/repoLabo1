@@ -26,16 +26,7 @@ public class AltaAutoPanel extends AutoPanel {
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaAuto((Auto) panelToObject());
-				limpiarCampos();
-			}
-		});
-
-		cancelarBoton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
+				accionConfirmar(handler);
 			}
 		});
 	}
@@ -132,5 +123,28 @@ public class AltaAutoPanel extends AutoPanel {
 	public void initButtons() {
 		confirmarBoton = new JButton("Guardar");
 		cancelarBoton = new JButton("Cancelar");
+	}
+
+	@Override
+	public void accionConfirmar(Handler handler) {
+		handler.altaAuto((Auto) panelToObject());
+		limpiarCampos();
+	}
+
+	@Override
+	public void accionBuscar(Handler handler) {
+
+	}
+
+	@Override
+	public void deshabilitarCampos() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void habilitarCampos() {
+		// TODO Auto-generated method stub
+		
 	}
 }
