@@ -13,6 +13,8 @@ public abstract class MiPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	protected JTextField buscarTextfield;
+	
 	protected JButton confirmarBoton;
 	protected JButton cancelarBoton;
 	protected JButton buscarBoton;

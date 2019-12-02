@@ -15,7 +15,6 @@ public abstract class AutoPanel extends MiPanel {
 	protected JTextField puertasTextField;
 	protected JTextField kilometrosTextField;
 	protected JTextField añoTextField;
-	protected JTextField buscarTextfield;
 
 	public AutoPanel(Handler handler) {
 		super(handler);
