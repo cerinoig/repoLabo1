@@ -95,7 +95,7 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 		passwordField.setVisible(false);
 	}
 
-	private void habilitarCampos() {
+	public void habilitarCampos() {
 		nombreTextField.setEditable(true);
 		nombreTextField.setBackground(Color.WHITE);
 		apellidoTextField.setEditable(true);
@@ -146,6 +146,18 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 		buscarBoton = new JButton("Buscar");
 		confirmarBoton = new JButton("Modificar");
 		cancelarBoton = new JButton("Cancelar");
+	}
+
+	@Override
+	public void accionConfirmar(Handler handler) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void accionBuscar(Handler handler) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
