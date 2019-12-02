@@ -70,14 +70,14 @@ public class LoginPanel extends JPanel {
 		login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.login(usuarioTextField.getText().toString(), String.valueOf(passwordField.getPassword()));
+				handler.consultarUsuario(usuarioTextField.getText().toString());
 			}
 		});
 
 		registro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.registro();
+//				handler.altaUsuario(usuario);
 			}
 		});
 	}

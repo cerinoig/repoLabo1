@@ -1,120 +1,149 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
-import excepciones.NonExistingUserException;
 import handler.Handler;
 
-public class ModificarUsuarioPanel extends JPanel {
+public class ModificarUsuarioPanel extends UsuarioPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel tituloLabel, nombreLabel, apellidoLabel, mailLabel, usuarioLabel, passwordLabel;
-	private JTextField nombreTextField, apellidoTextField, mailTextField, usuarioTextField;
-	private JPasswordField passwordField;
-	private JButton guardarBoton;
-
-	public ModificarUsuarioPanel(Handler handler, String nombreUsuario, String contraseña) {
-		initUI(handler, nombreUsuario, contraseña);
+	public ModificarUsuarioPanel(Handler handler) {
+		super(handler);
 	}
 
-	public void initUI(Handler handler, String nombreUsuario, String contraseña) {
-		setVisible(true);
-		setSize(700, 700);
-		setLayout(null);
+	@Override
+	public void initPanel(Handler handler) {
 
-		tituloLabel = new JLabel("Modificar datos - Usuario");
-		tituloLabel.setForeground(Color.blue);
-		tituloLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		buscarBoton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (handler.consultarUsuario(buscarTextfield.getText()) != null) {
+					objectToPanel(handler.consultarUsuario(buscarTextfield.getText()));
+					habilitarCampos();
+					confirmarBoton.setEnabled(true);
+				}
+			}
+		});
 
-		nombreLabel = new JLabel("Nombre:");
-		apellidoLabel = new JLabel("Apellido:");
-		mailLabel = new JLabel("Mail:");
-		usuarioLabel = new JLabel("Usuario");
-		passwordLabel = new JLabel("Contraseña");
+		confirmarBoton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.modificarUsuario((Usuario) panelToObject());
+			}
+		});
 
+		cancelarBoton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.irAlInicio();
+			}
+		});
+	}
+
+	@Override
+	public void limpiarCampos() {
+		nombreTextField.setText("");
+		apellidoTextField.setText("");
+		mailTextField.setText("");
+		usuarioTextField.setText("");
+		passwordField.setText("");
+	}
+
+	@Override
+	public Object panelToObject() {
+		Usuario usuario = new Usuario();
+		usuario.setNombre(nombreTextField.getText());
+		usuario.setApellido(apellidoTextField.getText());
+		usuario.setMail(mailTextField.getText());
+		usuario.setUsuario(usuarioTextField.getText());
+		usuario.setPassword(String.valueOf(passwordField.getPassword()));
+
+		return usuario;
+	}
+
+	@Override
+	public void objectToPanel(Object object) {
+		nombreTextField.setText(((Usuario) object).getNombre());
+		apellidoTextField.setText(((Usuario) object).getApellido());
+		mailTextField.setText(((Usuario) object).getMail());
+		usuarioTextField.setText(((Usuario) object).getUsuario());
+		passwordField.setText(((Usuario) object).getPassword());
+	}
+
+	public void deshabilitarCampos() {
+		nombreTextField.setEditable(false);
+		nombreTextField.setBackground(Color.LIGHT_GRAY);
+		apellidoTextField.setEditable(false);
+		apellidoTextField.setBackground(Color.LIGHT_GRAY);
+		mailTextField.setEditable(false);
+		mailTextField.setBackground(Color.LIGHT_GRAY);
+		usuarioTextField.setEditable(false);
+		usuarioTextField.setBackground(Color.LIGHT_GRAY);
+		passwordField.setVisible(false);
+	}
+
+	private void habilitarCampos() {
+		nombreTextField.setEditable(true);
+		nombreTextField.setBackground(Color.WHITE);
+		apellidoTextField.setEditable(true);
+		apellidoTextField.setBackground(Color.WHITE);
+		mailTextField.setEditable(true);
+		mailTextField.setBackground(Color.WHITE);
+		usuarioTextField.setEditable(true);
+		usuarioTextField.setBackground(Color.WHITE);
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("MODIFICAR USUARIOS");
+	}
+
+	@Override
+	public Box getBody() {
+		initTextFields();
+		deshabilitarCampos();
+		String[] labels = { "Buscar usuario", "Nombre", "Apellido", "Mail", "Usuario" };
+		JTextField[] textFields = { buscarTextfield, nombreTextField, apellidoTextField, mailTextField,
+				usuarioTextField };
+
+		return crearBoxVertical(labels, textFields);
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		initButtons();
+		confirmarBoton.setEnabled(false);
+		JButton[] botones = { buscarBoton, confirmarBoton, cancelarBoton };
+
+		return botones;
+	}
+
+	@Override
+	public void initTextFields() {
+		buscarTextfield = new JTextField();
 		nombreTextField = new JTextField();
 		apellidoTextField = new JTextField();
 		mailTextField = new JTextField();
 		usuarioTextField = new JTextField();
 		passwordField = new JPasswordField();
-
-		guardarBoton = new JButton("Guardar");
-
-		tituloLabel.setBounds(100, 30, 400, 30);
-		nombreLabel.setBounds(80, 70, 200, 30);
-		apellidoLabel.setBounds(80, 110, 200, 30);
-		mailLabel.setBounds(80, 150, 200, 30);
-		usuarioLabel.setBounds(80, 190, 200, 30);
-		passwordLabel.setBounds(80, 230, 200, 30);
-
-		nombreTextField.setBounds(300, 70, 200, 30);
-		apellidoTextField.setBounds(300, 110, 200, 30);
-		mailTextField.setBounds(300, 150, 200, 30);
-		usuarioTextField.setBounds(300, 190, 200, 30);
-		passwordField.setBounds(300, 230, 200, 30);
-
-		guardarBoton.setBounds(80, 280, 100, 30);
-
-		if (getUsuario(handler, nombreUsuario, contraseña) != null) {
-			Usuario usuario = getUsuario(handler, nombreUsuario, contraseña);
-			nombreTextField.setText(usuario.getNombre());
-			apellidoTextField.setText(usuario.getApellido());
-			mailTextField.setText(usuario.getMail());
-			usuarioTextField.setText(usuario.getUsuario());
-			passwordField.setText(usuario.getPassword());
-			;
-		}
-
-		add(tituloLabel);
-
-		add(nombreLabel);
-		add(nombreTextField);
-
-		add(apellidoLabel);
-		add(apellidoTextField);
-
-		add(mailLabel);
-		add(mailTextField);
-
-		add(usuarioLabel);
-		add(usuarioTextField);
-
-		add(passwordLabel);
-		add(passwordField);
-
-		add(guardarBoton);
-
-		guardarBoton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Usuario usuario = new Usuario();
-				usuario.setNombre(nombreTextField.getText().toString());
-				usuario.setApellido(apellidoTextField.getText().toString());
-				usuario.setMail(mailTextField.getText().toString());
-				usuario.setUsuario(usuarioTextField.getText().toString());
-				usuario.setPassword(String.valueOf(passwordField.getPassword()));
-
-				handler.modificarUsuario(usuario);
-			}
-		});
-
 	}
 
-	public Usuario getUsuario(Handler handler, String nombreUsuario, String contraseña) {
-		return handler.consultaUsuario(nombreUsuario, contraseña);
+	@Override
+	public void initButtons() {
+		buscarBoton = new JButton("Buscar");
+		confirmarBoton = new JButton("Modificar");
+		cancelarBoton = new JButton("Cancelar");
 	}
 
 }
