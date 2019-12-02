@@ -36,7 +36,7 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.deleteAuto(usuarioTextField.getText());
+				handler.deleteUsuario(usuarioTextField.getText());
 				limpiarCampos();
 			}
 		});
@@ -78,6 +78,7 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 		mailTextField.setText("");
 		usuarioTextField.setText("");
 		passwordField.setText("");
+		buscarTextfield.setText("");
 	}
 
 	@Override
