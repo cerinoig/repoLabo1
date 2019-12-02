@@ -106,7 +106,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	public void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, MAIL = ?, USUARIO = ?, PASSWORD = ?";
+			sql = "UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, MAIL = ?, USUARIO = ?, PASSWORD = ? WHERE USUARIO = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, usuario.getNombre());
@@ -114,6 +114,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			pstmt.setString(3, usuario.getMail());
 			pstmt.setString(4, usuario.getUsuario());
 			pstmt.setString(5, usuario.getPassword());
+			pstmt.setString(6, usuario.getUsuario());
 
 			pstmt.executeUpdate();
 			conn.commit();
