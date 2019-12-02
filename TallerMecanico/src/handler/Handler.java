@@ -29,6 +29,7 @@ import ui.LoginPanel;
 import ui.MiFrame;
 import ui.ModificarAutoPanel;
 import ui.ModificarFacturaPanel;
+import ui.ModificarUsuarioPanel;
 import ui.PanelBienvenida;
 
 import static utils.NombrePantallas.ALTA_AUTO;
@@ -66,71 +67,54 @@ public class Handler {
 	}
 
 	public void altaUsuario(Usuario usuario) {
-		if (usuario.getNombre() != null && usuario.getApellido() != null && usuario.getMail() != null
-				&& usuario.getUsuario() != null && usuario.getPassword() != null) {
-			try {
-				usuarioBusinessObject.insertUsuario(usuario);
-				mostrarExito("El usuario fue dado de alta con éxito");
-				frame.getJMenuBar().setVisible(true);
-			} catch (Exception e) {
-				mostrarError(e);
-			}
-		} else {
-			// camposVaciosMensaje();
+		try {
+			usuarioBusinessObject.insertUsuario(usuario);
+			mostrarExito("El usuario fue dado de alta con éxito");
+			frame.getJMenuBar().setVisible(true);
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
-
 	}
 
 	public void deleteUsuario(String usuario) {
-		if (!usuario.equals("")) {
-			try {
-				usuarioBusinessObject.deleteUsuario(usuario);
-				mostrarExito("El usuario fue eliminado exitosamente");
-			} catch (Exception e) {
-				mostrarError(e);
-			}
-		} else {
-			campoVacioMensaje("Debe ingresar el nombre de usuario");
+		try {
+			usuarioBusinessObject.deleteUsuario(usuario);
+			mostrarExito("El usuario fue eliminado exitosamente");
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
 		}
-
 	}
 
 	public void modificarUsuario(Usuario usuario) {
 		try {
 			usuarioBusinessObject.updateUsuario(usuario);
 			mostrarExito("El usuario fue modificado exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
 		} catch (Exception e) {
 			mostrarError(e);
 		}
 	}
 
-	public void login(String nombreUsuario, String contraseña) {
-		if (!nombreUsuario.equals("") && !contraseña.equals("")) {
-			try {
-				usuarioBusinessObject.login(nombreUsuario, contraseña);
-				frame.getJMenuBar().setVisible(true);
-				frame.cambiarPanel(new JPanel());
-			} catch (Exception e) {
-				mostrarError(new Exception("Usuario y/o password incorrectos"));
-			}
-		} else {
-			// camposVaciosMensaje();
-		}
-	}
-
-	public void registro() {
-		frame.cambiarPanel(new AltaUsuarioPanel(this));
-	}
-
-	public Usuario consultaUsuario(String nombreUsuario, String contraseña) {
+	public Usuario consultarUsuario(String nombreUsuario) {
 		Usuario usuario = null;
 		try {
-			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario, contraseña);
-			mostrarExito("Se encontro el usuario");
+			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario);
+			frame.getJMenuBar().setVisible(true);
+			frame.cambiarPanel(new PanelBienvenida());
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
 		} catch (Exception e) {
 			mostrarError(e);
 		}
-
 		return usuario;
 	}
 
@@ -163,8 +147,6 @@ public class Handler {
 			mostrarExito("El auto fue eliminado exitosamente");
 		} catch (CamposVaciosException cve) {
 			campoVacioMensaje(cve.getMessage());
-		} catch (NullPointerException npe) {
-			mostrarError(npe);
 		} catch (Exception e) {
 			mostrarError(e);
 		}
@@ -214,7 +196,7 @@ public class Handler {
 			frame.cambiarPanel(new EliminarUsuariosPanel(this));
 			break;
 		case MODIFICAR_USUARIO:
-			// frame.cambiarPanel(new ModificarUsuarioPanel(this));
+			 frame.cambiarPanel(new ModificarUsuarioPanel(this));
 			break;
 		case CONSULTA_USUARIOS:
 			frame.cambiarPanel(new ConsultaUsuariosPanel(this));

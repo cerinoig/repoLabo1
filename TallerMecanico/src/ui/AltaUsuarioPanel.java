@@ -1,132 +1,119 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
 import handler.Handler;
 
-public class AltaUsuarioPanel extends JPanel {
+public class AltaUsuarioPanel extends UsuarioPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel tituloLabel, nombreLabel, apellidoLabel, mailLabel, usuarioLabel, passwordLabel;
-	private JTextField nombreTextField, apellidoTextField, mailTextField, usuarioTextField;
 	private JPasswordField passwordField;
 	private JButton guardarBoton;
 
 	public AltaUsuarioPanel(Handler handler) {
-		initUI(handler);
+		super(handler);
 	}
 
-	public void initUI(Handler handler) {
-		setVisible(true);
-		setSize(700, 700);
-		setLayout(null);
+	@Override
+	public void initPanel(Handler handler) {
+		guardarBoton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.altaUsuario((Usuario) panelToObject());
+			}
+		});
 
-		tituloLabel = new JLabel("Registro de usuario");
-		tituloLabel.setForeground(Color.blue);
-		tituloLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		cancelarBoton.addActionListener(new ActionListener() {
 
-		nombreLabel = new JLabel("Nombre:");
-		apellidoLabel = new JLabel("Apellido:");
-		mailLabel = new JLabel("Mail:");
-		usuarioLabel = new JLabel("Usuario");
-		passwordLabel = new JLabel("Contraseña");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.irAlInicio();
+			}
+		});
+	}
 
+	@Override
+	public void limpiarCampos() {
+		nombreTextField.setText("");
+		apellidoTextField.setText("");
+		mailTextField.setText("");
+		usuarioTextField.setText("");
+		passwordField.setText("");
+	}
+
+	@Override
+	public Object panelToObject() {
+		Usuario usuario = new Usuario();
+		usuario.setNombre(nombreTextField.getText());
+		usuario.setApellido(apellidoTextField.getText());
+		usuario.setMail(mailTextField.getText());
+		usuario.setUsuario(usuarioTextField.getText());
+		usuario.setPassword(String.valueOf(passwordField.getPassword()));
+
+		return usuario;
+	}
+
+	@Override
+	public void objectToPanel(Object object) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("REGISTRO DE USUARIOS");
+	}
+
+	@Override
+	public Box getBody() {
+		initTextFields();
+		final String[] labels = { "Nombre", "Apellido", "Mail", "Usuario" };
+		JTextField[] textFields = { nombreTextField, apellidoTextField, mailTextField, usuarioTextField };
+
+		return crearBoxVertical(labels, textFields, passwordField);
+	}
+
+	public Box crearBoxVertical(String[] titulosBoxes, JTextField[] textFields, JPasswordField passwordField) {
+		Box vertical = Box.createVerticalBox();
+		for (int i = 0; i < titulosBoxes.length; i++) {
+			vertical.add(Box.createVerticalStrut(20));
+			vertical.add(crearBoxHorizontal(titulosBoxes[i], textFields[i]));
+		}
+		vertical.add(Box.createVerticalStrut(20));
+		vertical.add(crearBoxHorizontal("Contraseña", passwordField));
+
+		return vertical;
+	}
+
+	@Override
+	public JButton[] getBotones() {
+		initButtons();
+		JButton[] botones = { guardarBoton, cancelarBoton };
+		return botones;
+	}
+
+	@Override
+	public void initTextFields() {
 		nombreTextField = new JTextField();
 		apellidoTextField = new JTextField();
 		mailTextField = new JTextField();
 		usuarioTextField = new JTextField();
 		passwordField = new JPasswordField();
+	}
 
+	@Override
+	public void initButtons() {
 		guardarBoton = new JButton("Guardar");
-
-		tituloLabel.setBounds(100, 30, 400, 30);
-		nombreLabel.setBounds(80, 70, 200, 30);
-		apellidoLabel.setBounds(80, 110, 200, 30);
-		mailLabel.setBounds(80, 150, 200, 30);
-		usuarioLabel.setBounds(80, 190, 200, 30);
-		passwordLabel.setBounds(80, 230, 200, 30);
-
-		nombreTextField.setBounds(300, 70, 200, 30);
-		apellidoTextField.setBounds(300, 110, 200, 30);
-		mailTextField.setBounds(300, 150, 200, 30);
-		usuarioTextField.setBounds(300, 190, 200, 30);
-		passwordField.setBounds(300, 230, 200, 30);
-
-		guardarBoton.setBounds(80, 280, 100, 30);
-
-		add(tituloLabel);
-
-		add(nombreLabel);
-		add(nombreTextField);
-
-		add(apellidoLabel);
-		add(apellidoTextField);
-
-		add(mailLabel);
-		add(mailTextField);
-
-		add(usuarioLabel);
-		add(usuarioTextField);
-
-		add(passwordLabel);
-		add(passwordField);
-
-		add(guardarBoton);
-
-		guardarBoton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Usuario usuario = new Usuario();
-
-				if (!nombreTextField.getText().equals("")) {
-					usuario.setNombre(nombreTextField.getText());
-					nombreTextField.setBackground(Color.WHITE);
-				} else {
-					nombreTextField.setBackground(Color.RED);
-				}
-
-				if (!apellidoTextField.getText().equals("")) {
-					usuario.setApellido(apellidoTextField.getText());
-					apellidoTextField.setBackground(Color.WHITE);
-				} else {
-					apellidoTextField.setBackground(Color.RED);
-				}
-
-				if (!mailTextField.getText().equals("")) {
-					usuario.setMail(mailTextField.getText());
-					mailTextField.setBackground(Color.WHITE);
-				} else {
-					mailTextField.setBackground(Color.RED);
-				}
-
-				if (!usuarioTextField.getText().equals("")) {
-					usuario.setUsuario(usuarioTextField.getText());
-					usuarioTextField.setBackground(Color.WHITE);
-				} else {
-					usuarioTextField.setBackground(Color.RED);
-				}
-
-				if (!String.valueOf(passwordField.getPassword()).equals("")) {
-					usuario.setPassword(String.valueOf(passwordField.getPassword()));
-					passwordField.setBackground(Color.WHITE);
-				} else {
-					passwordField.setBackground(Color.RED);
-				}
-
-				handler.altaUsuario(usuario);
-			}
-		});
+		cancelarBoton = new JButton("Cancelar");
 	}
 
 }

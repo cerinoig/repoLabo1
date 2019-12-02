@@ -21,7 +21,7 @@ public class PanelBienvenida extends JPanel {
 
 	public PanelBienvenida() {
 		try {
-			setBackground(ImageIO.read(new File("C:/Users/Matias/Desktop/Taller-mecanico.jpg")));
+			setBackground(ImageIO.read(new File("C:/Users/Jesi/Desktop/mecanico.jpg")));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

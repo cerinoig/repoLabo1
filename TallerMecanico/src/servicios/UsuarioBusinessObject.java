@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.UsuarioDAO;
 import entidades.Usuario;
+import excepciones.CamposVaciosException;
 import excepciones.ExistingUserException;
 import excepciones.NoIdObtainedException;
 import excepciones.NonExistingUserException;
@@ -13,15 +14,15 @@ public interface UsuarioBusinessObject {
 
 	void setDAO(UsuarioDAO usuarioDAO);
 
-	Usuario selectUsuario(String usuario, String contraseña) throws TallerMecanicoException, NonExistingUserException;
+	Usuario selectUsuario(String usuario)
+			throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
 
-	void insertUsuario(Usuario usuario) throws TallerMecanicoException, ExistingUserException, NoIdObtainedException;
+	void insertUsuario(Usuario usuario)
+			throws TallerMecanicoException, ExistingUserException, NoIdObtainedException, CamposVaciosException;
 
-	void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException;
+	void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
 
-	void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException;
-
-	boolean login(String usuario, String contraseña) throws TallerMecanicoException, NonExistingUserException;
+	void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
 
 	List<Usuario> selectAll() throws TallerMecanicoException;
 
