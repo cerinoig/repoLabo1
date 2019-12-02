@@ -19,13 +19,16 @@ import servicios.UsuarioBusinessObjectImpl;
 import ui.AltaAutoPanel;
 import ui.AltaFacturaPanel;
 import ui.AltaUsuarioPanel;
+import ui.BajaFacturaPanel;
 import ui.ConsultaAutosPanel;
+import ui.ConsultaFacturaPanel;
 import ui.ConsultaUsuariosPanel;
 import ui.EliminarAutosPanel;
 import ui.EliminarUsuariosPanel;
 import ui.LoginPanel;
 import ui.MiFrame;
 import ui.ModificarAutoPanel;
+import ui.ModificarFacturaPanel;
 import ui.PanelBienvenida;
 
 import static utils.NombrePantallas.ALTA_AUTO;
@@ -41,7 +44,6 @@ import static utils.NombrePantallas.ALTA_FACTURA;
 import static utils.NombrePantallas.BAJA_FACTURA;
 import static utils.NombrePantallas.MODIFICAR_FACTURA;
 import static utils.NombrePantallas.CONSULTA_FACTURA;
-
 
 public class Handler {
 
@@ -237,13 +239,13 @@ public class Handler {
 			frame.cambiarPanel(new AltaFacturaPanel(this));
 			break;
 		case BAJA_FACTURA:
-			frame.cambiarPanel(new AltaFacturaPanel(this));
+			frame.cambiarPanel(new BajaFacturaPanel(this));
 			break;
 		case MODIFICAR_FACTURA:
-			frame.cambiarPanel(new AltaFacturaPanel(this));
+			frame.cambiarPanel(new ModificarFacturaPanel(this));
 			break;
 		case CONSULTA_FACTURA:
-			frame.cambiarPanel(new AltaFacturaPanel(this));
+			frame.cambiarPanel(new ConsultaFacturaPanel(this));
 			break;
 		}
 	}
@@ -270,7 +272,7 @@ public class Handler {
 	}
 
 	public void altaFactura(Factura factura) {
-		
+
 		try {
 			facturaBusinessObject.insertFactura(factura);
 			mostrarExito("La factura fue creada exitosamente");
@@ -281,6 +283,17 @@ public class Handler {
 		} catch (Exception e) {
 			mostrarError(e);
 		}
+	}
+
+	public List<Factura> selectAllFacturas() {
+
+		List<Factura> facturas = null;
+		try {
+			facturas = facturaBusinessObject.selectAll();
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return facturas;
 	}
 
 }

@@ -19,15 +19,20 @@ import static utils.NombrePantallas.ALTA_USUARIO;
 import static utils.NombrePantallas.BAJA_USUARIO;
 import static utils.NombrePantallas.MODIFICAR_USUARIO;
 import static utils.NombrePantallas.CONSULTA_USUARIOS;
+import static utils.NombrePantallas.ALTA_FACTURA;
+import static utils.NombrePantallas.BAJA_FACTURA;
+import static utils.NombrePantallas.MODIFICAR_FACTURA;
+import static utils.NombrePantallas.CONSULTA_FACTURA;
+
 import static utils.NombrePantallas.CERRAR_SESION;
 
 public class MiFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menuBar;
-	private JMenu menuOpciones, usuario, auto;
+	private JMenu menuOpciones, usuario, auto, factura;
 	private JMenuItem altaUsuario, bajaUsuario, modificarUsuario, cosultaUsuarios, cerrarSesion, altaAuto, bajaAuto,
-			modificacionAuto, consultaAutos;
+			modificacionAuto, consultaAutos, altaFactura, bajaFactura, consultaFacturas, modificarFactura;
 
 	public MiFrame(Handler handler) {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -50,10 +55,15 @@ public class MiFrame extends JFrame {
 
 		menuOpciones = new JMenu("Opciones");
 		menuBar.add(menuOpciones);
-		usuario = new JMenu("ABM Usuarios");
+		
+		usuario = new JMenu("Usuarios");
 		menuOpciones.add(usuario);
-		auto = new JMenu("ABM Autos");
+		
+		auto = new JMenu("Autos");
 		menuOpciones.add(auto);
+		
+		factura = new JMenu("Facturas");
+		menuOpciones.add(factura);
 
 		altaUsuario = new JMenuItem("Alta usuarios");
 		usuario.add(altaUsuario);
@@ -63,6 +73,15 @@ public class MiFrame extends JFrame {
 		usuario.add(modificarUsuario);
 		cosultaUsuarios = new JMenuItem("Consulta usuarios");
 		usuario.add(cosultaUsuarios);
+
+		altaFactura = new JMenuItem("Generar factura");
+		factura.add(altaFactura);
+		bajaFactura = new JMenuItem("Eliminar factura");
+		factura.add(bajaFactura);
+		modificarFactura = new JMenuItem("Modificar factura");
+		factura.add(modificarFactura);
+		consultaFacturas = new JMenuItem("Consultar facturas");
+		factura.add(cosultaUsuarios);
 
 		cerrarSesion = new JMenuItem("Cerrar Sesión");
 		usuario.add(cerrarSesion);
@@ -128,6 +147,30 @@ public class MiFrame extends JFrame {
 		consultaAutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				handler.menuUsage(CONSULTA_AUTO);
+			}
+		});
+
+		altaFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handler.menuUsage(ALTA_FACTURA);
+			}
+		});
+
+		bajaFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handler.menuUsage(BAJA_FACTURA);
+			}
+		});
+
+		modificarFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handler.menuUsage(MODIFICAR_FACTURA);
+			}
+		});
+
+		consultaFacturas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handler.menuUsage(CONSULTA_FACTURA);
 			}
 		});
 	}

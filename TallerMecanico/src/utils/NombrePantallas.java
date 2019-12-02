@@ -14,5 +14,5 @@ public interface NombrePantallas {
 	String ALTA_FACTURA = "altaFactura";
 	String BAJA_FACTURA = "bajaFactura";
 	String CONSULTA_FACTURA = "consultaFacturas";
-	String MODIFICAR_FACTURA = "modificarFActura";
+	String MODIFICAR_FACTURA = "modificarFactura";
 }
