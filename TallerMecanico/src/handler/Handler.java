@@ -108,6 +108,18 @@ public class Handler {
 		Usuario usuario = null;
 		try {
 			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario);
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return usuario;
+	}
+	
+	public Usuario login(String nombreUsuario) {
+		Usuario usuario = null;
+		try {
+			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario);
 			frame.getJMenuBar().setVisible(true);
 			frame.cambiarPanel(new PanelBienvenida());
 		} catch (CamposVaciosException cve) {
