@@ -31,14 +31,6 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 				handler.altaUsuario((Usuario) panelToObject());
 			}
 		});
-
-		cancelarBoton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
-			}
-		});
 	}
 
 	@Override
