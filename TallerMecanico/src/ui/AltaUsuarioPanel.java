@@ -116,4 +116,28 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 		cancelarBoton = new JButton("Cancelar");
 	}
 
+	@Override
+	public void accionConfirmar(Handler handler) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void accionBuscar(Handler handler) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deshabilitarCampos() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void habilitarCampos() {
+		// TODO Auto-generated method stub
+
+	}
+
 }
