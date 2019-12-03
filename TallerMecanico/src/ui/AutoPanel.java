@@ -23,6 +23,18 @@ public abstract class AutoPanel extends MiPanel {
 	}
 
 	@Override
+	public void initTextFields() {
+		buscarTextfield = new JTextField();
+		patenteTextField = new JTextField();
+		marcaTextField = new JTextField();
+		modeloTextField = new JTextField();
+		colorTextField = new JTextField();
+		puertasTextField = new JTextField();
+		kilometrosTextField = new JTextField();
+		añoTextField = new JTextField();
+	}
+
+	@Override
 	public void deshabilitarCampos() {
 		patenteTextField.setEditable(false);
 		patenteTextField.setBackground(Color.LIGHT_GRAY);
