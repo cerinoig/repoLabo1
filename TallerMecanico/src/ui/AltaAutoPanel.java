@@ -67,13 +67,11 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void objectToPanel(Object object) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void limpiarCampos() {
-
 		patenteTextField.setText("");
 		marcaTextField.setText("");
 		modeloTextField.setText("");
@@ -90,7 +88,6 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public Box getBody() {
-
 		initTextFields();
 		final String[] labels = { "Patente", "Marca", "Modelo", "Color", "Cantidad de Puertas", "Kilometros", "Año" };
 		JTextField[] textFields = { patenteTextField, marcaTextField, modeloTextField, colorTextField, puertasTextField,
@@ -109,7 +106,6 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void initTextFields() {
-
 		patenteTextField = new JTextField();
 		marcaTextField = new JTextField();
 		modeloTextField = new JTextField();
@@ -138,13 +134,11 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void deshabilitarCampos() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void habilitarCampos() {
-		// TODO Auto-generated method stub
 		
 	}
 }
