@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
@@ -23,43 +22,19 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void initPanel(Handler handler) {
-
 		buscarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (handler.consultarUsuario(buscarTextfield.getText()) != null) {
-					objectToPanel(handler.consultarUsuario(buscarTextfield.getText()));
-					habilitarCampos();
-					confirmarBoton.setEnabled(true);
-				}
+				accionBuscar(handler);
 			}
 		});
 
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.modificarUsuario((Usuario) panelToObject());
-				limpiarCampos();
-				deshabilitarCampos();
+				accionConfirmar(handler);
 			}
 		});
-
-		cancelarBoton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
-			}
-		});
-	}
-
-	@Override
-	public void limpiarCampos() {
-		nombreTextField.setText("");
-		apellidoTextField.setText("");
-		mailTextField.setText("");
-		usuarioTextField.setText("");
-		passwordField.setText("");
 	}
 
 	@Override
@@ -83,18 +58,7 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 		passwordField.setText(((Usuario) object).getPassword());
 	}
 
-	public void deshabilitarCampos() {
-		nombreTextField.setEditable(false);
-		nombreTextField.setBackground(Color.LIGHT_GRAY);
-		apellidoTextField.setEditable(false);
-		apellidoTextField.setBackground(Color.LIGHT_GRAY);
-		mailTextField.setEditable(false);
-		mailTextField.setBackground(Color.LIGHT_GRAY);
-		usuarioTextField.setEditable(false);
-		usuarioTextField.setBackground(Color.LIGHT_GRAY);
-		passwordField.setVisible(false);
-	}
-
+	@Override
 	public void habilitarCampos() {
 		nombreTextField.setEditable(true);
 		nombreTextField.setBackground(Color.WHITE);
@@ -104,6 +68,8 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 		mailTextField.setBackground(Color.WHITE);
 		usuarioTextField.setEditable(true);
 		usuarioTextField.setBackground(Color.WHITE);
+		passwordField.setEditable(true);
+		passwordField.setBackground(Color.WHITE);
 	}
 
 	@Override
@@ -119,7 +85,7 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 		JTextField[] textFields = { buscarTextfield, nombreTextField, apellidoTextField, mailTextField,
 				usuarioTextField };
 
-		return crearBoxVertical(labels, textFields);
+		return crearBoxVertical(labels, textFields, passwordField);
 	}
 
 	@Override
@@ -132,16 +98,6 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 	}
 
 	@Override
-	public void initTextFields() {
-		buscarTextfield = new JTextField();
-		nombreTextField = new JTextField();
-		apellidoTextField = new JTextField();
-		mailTextField = new JTextField();
-		usuarioTextField = new JTextField();
-		passwordField = new JPasswordField();
-	}
-
-	@Override
 	public void initButtons() {
 		buscarBoton = new JButton("Buscar");
 		confirmarBoton = new JButton("Modificar");
@@ -150,14 +106,18 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		// TODO Auto-generated method stub
-		
+		handler.modificarUsuario((Usuario) panelToObject());
+		limpiarCampos();
+		deshabilitarCampos();
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		// TODO Auto-generated method stub
-		
+		if (handler.consultarUsuario(buscarTextfield.getText()) != null) {
+			objectToPanel(handler.consultarUsuario(buscarTextfield.getText()));
+			habilitarCampos();
+			confirmarBoton.setEnabled(true);
+		}
 	}
 
 }
