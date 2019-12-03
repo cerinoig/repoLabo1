@@ -80,21 +80,9 @@ public class EliminarAutosPanel extends AutoPanel {
 	}
 
 	@Override
-	public void initTextFields() {
-		buscarTextfield = new JTextField();
-		patenteTextField = new JTextField();
-		marcaTextField = new JTextField();
-		modeloTextField = new JTextField();
-		colorTextField = new JTextField();
-		puertasTextField = new JTextField();
-		kilometrosTextField = new JTextField();
-		añoTextField = new JTextField();
-	}
-
-	@Override
 	public void initButtons() {
-		buscarBoton = new JButton("Eliminar");
-		confirmarBoton = new JButton("Confirmar");
+		buscarBoton = new JButton("Buscar");
+		confirmarBoton = new JButton("Eliminar");
 		cancelarBoton = new JButton("Cancelar");
 	}
 
