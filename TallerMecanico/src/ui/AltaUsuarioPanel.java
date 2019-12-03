@@ -28,7 +28,7 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 		guardarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaUsuario((Usuario) panelToObject());
+				accionConfirmar(handler);
 			}
 		});
 	}
@@ -74,18 +74,6 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 		return crearBoxVertical(labels, textFields, passwordField);
 	}
 
-	public Box crearBoxVertical(String[] titulosBoxes, JTextField[] textFields, JPasswordField passwordField) {
-		Box vertical = Box.createVerticalBox();
-		for (int i = 0; i < titulosBoxes.length; i++) {
-			vertical.add(Box.createVerticalStrut(20));
-			vertical.add(crearBoxHorizontal(titulosBoxes[i], textFields[i]));
-		}
-		vertical.add(Box.createVerticalStrut(20));
-		vertical.add(crearBoxHorizontal("Contraseña", passwordField));
-
-		return vertical;
-	}
-
 	@Override
 	public JButton[] getBotones() {
 		initButtons();
@@ -110,8 +98,8 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		// TODO Auto-generated method stub
-
+		handler.altaUsuario((Usuario) panelToObject());
+		limpiarCampos();
 	}
 
 	@Override
