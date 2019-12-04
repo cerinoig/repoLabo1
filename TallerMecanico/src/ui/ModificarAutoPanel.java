@@ -57,13 +57,13 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public Object panelToObject() {
-		auto.setPatente(patenteTextField.getText().toUpperCase());
-		auto.setMarca(marcaTextField.getText());
-		auto.setModelo(modeloTextField.getText());
-		auto.setColor(colorTextField.getText());
+		auto.setPatente(patenteTextField.getText().trim().toUpperCase());
+		auto.setMarca(marcaTextField.getText().trim());
+		auto.setModelo(modeloTextField.getText().trim());
+		auto.setColor(colorTextField.getText().trim());
 
 		try {
-			Integer.valueOf(puertasTextField.getText());
+			Integer.valueOf(puertasTextField.getText().trim());
 			puertasTextField.setBackground(Color.WHITE);
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
@@ -71,10 +71,10 @@ public class ModificarAutoPanel extends AutoPanel {
 			new NumberFormatException("La cantidad de puertas no es un numero");
 		}
 
-		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
+		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText().trim()));
 
 		try {
-			Integer.valueOf(kilometrosTextField.getText());
+			Integer.valueOf(kilometrosTextField.getText().trim());
 			kilometrosTextField.setBackground(Color.WHITE);
 		} catch (Exception e3) {
 			e3.printStackTrace();
@@ -82,8 +82,8 @@ public class ModificarAutoPanel extends AutoPanel {
 			new NumberFormatException("La cantidad de KM no es un numero");
 		}
 
-		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
-		auto.setAño(añoTextField.getText());
+		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText().trim()));
+		auto.setAño(añoTextField.getText().trim());
 		return auto;
 	}
 
@@ -133,19 +133,19 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-//		try {
-//			handler.modificarAuto((Auto) panelToObject());
-//			limpiarCampos();
-//			deshabilitarCampos();
-//		} catch (NumberFormatException nf) {
-//			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-//		}
+		try {
+			handler.modificarAuto((Auto) panelToObject());
+			limpiarCampos();
+			deshabilitarCampos();
+		} catch (NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		}
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
 		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-			objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
+			objectToPanel(handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()));
 			habilitarCampos();
 			confirmarBoton.setEnabled(true);
 		}

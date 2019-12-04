@@ -34,13 +34,13 @@ public class AltaAutoPanel extends AutoPanel {
 	@Override
 	public Object panelToObject() {
 		Auto auto = new Auto();
-		auto.setPatente(patenteTextField.getText().toUpperCase());
-		auto.setMarca(marcaTextField.getText());
-		auto.setModelo(modeloTextField.getText());
-		auto.setColor(colorTextField.getText());
+		auto.setPatente(patenteTextField.getText().trim().toUpperCase());
+		auto.setMarca(marcaTextField.getText().trim());
+		auto.setModelo(modeloTextField.getText().trim());
+		auto.setColor(colorTextField.getText().trim());
 
 		try {
-			Integer.valueOf(puertasTextField.getText());
+			Integer.valueOf(puertasTextField.getText().trim());
 			puertasTextField.setBackground(Color.WHITE);
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
@@ -51,7 +51,7 @@ public class AltaAutoPanel extends AutoPanel {
 		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText()));
 
 		try {
-			Integer.valueOf(kilometrosTextField.getText());
+			Integer.valueOf(kilometrosTextField.getText().trim());
 			kilometrosTextField.setBackground(Color.WHITE);
 		} catch (Exception e3) {
 			e3.printStackTrace();
@@ -59,9 +59,9 @@ public class AltaAutoPanel extends AutoPanel {
 			throw new NumberFormatException("La cantidad de KM no es un numero");
 		}
 
-		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText()));
+		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText().trim()));
 
-		auto.setAño(añoTextField.getText());
+		auto.setAño(añoTextField.getText().trim());
 		return auto;
 	}
 

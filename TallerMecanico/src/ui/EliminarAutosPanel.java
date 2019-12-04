@@ -88,14 +88,14 @@ public class EliminarAutosPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.deleteAuto(patenteTextField.getText().toUpperCase());
+		handler.deleteAuto(patenteTextField.getText().trim().toUpperCase());
 		limpiarCampos();
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
 		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-			objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
+			objectToPanel(handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()));
 			confirmarBoton.setEnabled(true);
 		}
 	}
