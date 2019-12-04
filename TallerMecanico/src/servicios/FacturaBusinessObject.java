@@ -5,6 +5,8 @@ import java.util.List;
 import dao.FacturaDAO;
 import entidades.Factura;
 import excepciones.CamposVaciosException;
+import excepciones.FacturaExistenteException;
+import excepciones.FacturaNoExistenteException;
 import excepciones.NoIdObtainedException;
 import excepciones.TallerMecanicoException;
 
@@ -12,16 +14,19 @@ public interface FacturaBusinessObject {
 
 	void setDAO(FacturaDAO facturaDAO);
 
-	Factura selectFactura(int idFactura) throws TallerMecanicoException, CamposVaciosException;
+	Factura selectFactura(int idFactura)
+			throws TallerMecanicoException, CamposVaciosException, FacturaNoExistenteException;
 
 	void insertFactura(Factura factura)
-			throws TallerMecanicoException, NoIdObtainedException, CamposVaciosException;
+			throws TallerMecanicoException, NoIdObtainedException, CamposVaciosException, FacturaExistenteException;
 
-	void updateFactura(Factura factura) throws TallerMecanicoException, CamposVaciosException;
+	void updateFactura(Factura factura)
+			throws TallerMecanicoException, CamposVaciosException, FacturaNoExistenteException;
 
-	void deleteFactura(int idFactura) throws TallerMecanicoException, CamposVaciosException;
-	
-	void cobrarArreglo(Factura factura)  throws TallerMecanicoException;
+	void deleteFactura(int idFactura)
+			throws TallerMecanicoException, CamposVaciosException, FacturaNoExistenteException;
+
+	void cobrarArreglo(Factura factura) throws TallerMecanicoException;
 
 	List<Factura> selectAll() throws TallerMecanicoException;
 
