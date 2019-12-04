@@ -24,6 +24,7 @@ public abstract class FacturaPanel extends MiPanel {
 	
 	@Override
 	public void initTextFields() {
+		buscarTextfield = new JTextField();
 		idFacturaTextField = new JTextField();
 		patenteTextField = new JTextField();
 		arregloTextField = new JTextField();
@@ -33,6 +34,8 @@ public abstract class FacturaPanel extends MiPanel {
 	
 	@Override
 	public void deshabilitarCampos() {
+		idFacturaTextField.setEditable(false);
+		idFacturaTextField.setBackground(Color.LIGHT_GRAY);
 		patenteTextField.setEditable(false);
 		patenteTextField.setBackground(Color.LIGHT_GRAY);
 		arregloTextField.setEditable(false);
