@@ -24,7 +24,7 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 			throws TallerMecanicoException, NonExistingUserException, CamposVaciosException {
 		if (!usuario.equals("")) {
 			if (usuarioDAO.selectUsuario(usuario) == null) {
-				throw new NonExistingUserException("Usuario y/o password incorrectos");
+				throw new NonExistingUserException("El usuario que esta buscando no existe");
 			} else {
 				return usuarioDAO.selectUsuario(usuario);
 			}
