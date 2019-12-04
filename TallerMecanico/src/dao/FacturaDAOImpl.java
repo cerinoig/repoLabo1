@@ -25,7 +25,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 		Factura factura = null;
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM FACTURAS WHERE id = " + "'" + codigoFactura + "'";
+			sql = "SELECT * FROM FACTURAS WHERE ID_FACTURA = " + "'" + codigoFactura + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
