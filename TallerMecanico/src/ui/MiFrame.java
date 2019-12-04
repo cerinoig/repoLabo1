@@ -81,7 +81,7 @@ public class MiFrame extends JFrame {
 		modificarFactura = new JMenuItem("Modificar factura");
 		factura.add(modificarFactura);
 		consultaFacturas = new JMenuItem("Consultar facturas");
-		factura.add(cosultaUsuarios);
+		factura.add(consultaFacturas);
 
 		cerrarSesion = new JMenuItem("Cerrar Sesión");
 		usuario.add(cerrarSesion);
