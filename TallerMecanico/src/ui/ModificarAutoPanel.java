@@ -133,13 +133,13 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		try {
-			handler.modificarAuto((Auto) panelToObject());
-			limpiarCampos();
-			deshabilitarCampos();
-		} catch (NumberFormatException nf) {
-			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-		}
+//		try {
+//			handler.modificarAuto((Auto) panelToObject());
+//			limpiarCampos();
+//			deshabilitarCampos();
+//		} catch (NumberFormatException nf) {
+//			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+//		}
 	}
 
 	@Override

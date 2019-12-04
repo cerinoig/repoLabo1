@@ -1,9 +1,14 @@
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
+import entidades.Factura;
 import handler.Handler;
 
 public class BajaFacturaPanel extends FacturaPanel{
@@ -13,83 +18,86 @@ public class BajaFacturaPanel extends FacturaPanel{
 	public BajaFacturaPanel(Handler handler) {
 		super(handler);
 	}
-
+	
 	@Override
-	public void limpiarCampos() {
-		// TODO Auto-generated method stub
-		
+	public void initPanel(Handler handler) {
+
+		buscarBoton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accionBuscar(handler);
+			}
+		});
+
+		confirmarBoton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accionConfirmar(handler);
+			}
+		});
 	}
 
 	@Override
 	public Object panelToObject() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void objectToPanel(Object object) {
-		// TODO Auto-generated method stub
-		
+		idFacturaTextField.setText(String.valueOf(((Factura) object).getIdFactura()));
+		patenteTextField.setText(((Factura) object).getPatente());
+		arregloTextField.setText(((Factura) object).getArreglo());
+		//precioTextField.setText(String.valueOf(((Factura) object).getPrecio()));
 	}
 
 	@Override
 	public JLabel getTituloPanel() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JLabel("ELIMINAR FACTURAS");
 	}
 
 	@Override
 	public Box getBody() {
-		// TODO Auto-generated method stub
-		return null;
+		initTextFields();
+		deshabilitarCampos();
+		String[] labels = { "Buscar factura","Cod Factura" , "Patente", "Arreglo", "Precio"};
+		JTextField[] textFields = { buscarTextfield, idFacturaTextField, patenteTextField, arregloTextField, precioTextField};
+		
+		return crearBoxVertical(labels, textFields);
 	}
 
 	@Override
 	public JButton[] getBotones() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		initButtons();
+		confirmarBoton.setEnabled(false);
+		JButton[] botones = { buscarBoton, confirmarBoton, cancelarBoton };
 
-	@Override
-	public void initPanel(Handler handler) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void initTextFields() {
-		// TODO Auto-generated method stub
-		
+		return botones;
 	}
 
 	@Override
 	public void initButtons() {
-		// TODO Auto-generated method stub
-		
+		buscarBoton = new JButton("Buscar");
+		confirmarBoton = new JButton("Eliminar");
+		cancelarBoton = new JButton("Cancelar");
 	}
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		// TODO Auto-generated method stub
+		//handler.deleteFactura(idFacturaTextField.getText());
+		limpiarCampos();
 		
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deshabilitarCampos() {
-		// TODO Auto-generated method stub
-		
+//		if (handler.consultaFactura(buscarTextfield.getText()) != null) {
+//			objectToPanel(handler.consultaFactura(buscarTextfield.getText().toUpperCase()));
+//			confirmarBoton.setEnabled(true);
+//		}
 	}
 
 	@Override
 	public void habilitarCampos() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
