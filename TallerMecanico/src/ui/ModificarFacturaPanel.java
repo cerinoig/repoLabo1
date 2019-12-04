@@ -43,11 +43,11 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public Object panelToObject() {
 
-		factura.setPatente(patenteTextField.getText().toUpperCase());
-		factura.setArreglo(arregloTextField.getText());
+		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
+		factura.setArreglo(arregloTextField.getText().trim());
 
 		try {
-			factura.setCostoAreglo(Double.valueOf(precioTextField.getText()));
+			factura.setCostoAreglo(Double.valueOf(precioTextField.getText().trim()));
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
 			new NumberFormatException("El precio no es un numero");
@@ -109,7 +109,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public void accionBuscar(Handler handler) {
 		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-			objectToPanel(handler.consultaAuto(buscarTextfield.getText().toUpperCase()));
+			objectToPanel(handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()));
 			habilitarCampos();
 			confirmarBoton.setEnabled(true);
 		}

@@ -107,7 +107,7 @@ public class BajaFacturaPanel extends FacturaPanel{
 		}
 		
 		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText())) != null) {
-			objectToPanel(handler.consultaFactura(Integer.valueOf(buscarTextfield.getText())));
+			objectToPanel(handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())));
 			confirmarBoton.setEnabled(true);
 		}
 	}

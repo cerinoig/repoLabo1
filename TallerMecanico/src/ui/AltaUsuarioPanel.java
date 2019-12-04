@@ -45,10 +45,10 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 	@Override
 	public Object panelToObject() {
 		Usuario usuario = new Usuario();
-		usuario.setNombre(nombreTextField.getText());
-		usuario.setApellido(apellidoTextField.getText());
-		usuario.setMail(mailTextField.getText());
-		usuario.setUsuario(usuarioTextField.getText());
+		usuario.setNombre(nombreTextField.getText().trim().toLowerCase());
+		usuario.setApellido(apellidoTextField.getText().trim().toLowerCase());
+		usuario.setMail(mailTextField.getText().trim());
+		usuario.setUsuario(usuarioTextField.getText().trim().toLowerCase());
 		usuario.setPassword(String.valueOf(passwordField.getPassword()));
 
 		return usuario;
@@ -104,20 +104,14 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void deshabilitarCampos() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void habilitarCampos() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

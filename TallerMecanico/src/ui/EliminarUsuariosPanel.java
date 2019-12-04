@@ -38,7 +38,6 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 
 	@Override
 	public Object panelToObject() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -85,7 +84,7 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.deleteUsuario(usuarioTextField.getText());
+		handler.deleteUsuario(usuarioTextField.getText().trim().toLowerCase());
 		limpiarCampos();
 	}
 

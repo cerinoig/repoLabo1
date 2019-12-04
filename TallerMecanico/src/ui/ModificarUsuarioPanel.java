@@ -40,10 +40,10 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 	@Override
 	public Object panelToObject() {
 		Usuario usuario = new Usuario();
-		usuario.setNombre(nombreTextField.getText());
-		usuario.setApellido(apellidoTextField.getText());
-		usuario.setMail(mailTextField.getText());
-		usuario.setUsuario(usuarioTextField.getText());
+		usuario.setNombre(nombreTextField.getText().trim().toLowerCase());
+		usuario.setApellido(apellidoTextField.getText().trim().toLowerCase());
+		usuario.setMail(mailTextField.getText().trim().toLowerCase());
+		usuario.setUsuario(usuarioTextField.getText().trim().toLowerCase());
 		usuario.setPassword(String.valueOf(passwordField.getPassword()));
 
 		return usuario;
@@ -114,7 +114,7 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 	@Override
 	public void accionBuscar(Handler handler) {
 		if (handler.consultarUsuario(buscarTextfield.getText()) != null) {
-			objectToPanel(handler.consultarUsuario(buscarTextfield.getText()));
+			objectToPanel(handler.consultarUsuario(buscarTextfield.getText().trim().toLowerCase()));
 			habilitarCampos();
 			confirmarBoton.setEnabled(true);
 		}
