@@ -48,4 +48,5 @@ public class Factura {
 	public void setCobrado(boolean cobrado) {
 		this.cobrado = cobrado;
 	}
+	
 }
