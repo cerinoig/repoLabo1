@@ -47,7 +47,7 @@ public class BajaFacturaPanel extends FacturaPanel{
 		idFacturaTextField.setText(String.valueOf(((Factura) object).getIdFactura()));
 		patenteTextField.setText(((Factura) object).getPatente());
 		arregloTextField.setText(((Factura) object).getArreglo());
-		//precioTextField.setText(String.valueOf(((Factura) object).getPrecio()));
+		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo()));
 	}
 
 	@Override
@@ -83,17 +83,33 @@ public class BajaFacturaPanel extends FacturaPanel{
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		//handler.deleteFactura(idFacturaTextField.getText());
+		
+		try {
+			Integer.valueOf(idFacturaTextField.getText());
+		} catch (NumberFormatException ne) {
+			ne.printStackTrace();
+			new NumberFormatException("El codigo de la factura no es un numero");
+		}
+		
+		handler.deleteFactura(Integer.valueOf(Integer.valueOf(idFacturaTextField.getText())));
 		limpiarCampos();
 		
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
-//		if (handler.consultaFactura(buscarTextfield.getText()) != null) {
-//			objectToPanel(handler.consultaFactura(buscarTextfield.getText().toUpperCase()));
-//			confirmarBoton.setEnabled(true);
-//		}
+		
+		try {
+			Integer.valueOf(buscarTextfield.getText());
+		} catch (NumberFormatException ne) {
+			ne.printStackTrace();
+			new NumberFormatException("El codigo de la factura no es un numero");
+		}
+		
+		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText())) != null) {
+			objectToPanel(handler.consultaFactura(Integer.valueOf(buscarTextfield.getText())));
+			confirmarBoton.setEnabled(true);
+		}
 	}
 
 	@Override

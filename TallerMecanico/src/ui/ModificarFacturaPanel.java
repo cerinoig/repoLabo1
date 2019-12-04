@@ -40,7 +40,6 @@ public class ModificarFacturaPanel extends FacturaPanel {
 		});
 	}
 
-
 	@Override
 	public Object panelToObject() {
 
@@ -48,7 +47,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 		factura.setArreglo(arregloTextField.getText());
 
 		try {
-			// factura.setPrecio()(precioTextField.getText());
+			factura.setCostoAreglo(Double.valueOf(precioTextField.getText()));
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
 			new NumberFormatException("El precio no es un numero");
@@ -62,7 +61,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 		
 		patenteTextField.setText(((Factura) object).getPatente());
 		arregloTextField.setText(((Factura) object).getArreglo());
-		//precioTextField.setText(String.valueOf(((Factura) object).getPrecio()));
+		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo()));
 	}
 
 	@Override
@@ -125,5 +124,4 @@ public class ModificarFacturaPanel extends FacturaPanel {
 		precioTextField.setEditable(true);
 		precioTextField.setBackground(Color.WHITE);
 	}
-
 }
