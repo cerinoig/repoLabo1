@@ -86,13 +86,6 @@ public class AltaFacturaPanel extends FacturaPanel {
 	}
 
 	@Override
-	public void initTextFields() {
-		idFacturaTextField = new JTextField();
-		patenteTextField = new JTextField();
-		arregloTextField = new JTextField();
-	}
-
-	@Override
 	public void initButtons() {
 		confirmarBoton = new JButton("Crear");
 		cancelarBoton = new JButton("Cancelar");
