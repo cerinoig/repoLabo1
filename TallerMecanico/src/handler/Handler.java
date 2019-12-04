@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dao.AutoDAOImpl;
+import dao.FacturaDAOImpl;
 import dao.UsuarioDAOImpl;
 import entidades.Auto;
 import entidades.Factura;
@@ -13,6 +14,7 @@ import excepciones.CamposVaciosException;
 import servicios.AutoBusinessObject;
 import servicios.AutoBusinessObjectImpl;
 import servicios.FacturaBusinessObject;
+import servicios.FacturaBusinessObjectImpl;
 import servicios.UsuarioBusinessObject;
 import servicios.UsuarioBusinessObjectImpl;
 import ui.AltaAutoPanel;
@@ -57,6 +59,8 @@ public class Handler {
 		usuarioBusinessObject.setDAO(new UsuarioDAOImpl());
 		autoBusinessObject = new AutoBusinessObjectImpl();
 		autoBusinessObject.setDAO(new AutoDAOImpl());
+		facturaBusinessObject = new FacturaBusinessObjectImpl();
+		facturaBusinessObject.setDAO(new FacturaDAOImpl());
 	}
 
 	public void initFrame() {
