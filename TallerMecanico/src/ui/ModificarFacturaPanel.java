@@ -98,7 +98,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public void accionConfirmar(Handler handler) {
 		try {
-			handler.modificarAuto((Auto) panelToObject());
+			handler.modificarFactura((Factura) panelToObject());
 			limpiarCampos();
 			deshabilitarCampos();
 		} catch (NumberFormatException nf) {
@@ -108,8 +108,17 @@ public class ModificarFacturaPanel extends FacturaPanel {
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
-			objectToPanel(handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()));
+		int idFactura = 0;
+		
+		try{
+			idFactura = Integer.valueOf(buscarTextfield.getText().trim());
+
+		}catch(NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		}
+		
+		if (handler.consultaFactura(idFactura) != null) {
+			objectToPanel(handler.consultaFactura(idFactura));
 			habilitarCampos();
 			confirmarBoton.setEnabled(true);
 		}

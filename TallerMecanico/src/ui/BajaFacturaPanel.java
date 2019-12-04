@@ -106,7 +106,7 @@ public class BajaFacturaPanel extends FacturaPanel{
 			new NumberFormatException("El codigo de la factura no es un numero");
 		}
 		
-		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText())) != null) {
+		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())) != null) {
 			objectToPanel(handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())));
 			confirmarBoton.setEnabled(true);
 		}
@@ -114,6 +114,14 @@ public class BajaFacturaPanel extends FacturaPanel{
 
 	@Override
 	public void habilitarCampos() {
+	}
+	
+	@Override
+	public void limpiarCampos() {
+		patenteTextField.setText("");
+		arregloTextField.setText("");
+		precioTextField.setText("");
+		idFacturaTextField.setText("");
 	}
 
 }
