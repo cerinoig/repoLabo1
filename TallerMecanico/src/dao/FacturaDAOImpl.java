@@ -34,6 +34,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 				factura.setIdFactura(rs.getInt("ID_FACTURA"));
 				factura.setArreglo(rs.getString("ARREGLO"));
 				factura.setCobrado(rs.getBoolean("COBRADO"));
+				factura.setCostoAreglo(rs.getDouble("COSTO_ARREGLO"));
 				factura.setPatente(rs.getString("PATENTE"));
 			}
 		} catch (SQLException sqle) {
@@ -60,12 +61,13 @@ public class FacturaDAOImpl implements FacturaDAO {
 	public void insertFactura(Factura factura) throws TallerMecanicoException, NoIdObtainedException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "INSERT INTO FACTURAS (PATENTE, ARREGLO, COBRADO) VALUES (?, ?, ?)";
+			sql = "INSERT INTO FACTURAS (PATENTE, ARREGLO, COSTO_ARREGLO, COBRADO) VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setString(1, factura.getPatente());
 			pstmt.setString(2, factura.getArreglo());
-			pstmt.setBoolean(3, factura.isCobrado());
+			pstmt.setDouble(3, factura.getCostoAreglo());
+			pstmt.setBoolean(4, factura.isCobrado());
 
 			pstmt.executeUpdate();
 			conn.commit();
@@ -103,7 +105,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 			sql = "UPDATE FACTURAS SET COBRADO = ? WHERE ID_FACTURA = ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setBoolean(1, true);
+			pstmt.setBoolean(1, factura.isCobrado());
 			pstmt.setInt(2, factura.getIdFactura());
 
 			pstmt.executeUpdate();
@@ -168,6 +170,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 				factura.setIdFactura(rs.getInt("ID_FACTURA"));
 				factura.setPatente(rs.getString("PATENTE"));
 				factura.setArreglo(rs.getString("ARREGLO"));
+				factura.setCostoAreglo(rs.getDouble("COSTO_ARREGLO"));
 				factura.setCobrado(rs.getBoolean("COBRADO"));
 				facturas.add(factura);
 			}
@@ -195,12 +198,13 @@ public class FacturaDAOImpl implements FacturaDAO {
 	public void updateFactura(Factura factura) throws TallerMecanicoException {
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "UPDATE FACTURAS SET ARREGLO = ?,  PATENTE = ?  WHERE ID_FACTURA = ?";
+			sql = "UPDATE FACTURAS SET ARREGLO = ?,  PATENTE = ?, COSTO_ARREGLO = ?  WHERE ID_FACTURA = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, factura.getArreglo());
 			pstmt.setString(2, factura.getPatente());
-			pstmt.setInt(3, factura.getIdFactura());
+			pstmt.setDouble(3, factura.getCostoAreglo());
+			pstmt.setInt(4, factura.getIdFactura());
 
 			pstmt.executeUpdate();
 			conn.commit();

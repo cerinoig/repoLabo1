@@ -2,11 +2,8 @@ package dao;
 
 import java.util.List;
 
-import entidades.Auto;
 import entidades.Factura;
-import excepciones.ExistingCarException;
 import excepciones.NoIdObtainedException;
-import excepciones.NonExistingCarException;
 import excepciones.TallerMecanicoException;
 
 public interface FacturaDAO {
