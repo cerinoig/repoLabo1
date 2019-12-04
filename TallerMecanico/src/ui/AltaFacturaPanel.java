@@ -14,9 +14,12 @@ import handler.Handler;
 public class AltaFacturaPanel extends FacturaPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Handler handler;
 
 	public AltaFacturaPanel(Handler handler) {
 		super(handler);
+		this.handler = handler;
 	}
 
 	@Override
@@ -25,14 +28,11 @@ public class AltaFacturaPanel extends FacturaPanel {
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.altaFactura(((Factura) panelToObject()));
-				;
-				limpiarCampos();
+				accionConfirmar(handler);
 			}
 		});
 
 		cancelarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.irAlInicio();
@@ -45,16 +45,22 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public void limpiarCampos() {
 		patenteTextField.setText("");
 		arregloTextField.setText("");
+		precioTextField.setText("");
 	}
 
 	@Override
 	public Object panelToObject() {
 		Factura factura = new Factura();
-
 		factura.setArreglo(arregloTextField.getText());
 		factura.setPatente(arregloTextField.getText().toUpperCase());
+		try {
+			factura.setCostoAreglo(
+					Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
+		} catch (NumberFormatException e) {
+			handler.mostrarError(new NumberFormatException("Debe ingresar un importe válido"));
+		}
 
-		return null;
+		return factura;
 	}
 
 	@Override
@@ -72,8 +78,8 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public Box getBody() {
 
 		initTextFields();
-		final String[] labels = { "patente", "Arreglo" };
-		JTextField[] textFields = { patenteTextField, arregloTextField };
+		final String[] labels = { "patente", "Arreglo", "Costo del arreglo" };
+		JTextField[] textFields = { patenteTextField, arregloTextField, precioTextField };
 
 		return crearBoxVertical(labels, textFields);
 	}
@@ -93,8 +99,8 @@ public class AltaFacturaPanel extends FacturaPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		// TODO Auto-generated method stub
-
+		handler.altaFactura(((Factura) panelToObject()));
+		limpiarCampos();
 	}
 
 	@Override
