@@ -3,7 +3,6 @@ package handler;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import dao.AutoDAOImpl;
 import dao.UsuarioDAOImpl;
@@ -115,7 +114,7 @@ public class Handler {
 		}
 		return usuario;
 	}
-	
+
 	public Usuario login(String nombreUsuario) {
 		Usuario usuario = null;
 		try {
@@ -199,6 +198,65 @@ public class Handler {
 		return autos;
 	}
 
+	public void altaFactura(Factura factura) {
+		try {
+			facturaBusinessObject.insertFactura(factura);
+			mostrarExito("La factura fue creada exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+	}
+
+	public void deleteFactura(int idFactura) {
+		try {
+			facturaBusinessObject.deleteFactura(idFactura);
+			mostrarExito("La factura fue eliminada exitosamente");
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+	}
+
+	public void modificarFactura(Factura factura) {
+		try {
+			facturaBusinessObject.updateFactura(factura);
+			mostrarExito("La factura" + factura.getIdFactura() + " fue modificada exitosamente");
+		} catch (NumberFormatException cve) {
+			campoNumericoInvalido();
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+	}
+
+	public Factura consultaFactura(int idFactura) {
+		Factura factura = null;
+		try {
+			factura = facturaBusinessObject.selectFactura(idFactura);
+		} catch (CamposVaciosException cve) {
+			campoVacioMensaje(cve.getMessage());
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return factura;
+	}
+
+	public List<Factura> selectAllFacturas() {
+		List<Factura> facturas = null;
+		try {
+			facturas = facturaBusinessObject.selectAll();
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+		return facturas;
+	}
+
 	public void menuUsage(String menuActionType) {
 		switch (menuActionType) {
 		case ALTA_USUARIO:
@@ -208,7 +266,7 @@ public class Handler {
 			frame.cambiarPanel(new EliminarUsuariosPanel(this));
 			break;
 		case MODIFICAR_USUARIO:
-			 frame.cambiarPanel(new ModificarUsuarioPanel(this));
+			frame.cambiarPanel(new ModificarUsuarioPanel(this));
 			break;
 		case CONSULTA_USUARIOS:
 			frame.cambiarPanel(new ConsultaUsuariosPanel(this));
@@ -263,31 +321,6 @@ public class Handler {
 
 	private void campoNumericoInvalido() {
 		JOptionPane.showMessageDialog(null, "El campo numerico es invalido", "Aviso", JOptionPane.WARNING_MESSAGE);
-	}
-
-	public void altaFactura(Factura factura) {
-
-		try {
-			facturaBusinessObject.insertFactura(factura);
-			mostrarExito("La factura fue creada exitosamente");
-		} catch (NumberFormatException cve) {
-			campoNumericoInvalido();
-		} catch (CamposVaciosException cve) {
-			campoVacioMensaje(cve.getMessage());
-		} catch (Exception e) {
-			mostrarError(e);
-		}
-	}
-
-	public List<Factura> selectAllFacturas() {
-
-		List<Factura> facturas = null;
-		try {
-			facturas = facturaBusinessObject.selectAll();
-		} catch (Exception e) {
-			mostrarError(e);
-		}
-		return facturas;
 	}
 
 }
