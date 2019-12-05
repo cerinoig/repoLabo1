@@ -52,7 +52,7 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public Object panelToObject() {
 		Factura factura = new Factura();
 		factura.setArreglo(arregloTextField.getText().trim());
-		factura.setPatente(arregloTextField.getText().trim().toUpperCase());
+		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
 		try {
 			factura.setCostoAreglo(
 					Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
