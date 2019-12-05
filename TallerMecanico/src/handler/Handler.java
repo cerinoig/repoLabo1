@@ -261,6 +261,14 @@ public class Handler {
 		return facturas;
 	}
 
+	public void cobrarArreglo(List<Factura> facturas) {
+		try {
+			facturaBusinessObject.cobrarArreglo(facturas);
+		} catch (Exception e) {
+			mostrarError(e);
+		}
+	}
+
 	public void menuUsage(String menuActionType) {
 		switch (menuActionType) {
 		case ALTA_USUARIO:
