@@ -144,7 +144,7 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		if (handler.consultaAuto(buscarTextfield.getText()) != null) {
+		if (handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()) != null) {
 			objectToPanel(handler.consultaAuto(buscarTextfield.getText().trim().toUpperCase()));
 			habilitarCampos();
 			confirmarBoton.setEnabled(true);
