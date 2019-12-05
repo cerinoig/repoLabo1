@@ -12,9 +12,9 @@ public interface FacturaDAO {
 
 	void insertFactura(Factura factura) throws TallerMecanicoException, NoIdObtainedException;
 
-	void cobrarArreglo(Factura factura) throws TallerMecanicoException;
+	void cobrarArreglo(List<Factura> facturas) throws TallerMecanicoException;
 
-	void updateFactura(Factura factura) throws TallerMecanicoException;
+	void updateFactura(Factura facturas) throws TallerMecanicoException;
 
 	void deleteFactura(int codigoFactura) throws TallerMecanicoException;
 
