@@ -9,6 +9,18 @@ public class Factura {
 	private Double costoAreglo;
 	private boolean cobrado;
 
+	public Factura() {
+
+	}
+
+	public Factura(int idFactura, String patente, String arreglo, Double costoAreglo, boolean cobrado) {
+		this.idFactura = idFactura;
+		this.patente = patente;
+		this.arreglo = arreglo;
+		this.costoAreglo = costoAreglo;
+		this.cobrado = cobrado;
+	}
+
 	public int getIdFactura() {
 		return idFactura;
 	}
@@ -48,5 +60,5 @@ public class Factura {
 	public void setCobrado(boolean cobrado) {
 		this.cobrado = cobrado;
 	}
-	
+
 }
