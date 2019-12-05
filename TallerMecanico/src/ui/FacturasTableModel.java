@@ -87,6 +87,4 @@ public class FacturasTableModel extends AbstractTableModel {
 		}
 	}
 
-	// YA SE EDITAN LOS CHECK FALTA LA FUNCIONALIDAD
-
 }
