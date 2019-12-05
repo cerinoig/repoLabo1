@@ -99,17 +99,19 @@ public class FacturaDAOImpl implements FacturaDAO {
 	}
 
 	@Override
-	public void cobrarArreglo(Factura factura) throws TallerMecanicoException {
+	public void cobrarArreglo(List<Factura> facturas) throws TallerMecanicoException {
 		try {
 			conn = ConnectionManager.getConnection();
 			sql = "UPDATE FACTURAS SET COBRADO = ? WHERE ID_FACTURA = ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setBoolean(1, factura.isCobrado());
-			pstmt.setInt(2, factura.getIdFactura());
+			for (Factura factura : facturas) {
+				pstmt.setBoolean(1, factura.isCobrado());
+				pstmt.setInt(2, factura.getIdFactura());
 
-			pstmt.executeUpdate();
-			conn.commit();
+				pstmt.executeUpdate();
+				conn.commit();
+			}
 		} catch (SQLException sqle) {
 			try {
 				conn.rollback();
@@ -161,7 +163,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 		List<Factura> facturas = new ArrayList<>();
 		try {
 			conn = ConnectionManager.getConnection();
-			sql = "SELECT * FROM FACTURAS";
+			sql = "SELECT * FROM FACTURAS WHERE COBRADO = 0";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
