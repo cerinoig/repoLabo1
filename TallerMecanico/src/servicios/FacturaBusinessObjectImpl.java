@@ -71,8 +71,11 @@ public class FacturaBusinessObjectImpl implements FacturaBusinessObject {
 	}
 
 	@Override
-	public void cobrarArreglo(Factura factura) throws TallerMecanicoException {
-		facturaDAO.cobrarArreglo(factura);
+	public void cobrarArreglo(List<Factura> facturas) throws TallerMecanicoException {
+		for (Factura factura : facturas) {
+			factura.setCobrado(true);
+		}
+		facturaDAO.cobrarArreglo(facturas);
 	}
 
 	@Override

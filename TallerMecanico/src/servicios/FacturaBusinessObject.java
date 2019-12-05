@@ -26,7 +26,7 @@ public interface FacturaBusinessObject {
 	void deleteFactura(int idFactura)
 			throws TallerMecanicoException, CamposVaciosException, FacturaNoExistenteException;
 
-	void cobrarArreglo(Factura factura) throws TallerMecanicoException;
+	void cobrarArreglo(List<Factura> facturas) throws TallerMecanicoException;
 
 	List<Factura> selectAll() throws TallerMecanicoException;
 
