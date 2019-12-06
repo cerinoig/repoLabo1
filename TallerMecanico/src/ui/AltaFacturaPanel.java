@@ -133,4 +133,16 @@ public class AltaFacturaPanel extends FacturaPanel {
 	        return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
 	    }
 	}
+
+	@Override
+	public boolean validarCamposVacios() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void marcarCamposVacios() {
+		// TODO Auto-generated method stub
+		
+	}
 }
