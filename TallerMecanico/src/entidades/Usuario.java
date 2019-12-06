@@ -68,8 +68,4 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public String toString() {
-		return "Nombre: " + nombre + "| Apellido: " + apellido + "| Mail: " + mail + "| Usuario: " + usuario;
-	}
-
 }
