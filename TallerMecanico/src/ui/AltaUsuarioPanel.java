@@ -114,4 +114,16 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 	public void habilitarCampos() {
 	}
 
+	@Override
+	public boolean validarCamposVacios() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void marcarCamposVacios() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
