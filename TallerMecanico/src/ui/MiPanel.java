@@ -99,4 +99,8 @@ public abstract class MiPanel extends JPanel {
 
 	public abstract void habilitarCampos();
 
+	public abstract boolean validarCamposVacios();
+
+	public abstract void marcarCamposVacios();
+
 }
