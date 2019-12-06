@@ -101,4 +101,16 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public boolean validarCamposVacios() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void marcarCamposVacios() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
