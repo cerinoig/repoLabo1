@@ -14,12 +14,10 @@ import handler.Handler;
 public class AltaFacturaPanel extends FacturaPanel {
 
 	private static final long serialVersionUID = 1L;
-	
-	private Handler handler;
+
 
 	public AltaFacturaPanel(Handler handler) {
 		super(handler);
-		this.handler = handler;
 	}
 
 	@Override
@@ -57,7 +55,8 @@ public class AltaFacturaPanel extends FacturaPanel {
 			factura.setCostoAreglo(
 					Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
 		} catch (NumberFormatException e) {
-			handler.mostrarError(new NumberFormatException("Debe ingresar un importe válido"));
+			e.printStackTrace();
+			throw new NumberFormatException("Debe ingresar un importe válido");
 		}
 
 		return factura;
@@ -99,8 +98,8 @@ public class AltaFacturaPanel extends FacturaPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.altaFactura(((Factura) panelToObject()));
-		limpiarCampos();
+			handler.altaFactura(((Factura) panelToObject()));
+			limpiarCampos();
 	}
 
 	@Override

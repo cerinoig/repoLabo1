@@ -106,9 +106,14 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
+	try{
 		handler.modificarUsuario((Usuario) panelToObject());
 		limpiarCampos();
 		deshabilitarCampos();
+	} catch (NumberFormatException nf) {
+		handler.mostrarError(new NumberFormatException("Atencion! El precio debe ser un numero"));
+	}
+	
 	}
 
 	@Override

@@ -123,8 +123,12 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
+	try{
 		handler.altaAuto((Auto) panelToObject());
 		limpiarCampos();
+	} catch (NumberFormatException nf) {
+		handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+	}
 	}
 
 	@Override

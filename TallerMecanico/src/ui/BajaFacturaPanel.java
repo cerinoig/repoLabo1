@@ -100,10 +100,9 @@ public class BajaFacturaPanel extends FacturaPanel{
 	public void accionBuscar(Handler handler) {
 		
 		try {
-			Integer.valueOf(buscarTextfield.getText());
-		} catch (NumberFormatException ne) {
-			ne.printStackTrace();
-			new NumberFormatException("El codigo de la factura no es un numero");
+			Integer.valueOf(buscarTextfield.getText().trim());
+		} catch (NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
 		}
 		
 		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())) != null) {

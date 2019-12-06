@@ -68,7 +68,7 @@ public class ModificarAutoPanel extends AutoPanel {
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
 			puertasTextField.setBackground(Color.RED);
-			new NumberFormatException("La cantidad de puertas no es un numero");
+			throw new NumberFormatException("La cantidad de puertas no es un numero");
 		}
 
 		auto.setCantidadPuertas(Integer.valueOf(puertasTextField.getText().trim()));
@@ -79,7 +79,7 @@ public class ModificarAutoPanel extends AutoPanel {
 		} catch (Exception e3) {
 			e3.printStackTrace();
 			kilometrosTextField.setBackground(Color.RED);
-			new NumberFormatException("La cantidad de KM no es un numero");
+			throw new NumberFormatException("La cantidad de KM no es un numero");
 		}
 
 		auto.setKilometraje(Integer.valueOf(kilometrosTextField.getText().trim()));

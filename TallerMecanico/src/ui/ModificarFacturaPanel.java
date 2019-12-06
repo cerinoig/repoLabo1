@@ -50,7 +50,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 			factura.setCostoAreglo(Double.valueOf(precioTextField.getText().trim()));
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
-			new NumberFormatException("El precio no es un numero");
+			throw new NumberFormatException("El precio no es un numero");
 		}
 
 		return factura;
@@ -58,7 +58,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 
 	@Override
 	public void objectToPanel(Object object) {
-		
+
 		patenteTextField.setText(((Factura) object).getPatente());
 		arregloTextField.setText(((Factura) object).getArreglo());
 		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo()));
@@ -73,9 +73,9 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	public Box getBody() {
 		initTextFields();
 		deshabilitarCampos();
-		String[] labels = { "Buscar factura", "Patente", "Arreglo", "Precio"};
-		JTextField[] textFields = { buscarTextfield, patenteTextField, arregloTextField, precioTextField};
-		
+		String[] labels = { "Buscar factura", "Patente", "Arreglo", "Precio" };
+		JTextField[] textFields = { buscarTextfield, patenteTextField, arregloTextField, precioTextField };
+
 		return crearBoxVertical(labels, textFields);
 	}
 
@@ -102,25 +102,24 @@ public class ModificarFacturaPanel extends FacturaPanel {
 			limpiarCampos();
 			deshabilitarCampos();
 		} catch (NumberFormatException nf) {
-			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+			handler.mostrarError(new NumberFormatException("Atencion! El precio debe ser un numero"));
 		}
+
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
 		int idFactura = 0;
-		
-		try{
-			idFactura = Integer.valueOf(buscarTextfield.getText().trim());
 
-		}catch(NumberFormatException nf) {
+		try {
+			idFactura = Integer.valueOf(buscarTextfield.getText().trim());
+			if (handler.consultaFactura(idFactura) != null) {
+				objectToPanel(handler.consultaFactura(idFactura));
+				habilitarCampos();
+				confirmarBoton.setEnabled(true);
+			}
+		} catch (NumberFormatException nf) {
 			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-		}
-		
-		if (handler.consultaFactura(idFactura) != null) {
-			objectToPanel(handler.consultaFactura(idFactura));
-			habilitarCampos();
-			confirmarBoton.setEnabled(true);
 		}
 	}
 
