@@ -132,4 +132,16 @@ public class ModificarFacturaPanel extends FacturaPanel {
 		precioTextField.setEditable(true);
 		precioTextField.setBackground(Color.WHITE);
 	}
+
+	@Override
+	public boolean validarCamposVacios() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void marcarCamposVacios() {
+		// TODO Auto-generated method stub
+		
+	}
 }
