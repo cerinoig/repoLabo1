@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -53,7 +54,9 @@ public class AltaFacturaPanel extends FacturaPanel {
 		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
 		try {
 			factura.setCostoAreglo(
-					Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
+					//Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
+					Double.parseDouble(truncateDecimal(Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))),2).toString()));
+			System.out.println(truncateDecimal(Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))),2).toString());
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			throw new NumberFormatException("Debe ingresar un importe válido");
@@ -120,4 +123,14 @@ public class AltaFacturaPanel extends FacturaPanel {
 
 	}
 
+	
+	
+	private static BigDecimal truncateDecimal(double x,int numberofDecimals)
+	{
+	    if ( x > 0) {
+	        return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
+	    } else {
+	        return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
+	    }
+	}
 }

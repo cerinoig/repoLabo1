@@ -264,6 +264,7 @@ public class Handler {
 	public void cobrarArreglo(List<Factura> facturas) {
 		try {
 			facturaBusinessObject.cobrarArreglo(facturas);
+			frame.cambiarPanel(new ConsultaFacturaPanel(this));
 		} catch (Exception e) {
 			mostrarError(e);
 		}
