@@ -26,7 +26,13 @@ public class AltaAutoPanel extends AutoPanel {
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				accionConfirmar(handler);
+				marcarCamposVacios();
+				if (validarCamposVacios()) {
+					accionConfirmar(handler);
+					limpiarCampos();
+				} else {
+					accionConfirmar(handler);
+				}
 			}
 		});
 	}
@@ -123,12 +129,11 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-	try{
-		handler.altaAuto((Auto) panelToObject());
-		limpiarCampos();
-	} catch (NumberFormatException nf) {
-		handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-	}
+		try {
+			handler.altaAuto((Auto) panelToObject());
+		} catch (NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		}
 	}
 
 	@Override
@@ -138,11 +143,62 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void deshabilitarCampos() {
-		
+
 	}
 
 	@Override
 	public void habilitarCampos() {
-		
+
+	}
+
+	@Override
+	public boolean validarCamposVacios() {
+		if (!patenteTextField.getText().equals("") && !marcaTextField.getText().equals("")
+				&& !modeloTextField.getText().equals("") && !colorTextField.getText().equals("")
+				&& Integer.valueOf(puertasTextField.getText()) != 0 && !añoTextField.getText().equals("")
+				&& Integer.valueOf(kilometrosTextField.getText()) != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void marcarCamposVacios() {
+		if (patenteTextField.getText().equals("")) {
+			patenteTextField.setBackground(Color.RED);
+		} else {
+			patenteTextField.setBackground(Color.WHITE);
+		}
+		if (marcaTextField.getText().equals("")) {
+			marcaTextField.setBackground(Color.RED);
+		} else {
+			marcaTextField.setBackground(Color.WHITE);
+		}
+		if (modeloTextField.getText().equals("")) {
+			modeloTextField.setBackground(Color.RED);
+		} else {
+			modeloTextField.setBackground(Color.WHITE);
+		}
+		if (colorTextField.getText().equals("")) {
+			colorTextField.setBackground(Color.RED);
+		} else {
+			colorTextField.setBackground(Color.WHITE);
+		}
+		if (puertasTextField.getText().equals("")) {
+			puertasTextField.setBackground(Color.RED);
+		} else {
+			puertasTextField.setBackground(Color.WHITE);
+		}
+		if (kilometrosTextField.getText().equals("")) {
+			kilometrosTextField.setBackground(Color.RED);
+		} else {
+			kilometrosTextField.setBackground(Color.WHITE);
+		}
+		if (añoTextField.getText().equals("")) {
+			añoTextField.setBackground(Color.RED);
+		} else {
+			añoTextField.setBackground(Color.WHITE);
+		}
 	}
 }
