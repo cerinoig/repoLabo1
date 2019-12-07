@@ -61,12 +61,12 @@ public class ConsultaFacturaPanel extends JPanel {
 
 				if (input == JOptionPane.OK_OPTION) {
 					handler.cobrarArreglo(facturas);
+					handler.mostrarExito("Listo! El pago se realizo con exito");
 				}
 			}
 		});
 
 		cancelarBoton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				handler.irAlInicio();
