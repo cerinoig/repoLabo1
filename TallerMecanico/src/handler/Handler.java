@@ -319,7 +319,7 @@ public class Handler {
 		frame.cambiarPanel(new PanelBienvenida());
 	}
 
-	private void mostrarExito(String string) {
+	public void mostrarExito(String string) {
 		JOptionPane.showMessageDialog(null, string);
 	}
 
