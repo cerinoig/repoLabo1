@@ -74,6 +74,7 @@ public class Handler {
 			usuarioBusinessObject.insertUsuario(usuario);
 			mostrarExito("El usuario fue dado de alta con éxito");
 			frame.getJMenuBar().setVisible(true);
+			frame.cambiarPanel(new LoginPanel(this));
 		} catch (NumberFormatException cve) {
 			campoNumericoInvalido();
 		} catch (CamposVaciosException cve) {
@@ -119,10 +120,10 @@ public class Handler {
 		return usuario;
 	}
 
-	public Usuario login(String nombreUsuario) {
+	public Usuario login(String nombreUsuario, String contraseña) {
 		Usuario usuario = null;
 		try {
-			usuario = usuarioBusinessObject.selectUsuario(nombreUsuario);
+			usuario = usuarioBusinessObject.login(nombreUsuario, contraseña);
 			frame.getJMenuBar().setVisible(true);
 			frame.cambiarPanel(new PanelBienvenida());
 		} catch (CamposVaciosException cve) {
