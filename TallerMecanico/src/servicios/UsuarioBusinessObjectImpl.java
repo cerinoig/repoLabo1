@@ -84,4 +84,18 @@ public class UsuarioBusinessObjectImpl implements UsuarioBusinessObject {
 			return false;
 		}
 	}
+
+	@Override
+	public Usuario login(String usuario, String contraseña)
+			throws TallerMecanicoException, NonExistingUserException, CamposVaciosException {
+		if (!usuario.equals("") && !contraseña.equals("")) {
+			if (usuarioDAO.login(usuario, contraseña) == null) {
+				throw new NonExistingUserException("Usuario y/o contraseña incorrectos");
+			} else {
+				return usuarioDAO.selectUsuario(usuario);
+			}
+		} else {
+			throw new CamposVaciosException("No puede haber espacios sin completar");
+		}
+	}
 }
