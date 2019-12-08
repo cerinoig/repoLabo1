@@ -17,28 +17,17 @@ import javax.swing.JTable;
 import entidades.Factura;
 import handler.Handler;
 
-public class ConsultaFacturaPanel extends JPanel {
+public class ConsultaFacturaPanel extends ConsultaPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private JButton confirmarBoton = new JButton("Pagar");
-	private JButton cancelarBoton = new JButton("Cancelar");
-
+	FacturasTableModel facturasTableModel;
+	
 	public ConsultaFacturaPanel(Handler handler) {
-		initUI(handler);
+		super(handler);
 	}
 
-	private void initUI(Handler handler) {
-		setLayout(new BorderLayout());
-
-		FacturasTableModel facturasTableModel = new FacturasTableModel(handler.selectAllFacturas());
-		JScrollPane scroll = new JScrollPane(new JTable(facturasTableModel));
-
-		JButton[] botones = { confirmarBoton, cancelarBoton };
-
-		add(new JLabel("CONSULTA DE FACTURAS"), BorderLayout.NORTH);
-		add(scroll, BorderLayout.CENTER);
-		add(crearBotonera(botones), BorderLayout.SOUTH);
+	@Override
+	public void initUI(Handler handler) {
 
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
@@ -66,29 +55,35 @@ public class ConsultaFacturaPanel extends JPanel {
 			}
 		});
 
-		cancelarBoton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
-			}
-		});
-
+	}
+	
+	@Override
+	public void initButtons() {
+		confirmarBoton = new JButton("Pagar");
+		cancelarBoton = new JButton("Cancelar");
 	}
 
-	public Box crearBotonera(JButton[] botones) {
-		Box horizontal = Box.createHorizontalBox();
-		Box botonera = Box.createHorizontalBox();
-		botonera.add(Box.createHorizontalGlue());
+	@Override
+	public JButton[] getBotones() {
+		initButtons();
+		JButton[] botones = { confirmarBoton, cancelarBoton };
+		return botones;
+	}
 
-		for (int i = 0; i < botones.length; i++) {
-			botonera.add(Box.createHorizontalStrut(10));
-			botonera.add(botones[i]);
-		}
+	@Override
+	public JLabel getTituloPanel() {
+		return new JLabel("FATURACION DEL DIA");
+	}
 
-		horizontal.add(botonera);
-		add(horizontal, BorderLayout.SOUTH);
+	@Override
+	public JScrollPane getBody(Handler handler) {
+		initTableModel(handler);
+		return new JScrollPane(new JTable(facturasTableModel));
+	}
 
-		return horizontal;
+	@Override
+	public void initTableModel(Handler handler) {
+		facturasTableModel = new FacturasTableModel(handler.selectAllFacturas());
 	}
 
 }
