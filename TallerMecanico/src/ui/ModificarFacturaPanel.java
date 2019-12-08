@@ -3,6 +3,8 @@ package ui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -44,23 +46,26 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public Object panelToObject() {
 
-		
 		try {
 			factura.setIdFactura(Integer.valueOf(buscarTextfield.getText().trim()));
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
 			throw new NumberFormatException("El codigo debe ser un numero");
 		}
-		
+
 		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
 		factura.setArreglo(arregloTextField.getText().trim());
 
 		try {
-			factura.setCostoAreglo(Double.valueOf(precioTextField.getText().trim()));
-		} catch (NumberFormatException ne) {
-			ne.printStackTrace();
+			Double.parseDouble(precioTextField.getText().trim().replace(".", "").replace(",", "."));
+			precioTextField.setBackground(Color.WHITE);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			precioTextField.setBackground(Color.RED);
 			throw new NumberFormatException("El precio no es un numero");
 		}
+
+		factura.setCostoAreglo(new BigDecimal(precioTextField.getText().trim().replace(".", "").replace(",", ".")).setScale(2, RoundingMode.HALF_EVEN));
 
 		return factura;
 	}
@@ -70,7 +75,7 @@ public class ModificarFacturaPanel extends FacturaPanel {
 
 		patenteTextField.setText(((Factura) object).getPatente());
 		arregloTextField.setText(((Factura) object).getArreglo());
-		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo()));
+		precioTextField.setText(((Factura) object).getCostoAreglo().setScale(2, RoundingMode.HALF_EVEN).toString().replace(".",  ","));
 	}
 
 	@Override
@@ -122,7 +127,6 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public void accionBuscar(Handler handler) {
 		int idFactura = 0;
-
 		try {
 			idFactura = Integer.valueOf(buscarTextfield.getText().trim());
 			if (handler.consultaFactura(idFactura) != null) {
