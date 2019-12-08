@@ -22,9 +22,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	private ResultSet rs = null;
 	private String sql;
 
+	private Usuario usuario;
+
 	@Override
 	public Usuario selectUsuario(String nombreUsuario) throws TallerMecanicoException {
-		Usuario usuario = null;
+		usuario = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			sql = "SELECT * FROM USUARIOS WHERE USUARIO = " + "'" + nombreUsuario + "'";
@@ -202,5 +204,43 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			}
 		}
 		return usuarios;
+	}
+
+	@Override
+	public Usuario login(String nombreUsuario, String contraseña) throws TallerMecanicoException {
+		usuario = null;
+		try {
+			conn = ConnectionManager.getConnection();
+			sql = "SELECT * FROM USUARIOS WHERE USUARIO = '" + nombreUsuario + "' AND PASSWORD = '" + contraseña + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("ID_USUARIO"));
+				usuario.setNombre(rs.getString("NOMBRE"));
+				usuario.setApellido(rs.getString("APELLIDO"));
+				usuario.setMail(rs.getString("MAIL"));
+				usuario.setUsuario(rs.getString("USUARIO"));
+				usuario.setPassword(rs.getString("PASSWORD"));
+			}
+		} catch (SQLException sqle) {
+			try {
+				conn.rollback();
+				sqle.printStackTrace();
+			} catch (SQLException sqle2) {
+				sqle2.printStackTrace();
+			}
+			throw new TallerMecanicoException("Ocurrio un error en la busqueda del usuario", sqle);
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException sqle3) {
+				sqle3.printStackTrace();
+			}
+		}
+
+		return usuario;
 	}
 }
