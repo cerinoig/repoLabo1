@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -48,7 +49,7 @@ public class BajaFacturaPanel extends FacturaPanel {
 		idFacturaTextField.setText(String.valueOf(((Factura) object).getIdFactura()));
 		patenteTextField.setText(((Factura) object).getPatente());
 		arregloTextField.setText(((Factura) object).getArreglo());
-		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo()));
+		precioTextField.setText(String.valueOf(((Factura) object).getCostoAreglo().setScale(2, RoundingMode.HALF_EVEN).toString().replace(".",  ",")));
 	}
 
 	@Override
