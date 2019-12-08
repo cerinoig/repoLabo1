@@ -84,7 +84,7 @@ public class FacturaBusinessObjectImpl implements FacturaBusinessObject {
 	}
 
 	public boolean validarFactura(Factura factura) {
-		if (!factura.getPatente().equals("") && !factura.getArreglo().equals("") && factura.getCostoAreglo() != 0) {
+		if (!factura.getPatente().equals("") && !factura.getArreglo().equals("") && factura.getCostoAreglo() != null) {
 			return true;
 		} else {
 			return false;
