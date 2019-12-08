@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
@@ -84,8 +85,13 @@ public class EliminarUsuariosPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.deleteUsuario(usuarioTextField.getText().trim().toLowerCase());
-		limpiarCampos();
+		int opcionElegida = JOptionPane.showOptionDialog(null, "Esta seguro que desea el minar al usuario " + usuarioTextField.getText().trim().toLowerCase(), "Baja de usuario",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+		if (opcionElegida == JOptionPane.OK_OPTION) {
+			handler.deleteUsuario(usuarioTextField.getText().trim().toLowerCase());
+			limpiarCampos();
+		}
 	}
 
 	@Override
