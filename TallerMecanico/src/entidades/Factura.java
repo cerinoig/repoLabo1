@@ -1,19 +1,21 @@
 
 package entidades;
 
+import java.math.BigDecimal;
+
 public class Factura {
 
 	private int idFactura;
 	private String patente;
 	private String arreglo;
-	private Double costoAreglo;
+	private BigDecimal costoAreglo;
 	private boolean cobrado;
 
 	public Factura() {
 
 	}
 
-	public Factura(int idFactura, String patente, String arreglo, Double costoAreglo, boolean cobrado) {
+	public Factura(int idFactura, String patente, String arreglo, BigDecimal costoAreglo, boolean cobrado) {
 		this.idFactura = idFactura;
 		this.patente = patente;
 		this.arreglo = arreglo;
@@ -33,7 +35,7 @@ public class Factura {
 		return arreglo;
 	}
 
-	public Double getCostoAreglo() {
+	public BigDecimal getCostoAreglo() {
 		return costoAreglo;
 	}
 
@@ -53,7 +55,7 @@ public class Factura {
 		this.arreglo = arreglo;
 	}
 
-	public void setCostoAreglo(Double costoAreglo) {
+	public void setCostoAreglo(BigDecimal costoAreglo) {
 		this.costoAreglo = costoAreglo;
 	}
 
