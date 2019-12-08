@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 
 import entidades.Factura;
 import excepciones.CamposVaciosException;
+import excepciones.NonExistingCarException;
 import handler.Handler;
 
 public class AltaFacturaPanel extends FacturaPanel {
@@ -32,13 +34,6 @@ public class AltaFacturaPanel extends FacturaPanel {
 			}
 		});
 
-		cancelarBoton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				handler.irAlInicio();
-			}
-		});
-
 	}
 
 	@Override
@@ -55,25 +50,16 @@ public class AltaFacturaPanel extends FacturaPanel {
 		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
 
 		try {
-			Double.parseDouble(truncateDecimal(Double.parseDouble(
-					String.valueOf(precioTextField.getText().trim().replace(".", "").replace(",", "."))), 2)
-							.toString());
+			Double.parseDouble(precioTextField.getText().trim().replace(".", "").replace(",", "."));
 			precioTextField.setBackground(Color.WHITE);
-			System.out.println(truncateDecimal(
-					Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))), 2)
-							.toString());
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			precioTextField.setBackground(Color.RED);
 			throw new NumberFormatException("Debe ingresar un importe válido");
 		}
 
-		factura.setCostoAreglo(
-				Double.parseDouble(
-						truncateDecimal(
-								Double.parseDouble(String
-										.valueOf(precioTextField.getText().trim().replace(".", "").replace(",", "."))),
-								2).toString()));
+		factura.setCostoAreglo(new BigDecimal(precioTextField.getText().trim().replace(".", "").replace(",", "."))
+				.setScale(2, RoundingMode.HALF_EVEN));
 		return factura;
 	}
 
@@ -113,11 +99,12 @@ public class AltaFacturaPanel extends FacturaPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-
 		try {
 			revisarCamposVacios();
-			handler.altaFactura(((Factura) panelToObject()));
-			limpiarCampos();
+			if(handler.consultaAuto(((Factura) panelToObject()).getPatente()) != null) {
+				handler.altaFactura(((Factura) panelToObject()));
+				limpiarCampos();
+			}
 		} catch (NumberFormatException nf) {
 			handler.mostrarError(new NumberFormatException("Atencion! El precio debe ser un numero"));
 		} catch (CamposVaciosException e) {
@@ -142,14 +129,6 @@ public class AltaFacturaPanel extends FacturaPanel {
 	public void habilitarCampos() {
 		// TODO Auto-generated method stub
 
-	}
-
-	private static BigDecimal truncateDecimal(double x, int numberofDecimals) {
-		if (x > 0) {
-			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
-		} else {
-			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
-		}
 	}
 
 }
