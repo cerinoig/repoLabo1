@@ -81,12 +81,8 @@ public abstract class UsuarioPanel extends MiPanel {
 		if (usuarioTextField.getText().trim().equals(""))
 			throw new CamposVaciosException();
 
-		try {
-			passwordField.getPassword();
-		} catch (Exception e) {
+		if (String.valueOf(passwordField.getPassword()).equals(""))
 			throw new CamposVaciosException();
-		}
-
 	}
 
 }
