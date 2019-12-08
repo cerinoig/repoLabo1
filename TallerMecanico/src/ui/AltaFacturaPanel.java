@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -52,16 +53,22 @@ public class AltaFacturaPanel extends FacturaPanel {
 		Factura factura = new Factura();
 		factura.setArreglo(arregloTextField.getText().trim());
 		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
+
 		try {
-			factura.setCostoAreglo(
-					//Double.parseDouble(precioTextField.getText().replace("$", "").replace(".", "").replace(",", ".")));
-					Double.parseDouble(truncateDecimal(Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))),2).toString()));
-			System.out.println(truncateDecimal(Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))),2).toString());
+			Double.parseDouble(truncateDecimal(Double.parseDouble(
+					String.valueOf(precioTextField.getText().trim().replace(".", "").replace(",", "."))), 2)
+							.toString());
+			precioTextField.setBackground(Color.WHITE);
+			System.out.println(truncateDecimal(
+					Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace("$", ""))), 2)
+							.toString());
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+			precioTextField.setBackground(Color.RED);
 			throw new NumberFormatException("Debe ingresar un importe válido");
 		}
 
+		factura.setCostoAreglo(Double.parseDouble(truncateDecimal(Double.parseDouble(String.valueOf(precioTextField.getText().trim().replace(".", "").replace(",", "."))),2).toString()));
 		return factura;
 	}
 
@@ -132,17 +139,5 @@ public class AltaFacturaPanel extends FacturaPanel {
 	    } else {
 	        return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
 	    }
-	}
-
-	@Override
-	public boolean validarCamposVacios() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void marcarCamposVacios() {
-		// TODO Auto-generated method stub
-		
 	}
 }
