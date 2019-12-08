@@ -66,6 +66,7 @@ public class Handler {
 	public void initFrame() {
 		frame = new MiFrame(this);
 		frame.cambiarPanel(new LoginPanel(this));
+		frame.getJMenuBar().setVisible(false);
 		frame.setVisible(true);
 	}
 
