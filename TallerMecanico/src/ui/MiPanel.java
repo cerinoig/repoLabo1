@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public abstract class MiPanel extends JPanel {
@@ -98,5 +99,7 @@ public abstract class MiPanel extends JPanel {
 	public abstract void deshabilitarCampos();
 
 	public abstract void habilitarCampos();
+	
+	public abstract void revisarCamposVacios() throws CamposVaciosException;
 
 }

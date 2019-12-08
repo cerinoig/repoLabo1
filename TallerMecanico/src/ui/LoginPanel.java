@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import handler.Handler;
+import static utils.NombrePantallas.ALTA_USUARIO;
 
 public class LoginPanel extends JPanel {
 
@@ -77,7 +78,7 @@ public class LoginPanel extends JPanel {
 		registro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				handler.altaUsuario(usuario);
+				handler.menuUsage(ALTA_USUARIO);
 			}
 		});
 	}

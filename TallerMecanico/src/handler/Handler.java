@@ -65,7 +65,7 @@ public class Handler {
 
 	public void initFrame() {
 		frame = new MiFrame(this);
-		frame.cambiarPanel(new PanelBienvenida());
+		frame.cambiarPanel(new LoginPanel(this));
 		frame.setVisible(true);
 	}
 
@@ -328,7 +328,7 @@ public class Handler {
 		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
-	private void campoVacioMensaje(String mensaje) {
+	public void campoVacioMensaje(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, "Aviso", JOptionPane.WARNING_MESSAGE);
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public class AltaUsuarioPanel extends UsuarioPanel {
@@ -98,8 +99,15 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.altaUsuario((Usuario) panelToObject());
-		limpiarCampos();
+		
+		try {
+			revisarCamposVacios();
+			handler.altaUsuario((Usuario) panelToObject());
+			limpiarCampos();
+		} catch (CamposVaciosException e) {
+			handler.campoVacioMensaje("Debe completar todos los campos");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -113,5 +121,4 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 	@Override
 	public void habilitarCampos() {
 	}
-
 }

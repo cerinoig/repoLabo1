@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import entidades.Usuario;
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public class ModificarUsuarioPanel extends UsuarioPanel {
@@ -106,14 +107,18 @@ public class ModificarUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-	try{
-		handler.modificarUsuario((Usuario) panelToObject());
-		limpiarCampos();
-		deshabilitarCampos();
-	} catch (NumberFormatException nf) {
-		handler.mostrarError(new NumberFormatException("Atencion! El precio debe ser un numero"));
-	}
-	
+
+		try {
+			revisarCamposVacios();
+			handler.modificarUsuario((Usuario) panelToObject());
+			limpiarCampos();
+			deshabilitarCampos();
+
+		} catch (CamposVaciosException e) {
+			handler.campoVacioMensaje("Debe completar todos los campos");
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

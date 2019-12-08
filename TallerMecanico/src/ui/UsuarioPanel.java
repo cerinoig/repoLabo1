@@ -6,6 +6,7 @@ import javax.swing.Box;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public abstract class UsuarioPanel extends MiPanel {
@@ -63,6 +64,29 @@ public abstract class UsuarioPanel extends MiPanel {
 		usuarioTextField.setText("");
 		passwordField.setText("");
 		buscarTextfield.setText("");
+	}
+
+	@Override
+	public void revisarCamposVacios() throws CamposVaciosException {
+
+		if (nombreTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (apellidoTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (mailTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (usuarioTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		try {
+			passwordField.getPassword();
+		} catch (Exception e) {
+			throw new CamposVaciosException();
+		}
+
 	}
 
 }

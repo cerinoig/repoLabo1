@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import entidades.Auto;
 import entidades.Factura;
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public class ModificarFacturaPanel extends FacturaPanel {
@@ -43,6 +44,14 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public Object panelToObject() {
 
+		
+		try {
+			factura.setIdFactura(Integer.valueOf(buscarTextfield.getText().trim()));
+		} catch (NumberFormatException ne) {
+			ne.printStackTrace();
+			throw new NumberFormatException("El codigo debe ser un numero");
+		}
+		
 		factura.setPatente(patenteTextField.getText().trim().toUpperCase());
 		factura.setArreglo(arregloTextField.getText().trim());
 
@@ -98,13 +107,16 @@ public class ModificarFacturaPanel extends FacturaPanel {
 	@Override
 	public void accionConfirmar(Handler handler) {
 		try {
+			revisarCamposVacios();
 			handler.modificarFactura((Factura) panelToObject());
 			limpiarCampos();
 			deshabilitarCampos();
 		} catch (NumberFormatException nf) {
 			handler.mostrarError(new NumberFormatException("Atencion! El precio debe ser un numero"));
+		} catch (CamposVaciosException e) {
+			handler.campoVacioMensaje("Debe completar todos los campos");
+			e.printStackTrace();
 		}
-
 	}
 
 	@Override

@@ -117,10 +117,8 @@ public class BajaFacturaPanel extends FacturaPanel{
 	
 	@Override
 	public void limpiarCampos() {
-		patenteTextField.setText("");
-		arregloTextField.setText("");
-		precioTextField.setText("");
+		super.limpiarCampos();
+		buscarTextfield.setText("");
 		idFacturaTextField.setText("");
 	}
-
 }

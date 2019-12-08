@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JTextField;
 
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public abstract class AutoPanel extends MiPanel {
@@ -63,5 +64,31 @@ public abstract class AutoPanel extends MiPanel {
 		añoTextField.setText("");
 		buscarTextfield.setText("");
 	}
+	
+	
+	public void revisarCamposVacios() throws CamposVaciosException {
+
+		if (patenteTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (marcaTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (modeloTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (colorTextField.getText().trim().equals(""))	
+			throw new CamposVaciosException();
+
+		if (puertasTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (kilometrosTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (añoTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+	}
+	
 
 }

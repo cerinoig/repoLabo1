@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public class ModificarAutoPanel extends AutoPanel {
@@ -133,12 +134,17 @@ public class ModificarAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
+		
 		try {
+			revisarCamposVacios();
 			handler.modificarAuto((Auto) panelToObject());
 			limpiarCampos();
 			deshabilitarCampos();
 		} catch (NumberFormatException nf) {
 			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		} catch (CamposVaciosException e) {
+			handler.campoVacioMensaje("Debe completar todos los campos");
+			e.printStackTrace();
 		}
 	}
 

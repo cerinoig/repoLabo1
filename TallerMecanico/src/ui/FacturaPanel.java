@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public abstract class FacturaPanel extends MiPanel {
@@ -51,4 +52,18 @@ public abstract class FacturaPanel extends MiPanel {
 		arregloTextField.setText("");
 		precioTextField.setText("");
 	}
+	
+	@Override
+	public void revisarCamposVacios() throws CamposVaciosException {
+		
+		if (patenteTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (arregloTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+
+		if (precioTextField.getText().trim().equals(""))
+			throw new CamposVaciosException();
+	}
+	
 }

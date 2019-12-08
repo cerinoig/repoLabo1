@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import entidades.Auto;
+import excepciones.CamposVaciosException;
 import handler.Handler;
 
 public class AltaAutoPanel extends AutoPanel {
@@ -26,7 +27,9 @@ public class AltaAutoPanel extends AutoPanel {
 		confirmarBoton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				accionConfirmar(handler);
+			
+					accionConfirmar(handler);
+
 			}
 		});
 	}
@@ -123,12 +126,16 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-	try{
-		handler.altaAuto((Auto) panelToObject());
-		limpiarCampos();
-	} catch (NumberFormatException nf) {
-		handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
-	}
+		try {
+			revisarCamposVacios();
+			handler.altaAuto((Auto) panelToObject());
+			limpiarCampos();
+		} catch (NumberFormatException nf) {
+			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
+		} catch (CamposVaciosException e) {
+			handler.campoVacioMensaje("Debe completar todos los campos");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -138,11 +145,12 @@ public class AltaAutoPanel extends AutoPanel {
 
 	@Override
 	public void deshabilitarCampos() {
-		
+
 	}
 
 	@Override
 	public void habilitarCampos() {
-		
+
 	}
+
 }
