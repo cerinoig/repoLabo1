@@ -150,16 +150,4 @@ public class ModificarAutoPanel extends AutoPanel {
 			confirmarBoton.setEnabled(true);
 		}
 	}
-
-	@Override
-	public boolean validarCamposVacios() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void marcarCamposVacios() {
-		// TODO Auto-generated method stub
-		
-	}
 }
