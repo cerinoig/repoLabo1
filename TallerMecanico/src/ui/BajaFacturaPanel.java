@@ -6,19 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import entidades.Factura;
 import handler.Handler;
 
-public class BajaFacturaPanel extends FacturaPanel{
+public class BajaFacturaPanel extends FacturaPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public BajaFacturaPanel(Handler handler) {
 		super(handler);
 	}
-	
+
 	@Override
 	public void initPanel(Handler handler) {
 
@@ -59,9 +60,10 @@ public class BajaFacturaPanel extends FacturaPanel{
 	public Box getBody() {
 		initTextFields();
 		deshabilitarCampos();
-		String[] labels = { "Buscar factura","Cod Factura" , "Patente", "Arreglo", "Precio"};
-		JTextField[] textFields = { buscarTextfield, idFacturaTextField, patenteTextField, arregloTextField, precioTextField};
-		
+		String[] labels = { "Buscar factura", "Cod Factura", "Patente", "Arreglo", "Precio" };
+		JTextField[] textFields = { buscarTextfield, idFacturaTextField, patenteTextField, arregloTextField,
+				precioTextField };
+
 		return crearBoxVertical(labels, textFields);
 	}
 
@@ -83,28 +85,32 @@ public class BajaFacturaPanel extends FacturaPanel{
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		
 		try {
 			Integer.valueOf(idFacturaTextField.getText());
 		} catch (NumberFormatException ne) {
 			ne.printStackTrace();
 			new NumberFormatException("El codigo de la factura no es un numero");
 		}
-		
-		handler.deleteFactura(Integer.valueOf(Integer.valueOf(idFacturaTextField.getText())));
-		limpiarCampos();
-		
+
+		int opcionElegida = JOptionPane.showOptionDialog(null,
+				"Esta seguro que desea eliminar la factura n° " + idFacturaTextField.getText().trim(), "Baja de facturas",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+		if (opcionElegida == JOptionPane.OK_OPTION) {
+			handler.deleteFactura(Integer.valueOf(Integer.valueOf(idFacturaTextField.getText())));
+			limpiarCampos();
+		}
 	}
 
 	@Override
 	public void accionBuscar(Handler handler) {
-		
+
 		try {
 			Integer.valueOf(buscarTextfield.getText().trim());
 		} catch (NumberFormatException nf) {
 			handler.mostrarError(new NumberFormatException("Atencion! Debe ser un numero"));
 		}
-		
+
 		if (handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())) != null) {
 			objectToPanel(handler.consultaFactura(Integer.valueOf(buscarTextfield.getText().trim())));
 			confirmarBoton.setEnabled(true);
@@ -114,7 +120,7 @@ public class BajaFacturaPanel extends FacturaPanel{
 	@Override
 	public void habilitarCampos() {
 	}
-	
+
 	@Override
 	public void limpiarCampos() {
 		super.limpiarCampos();
