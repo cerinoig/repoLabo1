@@ -17,7 +17,6 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JPasswordField passwordField;
 	private JButton guardarBoton;
 
 	public AltaUsuarioPanel(Handler handler) {
@@ -99,7 +98,6 @@ public class AltaUsuarioPanel extends UsuarioPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		
 		try {
 			revisarCamposVacios();
 			handler.altaUsuario((Usuario) panelToObject());
