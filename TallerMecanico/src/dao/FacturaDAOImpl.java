@@ -34,7 +34,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 				factura.setIdFactura(rs.getInt("ID_FACTURA"));
 				factura.setArreglo(rs.getString("ARREGLO"));
 				factura.setCobrado(rs.getBoolean("COBRADO"));
-				factura.setCostoAreglo(rs.getDouble("COSTO_ARREGLO"));
+				factura.setCostoAreglo(rs.getBigDecimal("COSTO_ARREGLO"));
 				factura.setPatente(rs.getString("PATENTE"));
 			}
 		} catch (SQLException sqle) {
@@ -66,7 +66,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 
 			pstmt.setString(1, factura.getPatente());
 			pstmt.setString(2, factura.getArreglo());
-			pstmt.setDouble(3, factura.getCostoAreglo());
+			pstmt.setBigDecimal(3, factura.getCostoAreglo());
 			pstmt.setBoolean(4, factura.isCobrado());
 
 			pstmt.executeUpdate();
@@ -172,7 +172,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 				factura.setIdFactura(rs.getInt("ID_FACTURA"));
 				factura.setPatente(rs.getString("PATENTE"));
 				factura.setArreglo(rs.getString("ARREGLO"));
-				factura.setCostoAreglo(rs.getDouble("COSTO_ARREGLO"));
+				factura.setCostoAreglo(rs.getBigDecimal("COSTO_ARREGLO"));
 				factura.setCobrado(rs.getBoolean("COBRADO"));
 				facturas.add(factura);
 			}
@@ -205,7 +205,7 @@ public class FacturaDAOImpl implements FacturaDAO {
 
 			pstmt.setString(1, factura.getArreglo());
 			pstmt.setString(2, factura.getPatente());
-			pstmt.setDouble(3, factura.getCostoAreglo());
+			pstmt.setBigDecimal(3, factura.getCostoAreglo());
 			pstmt.setInt(4, factura.getIdFactura());
 
 			pstmt.executeUpdate();
