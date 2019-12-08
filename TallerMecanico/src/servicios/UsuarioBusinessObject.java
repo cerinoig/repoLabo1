@@ -23,6 +23,9 @@ public interface UsuarioBusinessObject {
 	void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
 
 	void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
+	
+	Usuario login(String usuario, String contraseña)
+			throws TallerMecanicoException, NonExistingUserException, CamposVaciosException;
 
 	List<Usuario> selectAll() throws TallerMecanicoException;
 
