@@ -17,6 +17,8 @@ public interface UsuarioDAO {
 	void updateUsuario(Usuario usuario) throws TallerMecanicoException, NonExistingUserException;
 
 	void deleteUsuario(String usuario) throws TallerMecanicoException, NonExistingUserException;
+	
+	Usuario login(String usuario, String contraseña) throws TallerMecanicoException;
 
 	List<Usuario> selectAll() throws TallerMecanicoException;
 }
