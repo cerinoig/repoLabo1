@@ -71,7 +71,7 @@ public class LoginPanel extends JPanel {
 		login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.login(usuarioTextField.getText().toString().trim());
+				handler.login(usuarioTextField.getText().toString().trim(), String.valueOf(passwordField.getPassword()));
 			}
 		});
 
