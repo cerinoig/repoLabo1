@@ -123,16 +123,4 @@ public class BajaFacturaPanel extends FacturaPanel{
 		idFacturaTextField.setText("");
 	}
 
-	@Override
-	public boolean validarCamposVacios() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void marcarCamposVacios() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
