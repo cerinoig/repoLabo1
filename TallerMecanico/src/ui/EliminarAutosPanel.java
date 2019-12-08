@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import entidades.Auto;
@@ -88,8 +89,14 @@ public class EliminarAutosPanel extends AutoPanel {
 
 	@Override
 	public void accionConfirmar(Handler handler) {
-		handler.deleteAuto(patenteTextField.getText().trim().toUpperCase());
-		limpiarCampos();
+		int opcionElegida = JOptionPane.showOptionDialog(null,
+				"Esta seguro que desea eliminar el auto " + patenteTextField.getText().trim().toUpperCase(),
+				"Baja de autos", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+		if (opcionElegida == JOptionPane.OK_OPTION) {
+			handler.deleteAuto(patenteTextField.getText().trim().toUpperCase());
+			limpiarCampos();
+		}
 	}
 
 	@Override
